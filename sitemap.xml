@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://jryans.github.com/blog/archives/</loc>
+        <loc>http://convolve.me/blog/archives/</loc>
         <lastmod>2012-03-20T00:08:45-05:00</lastmod>
     </url>
     <url>
-        <loc>http://jryans.github.com/</loc>
+        <loc>http://convolve.me/</loc>
         <lastmod>2012-03-20T00:08:45-05:00</lastmod>
     </url>
 </urlset>

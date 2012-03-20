@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[A Convolution of Software and Electronics]]></title>
-  <link href="http://jryans.github.com/atom.xml" rel="self"/>
-  <link href="http://jryans.github.com/"/>
-  <updated>2012-03-20T01:21:35-05:00</updated>
-  <id>http://jryans.github.com/</id>
+  <link href="http://convolve.me/atom.xml" rel="self"/>
+  <link href="http://convolve.me/"/>
+  <updated>2012-03-20T01:56:53-05:00</updated>
+  <id>http://convolve.me/</id>
   <author>
     <name><![CDATA[J. Ryan Stinnett]]></name>
     
