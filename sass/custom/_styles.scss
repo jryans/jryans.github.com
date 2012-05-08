@@ -1,2 +1,23 @@
 // This File is imported last, and will override other styles in the cascade
 // Add styles here to make changes without digging in too much
+#content .blog-index a {
+  @extend .sans;
+}
+
+html {
+  background: $page-bg image-url('noise.png') top left;
+}
+
+aside.sidebar {
+  border-right: 1px solid $sidebar-border;
+}
+
+body > header {
+  background: $header-bg image-url('noise.png') top left;
+}
+
+body > footer {
+  background: $footer-bg image-url('noise.png') top left;
+  text-shadow: none;
+  border-top: 0;
+}
