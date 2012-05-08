@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[A Convolution of Software and Electronics]]></title>
-  <link href="http://convolve.me/atom.xml" rel="self"/>
-  <link href="http://convolve.me/"/>
-  <updated>2012-05-08T00:02:50-05:00</updated>
-  <id>http://convolve.me/</id>
+  <link href="http://convolv.es/atom.xml" rel="self"/>
+  <link href="http://convolv.es/"/>
+  <updated>2012-05-08T11:44:44-05:00</updated>
+  <id>http://convolv.es/</id>
   <author>
     <name><![CDATA[J. Ryan Stinnett]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Exciting new blog thing]]></title>
-    <link href="http://convolve.me/blog/2012/05/07/exciting-new-blog-thing/"/>
+    <link href="http://convolv.es/blog/2012/05/07/exciting-new-blog-thing/"/>
     <updated>2012-05-07T23:28:00-05:00</updated>
-    <id>http://convolve.me/blog/2012/05/07/exciting-new-blog-thing</id>
+    <id>http://convolv.es/blog/2012/05/07/exciting-new-blog-thing</id>
     <content type="html"><![CDATA[<p>&#8230;to replace what exactly? My LiveJournal from college&#8230;? I&#8217;ve never been great at maintaining any kind of journal / blog / whatever, but <a href="http://octopress.org">Octopress</a> just looks like so much fun, so I had to give it a shot. Tonight I finally ripped the default theme up a bit to create a more minimalist look, which I think turned out quite well.</p>
 
 <p>I&#8217;m hoping to start talking about all the crazy tech projects I&#8217;ve got brewing in my mind that I&#8217;ll one day sit down and make progress on, along with a few bits of life, work, and everything else mixed in.</p>

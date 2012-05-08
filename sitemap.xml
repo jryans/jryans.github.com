@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://convolve.me/blog/2012/05/07/exciting-new-blog-thing/</loc>
+        <loc>http://convolv.es/blog/2012/05/07/exciting-new-blog-thing/</loc>
         <lastmod>2012-05-07T23:36:40-05:00</lastmod>
     </url>
     <url>
-        <loc>http://convolve.me/blog/archives/</loc>
+        <loc>http://convolv.es/blog/archives/</loc>
         <lastmod>2012-05-07T23:36:40-05:00</lastmod>
     </url>
     <url>
-        <loc>http://convolve.me/</loc>
+        <loc>http://convolv.es/</loc>
         <lastmod>2012-05-07T23:36:40-05:00</lastmod>
     </url>
 </urlset>
