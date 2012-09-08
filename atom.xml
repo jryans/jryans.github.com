@@ -4,7 +4,7 @@
   <title><![CDATA[J. Ryan Stinnett]]></title>
   <link href="http://convolv.es/atom.xml" rel="self"/>
   <link href="http://convolv.es/"/>
-  <updated>2012-09-07T22:59:14-05:00</updated>
+  <updated>2012-09-08T00:00:34-05:00</updated>
   <id>http://convolv.es/</id>
   <author>
     <name><![CDATA[J. Ryan Stinnett]]></name>
@@ -12,6 +12,27 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[3D Modeling and Rendering 1]]></title>
+    <link href="http://convolv.es/blog/2012/09/07/3d-modeling-and-rendering-1/"/>
+    <updated>2012-09-07T23:20:00-05:00</updated>
+    <id>http://convolv.es/blog/2012/09/07/3d-modeling-and-rendering-1</id>
+    <content type="html"><![CDATA[<p>I&#8217;ve started taking classes at ACC to learn some visual design skills and
+generally extend my knowledge of how games and other media are built.</p>
+
+<p>The first one is this 3D modeling class, and I&#8217;ll be maintaining a portfolio of
+my work as this class goes on. I&#8217;m excited to see what I can come up with!
+Undoubtedly my work won&#8217;t win too many awards, but hopefully I can pick up the
+principles and develop them further over time.</p>
+
+<p>I think this will also give me a better understanding of the thought process that
+design and creative teams go through at the various places I&#8217;ve worked now and in
+the past.</p>
+
+<p>Anyway, should be fun! :D</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Exciting new blog thing]]></title>
