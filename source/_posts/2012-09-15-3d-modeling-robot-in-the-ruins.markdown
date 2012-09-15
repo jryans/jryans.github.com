@@ -39,9 +39,9 @@ various items between the islands as needed.
 
 
 [a1]: http://viscom3d.blogspot.com/2012/01/robot-in-ruins.html
-[env1]: https://photos-1.dropbox.com/thumb/AABDqDYRpn3svviq7n1j7afeO_3JAX6OTRn02H5CYVQ9wA/1168103/png/2048x1536/2/1347710400/0/2/env1.png/55GFnkBdIrZLucpGoU_1h3fCDRhejaZb0cx7MmIEg9I
-[env2]: https://photos-4.dropbox.com/thumb/AABpiqaVI-2rs1L7GE3hG1vDFzjbbnsXrhjDdVgm_GXveA/1168103/png/2048x1536/2/1347714000/0/2/env2.png/crScjGzoSNji4gLhkwFkgeyz42Hs1MINcqSJwKqRHQc
-[env3]: https://photos-5.dropbox.com/thumb/AACTg2i0FScZ3EnkWPXPsOLrAxyoAzdRYOd7ZyPCFrRtqw/1168103/png/2048x1536/2/1347714000/0/2/env3.png/Rb1u6ZDsT32h072vAaKngIiTUHBC3h2A7Q56m9qq8UM
-[robot1]: https://photos-2.dropbox.com/thumb/AACqiqnDm5k2ULPsOeO-AkK-KTKSicQSQha69AiQp95g4Q/1168103/png/2048x1536/2/1347714000/0/2/robot1.png/JhgVT4QUbGhBnWvbSDGyheK5jr51X69g2wrQQH9vwAc
-[robot2]: https://photos-1.dropbox.com/thumb/AACYOuNWBQ0QoMyGQ-mX0J4_eE4VL9xuoRQT1201o0aRzQ/1168103/png/2048x1536/2/1347714000/0/2/robot2.png/x_6Ad2gSJZgXedURL4COVqYjTT6B7d0D0StdVvN6_3c
-[robot3]: https://photos-6.dropbox.com/thumb/AADM2oHpUjHsaEmuymZGzgFSGw7bkIW6qM6ujJIQrL8R7A/1168103/png/2048x1536/2/1347714000/0/2/robot3.png/YnuRNRQlHYHVEo4gedq8N7hGE7jEdZuVvqbA2gye0Is
+[env1]: /images/posts/env1.png
+[env2]: /images/posts/env2.png
+[env3]: /images/posts/env3.png
+[robot1]: /images/posts/robot1.png
+[robot2]: /images/posts/robot2.png
+[robot3]: /images/posts/robot3.png
