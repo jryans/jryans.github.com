@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ARTV-1445 | J. Ryan Stinnett]]></title>
   <link href="http://convolv.es/blog/categories/artv-1445/atom.xml" rel="self"/>
   <link href="http://convolv.es/"/>
-  <updated>2012-09-08T00:00:34-05:00</updated>
+  <updated>2012-09-15T06:55:14-05:00</updated>
   <id>http://convolv.es/</id>
   <author>
     <name><![CDATA[J. Ryan Stinnett]]></name>
@@ -12,6 +12,44 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[3D Modeling: Robot in the Ruins]]></title>
+    <link href="http://convolv.es/blog/2012/09/15/3d-modeling-robot-in-the-ruins/"/>
+    <updated>2012-09-15T05:43:00-05:00</updated>
+    <id>http://convolv.es/blog/2012/09/15/3d-modeling-robot-in-the-ruins</id>
+    <content type="html"><![CDATA[<h3>Overview</h3>
+
+<p>For our <a href="http://viscom3d.blogspot.com/2012/01/robot-in-ruins.html">first assignment</a>, we had to build a robot and an environment for the it to inhabit.</p>
+
+<h3>Robot</h3>
+
+<p>The robot had to use exactly 1000 polygons. I chose to create a kind of
+transport robot with a cute appearance. I used an elongated egg shape, and gave
+it two propellers to maneuver. The robot is shown at an angle to suggest
+movement.  The propellers were fun to construct, especially with the primitives,
+since you have to think of clever ways to build what want from just a few
+shapes. With two shapes and a few filters, I arrived at a convincing version of
+propeller blades.</p>
+
+<p><img src="https://photos-2.dropbox.com/thumb/AACqiqnDm5k2ULPsOeO-AkK-KTKSicQSQha69AiQp95g4Q/1168103/png/2048x1536/2/1347714000/0/2/robot1.png/JhgVT4QUbGhBnWvbSDGyheK5jr51X69g2wrQQH9vwAc" alt="Robot 1" />
+<img src="https://photos-1.dropbox.com/thumb/AACYOuNWBQ0QoMyGQ-mX0J4_eE4VL9xuoRQT1201o0aRzQ/1168103/png/2048x1536/2/1347714000/0/2/robot2.png/x_6Ad2gSJZgXedURL4COVqYjTT6B7d0D0StdVvN6_3c" alt="Robot 2" />
+<img src="https://photos-6.dropbox.com/thumb/AADM2oHpUjHsaEmuymZGzgFSGw7bkIW6qM6ujJIQrL8R7A/1168103/png/2048x1536/2/1347714000/0/2/robot3.png/YnuRNRQlHYHVEo4gedq8N7hGE7jEdZuVvqbA2gye0Is" alt="Robot 3" /></p>
+
+<h3>Environment</h3>
+
+<p>For the environment, we had a budget of 10,000 polygons. I thought it would be
+fun to create a water / island environment. However, even a poor simulation of
+water quickly eats up a lot of polygons!</p>
+
+<p>My thoughts here were that several of the robots might be used to transport
+various items between the islands as needed.</p>
+
+<p><img src="https://photos-1.dropbox.com/thumb/AABDqDYRpn3svviq7n1j7afeO_3JAX6OTRn02H5CYVQ9wA/1168103/png/2048x1536/2/1347710400/0/2/env1.png/55GFnkBdIrZLucpGoU_1h3fCDRhejaZb0cx7MmIEg9I" alt="Environment 1" />
+<img src="https://photos-4.dropbox.com/thumb/AABpiqaVI-2rs1L7GE3hG1vDFzjbbnsXrhjDdVgm_GXveA/1168103/png/2048x1536/2/1347714000/0/2/env2.png/crScjGzoSNji4gLhkwFkgeyz42Hs1MINcqSJwKqRHQc" alt="Environment 2" />
+<img src="https://photos-5.dropbox.com/thumb/AACTg2i0FScZ3EnkWPXPsOLrAxyoAzdRYOd7ZyPCFrRtqw/1168103/png/2048x1536/2/1347714000/0/2/env3.png/Rb1u6ZDsT32h072vAaKngIiTUHBC3h2A7Q56m9qq8UM" alt="Environment 3" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[3D Modeling and Rendering 1]]></title>
