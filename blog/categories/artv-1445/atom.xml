@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ARTV-1445 | J. Ryan Stinnett]]></title>
   <link href="http://convolv.es/blog/categories/artv-1445/atom.xml" rel="self"/>
   <link href="http://convolv.es/"/>
-  <updated>2012-09-22T04:55:18-05:00</updated>
+  <updated>2012-09-29T08:32:08-05:00</updated>
   <id>http://convolv.es/</id>
   <author>
     <name><![CDATA[J. Ryan Stinnett]]></name>
@@ -12,6 +12,51 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Splines, Loft, and Lathe]]></title>
+    <link href="http://convolv.es/blog/2012/09/29/splines/"/>
+    <updated>2012-09-29T08:17:00-05:00</updated>
+    <id>http://convolv.es/blog/2012/09/29/splines</id>
+    <content type="html"><![CDATA[<h3>Overview</h3>
+
+<p>For this <a href="http://viscom3d.blogspot.com/2012/09/spline-modeling-and-compound-objects.html">assignment</a>, we learned a few new techniques, namely how to make
+use of 2D shapes to give more detail to our models.  Beyond simple shapes like
+circles and squares is the very flexible spline, which gives you a lot of
+control over how a line is drawn, while still be purely analytical.</p>
+
+<h3>Shapes and Splines</h3>
+
+<p>For part of the homework, we added some shapes and splines to our existing
+models.  Below you can see the island huts from before, but with a few
+additional decorations, such as some scary wiring / branches, as well as door
+knobs and roof ornaments.</p>
+
+<p><img src="/images/posts/env-ss1.png" alt="Env 1" />
+<img src="/images/posts/env-ss2.png" alt="Env 2" />
+<img src="/images/posts/env-ss3.png" alt="Env 3" /></p>
+
+<h3>Lathe and Loft</h3>
+
+<p>We also learned how to take 2D paths and morph them into 3D shapes in several
+interesting ways.  You can use lathe to revolve the path around an axis, similar
+to a torus.</p>
+
+<p>I used this technique to create a pot, an inflatable pool, and a spyglass.</p>
+
+<p><img src="/images/posts/lathe.png" alt="Lathe" /></p>
+
+<p>We also learned about loft, which will take a shape and replicate it in 3D
+across whatever path you define.  This is another very powerful feature, with
+many ways you can customize and tune its behavior.</p>
+
+<p>I made several tracks and other shapes using this process:</p>
+
+<p><img src="/images/posts/loft1.png" alt="Loft 1" />
+<img src="/images/posts/loft2.png" alt="Loft 2" />
+<img src="/images/posts/loft3.png" alt="Loft 3" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Basic Game with Unity]]></title>
