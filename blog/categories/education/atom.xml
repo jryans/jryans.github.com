@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: ARTV-1445 | J. Ryan Stinnett]]></title>
-  <link href="http://convolv.es/blog/categories/artv-1445/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Education | J. Ryan Stinnett]]></title>
+  <link href="http://convolv.es/blog/categories/education/atom.xml" rel="self"/>
   <link href="http://convolv.es/"/>
-  <updated>2012-10-06T15:34:56-05:00</updated>
+  <updated>2013-02-17T23:13:02-06:00</updated>
   <id>http://convolv.es/</id>
   <author>
     <name><![CDATA[J. Ryan Stinnett]]></name>
@@ -21,12 +21,12 @@
     <content type="html"><![CDATA[<h3>Overview</h3>
 
 <p>For this <a href="http://viscom3d.blogspot.com/2012/09/materials-maps-and-surfacing.html">assignment</a>, we learned how to apply materials to the objects
-we've been creating.  There many, many different ways to construct a material
-that you apply to 3D object.  They can be procedurally generated, they can pull
-from textures (or maps) you create, and you can manually tune many parameters as
-well.</p>
+we've been creating.  There are many, many different ways to construct a
+material that you apply to 3D object.  They can be procedurally generated, they
+can pull from textures (or maps) you create, and you can manually tune many
+parameters as well.</p>
 
-<p>Maps are a great way to control the appearance of an object because you make
+<p>Maps are a great way to control the appearance of an object because you can make
 something resemble a real object quite quickly by just taking a picture and
 doing a bit of editing.</p>
 

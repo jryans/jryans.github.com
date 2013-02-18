@@ -4,7 +4,7 @@
   <title><![CDATA[J. Ryan Stinnett]]></title>
   <link href="http://convolv.es/atom.xml" rel="self"/>
   <link href="http://convolv.es/"/>
-  <updated>2012-10-06T15:34:56-05:00</updated>
+  <updated>2013-02-17T23:13:02-06:00</updated>
   <id>http://convolv.es/</id>
   <author>
     <name><![CDATA[J. Ryan Stinnett]]></name>
@@ -14,6 +14,37 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Into the Open]]></title>
+    <link href="http://convolv.es/blog/2013/02/17/into-the-open/"/>
+    <updated>2013-02-17T22:52:00-06:00</updated>
+    <id>http://convolv.es/blog/2013/02/17/into-the-open</id>
+    <content type="html"><![CDATA[<p>I&#8217;m excited to start to focusing what time I do have on the side towards open
+source projects.  I&#8217;m always on the lookout for good projects to help out with,
+but these days I always seem to come back to web browsers.</p>
+
+<p>In particular, I really enjoy working on tools that improve the lives of other
+every day.  In that vein, I&#8217;d like to focus on improvements to the developer
+tools in browsers today, though they are vastly better today than even a few
+years ago.</p>
+
+<p>The main open source options as far as web browsers go are Chrome / Chromium and
+the various Mozilla projects, like Firefox. Near the end of 2011, I started
+ramping up on the Chromium project, mainly because Chrome is the main browser I
+used then.</p>
+
+<p>However, now that Opera has decided to switch to Chromium for future versions of
+their browser, I&#8217;ve been reminded that Mozilla is the only party in the web
+development game that truly seems to be doing their best to fight for the user.
+The main reason I stopped using Firefox was due to Chrome&#8217;s impressive developer
+tools, so I&#8217;d like to help improve Firefox tools to bring them up to the level
+we&#8217;ve now come to expect and beyond.</p>
+
+<p>Likely I&#8217;ll dabble in both Chromium and Firefox, but no matter what it should be
+an exciting time ahead!</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Materials, Maps, and Surfacing]]></title>
     <link href="http://convolv.es/blog/2012/10/06/materials/"/>
     <updated>2012-10-06T15:13:00-05:00</updated>
@@ -21,12 +52,12 @@
     <content type="html"><![CDATA[<h3>Overview</h3>
 
 <p>For this <a href="http://viscom3d.blogspot.com/2012/09/materials-maps-and-surfacing.html">assignment</a>, we learned how to apply materials to the objects
-we&#8217;ve been creating.  There many, many different ways to construct a material
-that you apply to 3D object.  They can be procedurally generated, they can pull
-from textures (or maps) you create, and you can manually tune many parameters as
-well.</p>
+we&#8217;ve been creating.  There are many, many different ways to construct a
+material that you apply to 3D object.  They can be procedurally generated, they
+can pull from textures (or maps) you create, and you can manually tune many
+parameters as well.</p>
 
-<p>Maps are a great way to control the appearance of an object because you make
+<p>Maps are a great way to control the appearance of an object because you can make
 something resemble a real object quite quickly by just taking a picture and
 doing a bit of editing.</p>
 
