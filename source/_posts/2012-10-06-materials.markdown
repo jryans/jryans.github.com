@@ -3,7 +3,7 @@ layout: post
 title: "Materials, Maps, and Surfacing"
 date: 2012-10-06 15:13
 comments: true
-categories: ARTV-1445 
+categories: Education
 ---
 
 ### Overview

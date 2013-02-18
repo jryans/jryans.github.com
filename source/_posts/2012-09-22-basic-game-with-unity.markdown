@@ -3,14 +3,14 @@ layout: post
 title: "Basic Game with Unity"
 date: 2012-09-22 04:42
 comments: true
-categories: ARTV-1445
+categories: Education
 ---
 
 ### Overview
 
 For this week's [assignment][a2], we jumped out of the normal curriculum and
 went straight to using a game engine with our models from last time.  We added a
-few common elements, like terrain and fog. 
+few common elements, like terrain and fog.
 
 ### Unity
 
@@ -23,7 +23,7 @@ wide multi-platform support.
 
 For the level itself, I modified the environment to remove the static water I
 made before and surround the island with mountainous terrain.  Then I added the
-animated water to get back to the original environment idea. 
+animated water to get back to the original environment idea.
 
 From there, I added some basic lighting and fog to match the skybox I chose.  It
 was actually a bit tricky to map a collider to the island huts.  For now I used
