@@ -9,12 +9,12 @@ categories: Education
 ### Overview
 
 For this [assignment][a4], we learned how to apply materials to the objects
-we've been creating.  There many, many different ways to construct a material
-that you apply to 3D object.  They can be procedurally generated, they can pull
-from textures (or maps) you create, and you can manually tune many parameters as
-well.
+we've been creating.  There are many, many different ways to construct a
+material that you apply to 3D object.  They can be procedurally generated, they
+can pull from textures (or maps) you create, and you can manually tune many
+parameters as well.
 
-Maps are a great way to control the appearance of an object because you make
+Maps are a great way to control the appearance of an object because you can make
 something resemble a real object quite quickly by just taking a picture and
 doing a bit of editing.
 
