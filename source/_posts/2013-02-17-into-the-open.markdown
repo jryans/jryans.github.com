@@ -3,7 +3,7 @@ layout: post
 title: "Into the Open"
 date: 2013-02-17 22:52
 comments: true
-categories: Open Source
+categories: [Open Source]
 ---
 
 I'm excited to start to focusing what time I do have on the side towards open
