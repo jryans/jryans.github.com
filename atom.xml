@@ -4,7 +4,7 @@
   <title><![CDATA[J. Ryan Stinnett]]></title>
   <link href="http://convolv.es/atom.xml" rel="self"/>
   <link href="http://convolv.es/"/>
-  <updated>2013-05-30T23:44:47-05:00</updated>
+  <updated>2013-08-25T02:33:54+02:00</updated>
   <id>http://convolv.es/</id>
   <author>
     <name><![CDATA[J. Ryan Stinnett]]></name>
@@ -14,9 +14,43 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Mozilla]]></title>
+    <link href="http://convolv.es/blog/2013/08/25/mozilla/"/>
+    <updated>2013-08-25T01:27:00+02:00</updated>
+    <id>http://convolv.es/blog/2013/08/25/mozilla</id>
+    <content type="html"><![CDATA[<p>In my <a href="http://convolv.es/blog/2013/02/17/into-the-open/">last post</a> (back in February&#8230;), I mentioned I was spending a lot of
+time on the side working on the developer tools in web browsers, particularly
+Firefox.  I find that Mozilla&#8217;s values, which truly put the user first, are
+something I agree with wholeheartedly.  Mozilla is in a unique position in this
+way, since all the other browsers are made by companies that, at the end of day,
+are looking to make money to appease their shareholders.  Mozilla&#8217;s values are
+even more important to emphasize these days with the various forms of
+governmental spying that has been revealed in the last few months.</p>
+
+<p>With that context, hopefully you can get an idea of how excited I am to say that
+this past Monday was my first day as a Mozilla employee, working on the Firefox
+Developer Tools team!</p>
+
+<p>I am currently in Paris ramping up with the team for two weeks.  After the first
+week, I am humbled to be able to say I am a part of this organization.  There
+are so many people smarter than me here, and I am thrilled to have the
+opportunity to work them.  I know we will accomplish great things together.</p>
+
+<p>There is so much potential in the web developer tools space.  Every developer
+has their own workflow, favorite set of frameworks and tools, and new platform
+technologies and techniques are coming out at a rapid pace.  While part of my
+job is certainly to help make all of this more efficient, there is a lot of room
+to shake things up by looking towards the future of web development and the
+tools that people don&#8217;t even know they need.</p>
+
+<p>It&#8217;s going to be a blast! Hopefully I&#8217;ll have to some fun things to share.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Into the Open]]></title>
     <link href="http://convolv.es/blog/2013/02/17/into-the-open/"/>
-    <updated>2013-02-17T22:52:00-06:00</updated>
+    <updated>2013-02-17T22:52:00+01:00</updated>
     <id>http://convolv.es/blog/2013/02/17/into-the-open</id>
     <content type="html"><![CDATA[<p>I&#8217;m excited to start to focusing what time I do have on the side towards open
 source projects.  I&#8217;m always on the lookout for good projects to help out with,
@@ -47,7 +81,7 @@ an exciting time ahead!</p>
   <entry>
     <title type="html"><![CDATA[Materials, Maps, and Surfacing]]></title>
     <link href="http://convolv.es/blog/2012/10/06/materials/"/>
-    <updated>2012-10-06T15:13:00-05:00</updated>
+    <updated>2012-10-06T15:13:00+02:00</updated>
     <id>http://convolv.es/blog/2012/10/06/materials</id>
     <content type="html"><![CDATA[<h3>Overview</h3>
 
@@ -89,7 +123,7 @@ give a metallic appearance.</p>
   <entry>
     <title type="html"><![CDATA[Splines, Loft, and Lathe]]></title>
     <link href="http://convolv.es/blog/2012/09/29/splines/"/>
-    <updated>2012-09-29T08:17:00-05:00</updated>
+    <updated>2012-09-29T08:17:00+02:00</updated>
     <id>http://convolv.es/blog/2012/09/29/splines</id>
     <content type="html"><![CDATA[<h3>Overview</h3>
 
@@ -134,7 +168,7 @@ many ways you can customize and tune its behavior.</p>
   <entry>
     <title type="html"><![CDATA[Basic Game with Unity]]></title>
     <link href="http://convolv.es/blog/2012/09/22/basic-game-with-unity/"/>
-    <updated>2012-09-22T04:42:00-05:00</updated>
+    <updated>2012-09-22T04:42:00+02:00</updated>
     <id>http://convolv.es/blog/2012/09/22/basic-game-with-unity</id>
     <content type="html"><![CDATA[<h3>Overview</h3>
 
@@ -170,7 +204,7 @@ exciting to see something playable come together so quickly.</p>
   <entry>
     <title type="html"><![CDATA[3D Modeling: Robot in the Ruins]]></title>
     <link href="http://convolv.es/blog/2012/09/15/3d-modeling-robot-in-the-ruins/"/>
-    <updated>2012-09-15T05:43:00-05:00</updated>
+    <updated>2012-09-15T05:43:00+02:00</updated>
     <id>http://convolv.es/blog/2012/09/15/3d-modeling-robot-in-the-ruins</id>
     <content type="html"><![CDATA[<h3>Overview</h3>
 
@@ -208,7 +242,7 @@ various items between the islands as needed.</p>
   <entry>
     <title type="html"><![CDATA[3D Modeling and Rendering 1]]></title>
     <link href="http://convolv.es/blog/2012/09/07/3d-modeling-and-rendering-1/"/>
-    <updated>2012-09-07T23:20:00-05:00</updated>
+    <updated>2012-09-07T23:20:00+02:00</updated>
     <id>http://convolv.es/blog/2012/09/07/3d-modeling-and-rendering-1</id>
     <content type="html"><![CDATA[<p>I&#8217;ve started taking classes at ACC to learn some visual design skills and
 generally extend my knowledge of how games and other media are built.</p>
@@ -229,7 +263,7 @@ the past.</p>
   <entry>
     <title type="html"><![CDATA[Exciting new blog thing]]></title>
     <link href="http://convolv.es/blog/2012/05/07/exciting-new-blog-thing/"/>
-    <updated>2012-05-07T23:28:00-05:00</updated>
+    <updated>2012-05-07T23:28:00+02:00</updated>
     <id>http://convolv.es/blog/2012/05/07/exciting-new-blog-thing</id>
     <content type="html"><![CDATA[<p>&#8230;to replace what exactly? My LiveJournal from college&#8230;? I&#8217;ve never been great at maintaining any kind of journal / blog / whatever, but <a href="http://octopress.org">Octopress</a> just looks like so much fun, so I had to give it a shot. Tonight I finally ripped the default theme up a bit to create a more minimalist look, which I think turned out quite well.</p>
 
