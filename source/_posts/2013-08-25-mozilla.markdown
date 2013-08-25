@@ -22,7 +22,7 @@ Developer Tools team!
 I am currently in Paris ramping up with the team for two weeks.  After the first
 week, I am humbled to be able to say I am a part of this organization.  There
 are so many people smarter than me here, and I am thrilled to have the
-opportunity to work them.  I know we will accomplish great things together.
+opportunity to work with them.  I know we will accomplish great things together.
 
 There is so much potential in the web developer tools space.  Every developer
 has their own workflow, favorite set of frameworks and tools, and new platform
