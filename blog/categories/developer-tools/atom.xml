@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Developer Tools | J. Ryan Stinnett]]></title>
   <link href="http://convolv.es/blog/categories/developer-tools/atom.xml" rel="self"/>
   <link href="http://convolv.es/"/>
-  <updated>2013-08-25T02:50:22+02:00</updated>
+  <updated>2013-09-25T12:08:05-05:00</updated>
   <id>http://convolv.es/</id>
   <author>
     <name><![CDATA[J. Ryan Stinnett]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Mozilla]]></title>
     <link href="http://convolv.es/blog/2013/08/25/mozilla/"/>
-    <updated>2013-08-25T01:27:00+02:00</updated>
+    <updated>2013-08-25T01:27:00-05:00</updated>
     <id>http://convolv.es/blog/2013/08/25/mozilla</id>
     <content type="html"><![CDATA[<p>In my <a href="/blog/2013/02/17/into-the-open/">last post</a> (back in February...), I mentioned I was spending a lot of
 time on the side working on the developer tools in web browsers, particularly
