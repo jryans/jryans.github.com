@@ -4,19 +4,20 @@
   <title><![CDATA[J. Ryan Stinnett]]></title>
   <link href="http://convolv.es/atom.xml" rel="self"/>
   <link href="http://convolv.es/"/>
-  <updated>2013-09-25T12:08:05-05:00</updated>
+  <updated>2013-10-04T00:45:51-04:00</updated>
   <id>http://convolv.es/</id>
   <author>
     <name><![CDATA[J. Ryan Stinnett]]></name>
     
   </author>
+  <icon>http://convolv.es/favicon.ico</icon>
   <generator uri="http://octopress.org/">Octopress</generator>
 
   
   <entry>
     <title type="html"><![CDATA[Mozilla]]></title>
     <link href="http://convolv.es/blog/2013/08/25/mozilla/"/>
-    <updated>2013-08-25T01:27:00-05:00</updated>
+    <updated>2013-08-25T01:27:00-04:00</updated>
     <id>http://convolv.es/blog/2013/08/25/mozilla</id>
     <content type="html"><![CDATA[<p>In my <a href="http://convolv.es/blog/2013/02/17/into-the-open/">last post</a> (back in February&#8230;), I mentioned I was spending a lot of
 time on the side working on the developer tools in web browsers, particularly
@@ -50,7 +51,7 @@ tools that people don&#8217;t even know they need.</p>
   <entry>
     <title type="html"><![CDATA[Into the Open]]></title>
     <link href="http://convolv.es/blog/2013/02/17/into-the-open/"/>
-    <updated>2013-02-17T22:52:00-06:00</updated>
+    <updated>2013-02-17T22:52:00-05:00</updated>
     <id>http://convolv.es/blog/2013/02/17/into-the-open</id>
     <content type="html"><![CDATA[<p>I&#8217;m excited to start to focusing what time I do have on the side towards open
 source projects.  I&#8217;m always on the lookout for good projects to help out with,
@@ -81,7 +82,7 @@ an exciting time ahead!</p>
   <entry>
     <title type="html"><![CDATA[Materials, Maps, and Surfacing]]></title>
     <link href="http://convolv.es/blog/2012/10/06/materials/"/>
-    <updated>2012-10-06T15:13:00-05:00</updated>
+    <updated>2012-10-06T15:13:00-04:00</updated>
     <id>http://convolv.es/blog/2012/10/06/materials</id>
     <content type="html"><![CDATA[<h3>Overview</h3>
 
@@ -123,7 +124,7 @@ give a metallic appearance.</p>
   <entry>
     <title type="html"><![CDATA[Splines, Loft, and Lathe]]></title>
     <link href="http://convolv.es/blog/2012/09/29/splines/"/>
-    <updated>2012-09-29T08:17:00-05:00</updated>
+    <updated>2012-09-29T08:17:00-04:00</updated>
     <id>http://convolv.es/blog/2012/09/29/splines</id>
     <content type="html"><![CDATA[<h3>Overview</h3>
 
@@ -168,7 +169,7 @@ many ways you can customize and tune its behavior.</p>
   <entry>
     <title type="html"><![CDATA[Basic Game with Unity]]></title>
     <link href="http://convolv.es/blog/2012/09/22/basic-game-with-unity/"/>
-    <updated>2012-09-22T04:42:00-05:00</updated>
+    <updated>2012-09-22T04:42:00-04:00</updated>
     <id>http://convolv.es/blog/2012/09/22/basic-game-with-unity</id>
     <content type="html"><![CDATA[<h3>Overview</h3>
 
@@ -204,7 +205,7 @@ exciting to see something playable come together so quickly.</p>
   <entry>
     <title type="html"><![CDATA[3D Modeling: Robot in the Ruins]]></title>
     <link href="http://convolv.es/blog/2012/09/15/3d-modeling-robot-in-the-ruins/"/>
-    <updated>2012-09-15T05:43:00-05:00</updated>
+    <updated>2012-09-15T05:43:00-04:00</updated>
     <id>http://convolv.es/blog/2012/09/15/3d-modeling-robot-in-the-ruins</id>
     <content type="html"><![CDATA[<h3>Overview</h3>
 
@@ -242,7 +243,7 @@ various items between the islands as needed.</p>
   <entry>
     <title type="html"><![CDATA[3D Modeling and Rendering 1]]></title>
     <link href="http://convolv.es/blog/2012/09/07/3d-modeling-and-rendering-1/"/>
-    <updated>2012-09-07T23:20:00-05:00</updated>
+    <updated>2012-09-07T23:20:00-04:00</updated>
     <id>http://convolv.es/blog/2012/09/07/3d-modeling-and-rendering-1</id>
     <content type="html"><![CDATA[<p>I&#8217;ve started taking classes at ACC to learn some visual design skills and
 generally extend my knowledge of how games and other media are built.</p>
@@ -263,7 +264,7 @@ the past.</p>
   <entry>
     <title type="html"><![CDATA[Exciting new blog thing]]></title>
     <link href="http://convolv.es/blog/2012/05/07/exciting-new-blog-thing/"/>
-    <updated>2012-05-07T23:28:00-05:00</updated>
+    <updated>2012-05-07T23:28:00-04:00</updated>
     <id>http://convolv.es/blog/2012/05/07/exciting-new-blog-thing</id>
     <content type="html"><![CDATA[<p>&#8230;to replace what exactly? My LiveJournal from college&#8230;? I&#8217;ve never been great at maintaining any kind of journal / blog / whatever, but <a href="http://octopress.org">Octopress</a> just looks like so much fun, so I had to give it a shot. Tonight I finally ripped the default theme up a bit to create a more minimalist look, which I think turned out quite well.</p>
 
