@@ -13,6 +13,7 @@ layout: nil
     <name><![CDATA[{{ site.author | strip_html }}]]></name>
     {% if site.email %}<email><![CDATA[{{ site.email }}]]></email>{% endif %}
   </author>
+  <icon>https://secure.gravatar.com/avatar/da74cfd81f892e34f7e3926f2c56f908?s=32</icon>
   <generator uri="http://octopress.org/">Octopress</generator>
 
   {% for post in site.categories[page.category] limit: 5 %}
