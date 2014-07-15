@@ -4,7 +4,7 @@
   <title><![CDATA[J. Ryan Stinnett]]></title>
   <link href="http://convolv.es/atom.xml" rel="self"/>
   <link href="http://convolv.es/"/>
-  <updated>2013-10-06T12:28:12-04:00</updated>
+  <updated>2014-07-15T16:05:27-05:00</updated>
   <id>http://convolv.es/</id>
   <author>
     <name><![CDATA[J. Ryan Stinnett]]></name>
@@ -17,7 +17,7 @@
   <entry>
     <title type="html"><![CDATA[Mozilla]]></title>
     <link href="http://convolv.es/blog/2013/08/25/mozilla/"/>
-    <updated>2013-08-25T01:27:00-04:00</updated>
+    <updated>2013-08-25T01:27:00-05:00</updated>
     <id>http://convolv.es/blog/2013/08/25/mozilla</id>
     <content type="html"><![CDATA[<p>In my <a href="http://convolv.es/blog/2013/02/17/into-the-open/">last post</a> (back in February&#8230;), I mentioned I was spending a lot of
 time on the side working on the developer tools in web browsers, particularly
@@ -51,7 +51,7 @@ tools that people don&#8217;t even know they need.</p>
   <entry>
     <title type="html"><![CDATA[Into the Open]]></title>
     <link href="http://convolv.es/blog/2013/02/17/into-the-open/"/>
-    <updated>2013-02-17T22:52:00-05:00</updated>
+    <updated>2013-02-17T22:52:00-06:00</updated>
     <id>http://convolv.es/blog/2013/02/17/into-the-open</id>
     <content type="html"><![CDATA[<p>I&#8217;m excited to start to focusing what time I do have on the side towards open
 source projects.  I&#8217;m always on the lookout for good projects to help out with,
@@ -82,7 +82,7 @@ an exciting time ahead!</p>
   <entry>
     <title type="html"><![CDATA[Materials, Maps, and Surfacing]]></title>
     <link href="http://convolv.es/blog/2012/10/06/materials/"/>
-    <updated>2012-10-06T15:13:00-04:00</updated>
+    <updated>2012-10-06T15:13:00-05:00</updated>
     <id>http://convolv.es/blog/2012/10/06/materials</id>
     <content type="html"><![CDATA[<h3>Overview</h3>
 
@@ -103,8 +103,6 @@ a rustic feel.  The door particularly look much more believable now.  Also, the
 islands look much less like strange brains now there&#8217;s a grassy appearance
 applied, instead of just the flat green.</p>
 
-<p><img src="http://convolv.es/images/posts/env-mat.png" alt="Env 1" /></p>
-
 <h3>Robot</h3>
 
 <p>For the robot, I gave him a weathered, rusty metal appearance that seems to tie
@@ -116,15 +114,13 @@ the transparency.</p>
 
 <p>It was fun to experiment with the various parameters and material types that can
 give a metallic appearance.</p>
-
-<p><img src="http://convolv.es/images/posts/robot-mat.png" alt="Robot 1" /></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Splines, Loft, and Lathe]]></title>
     <link href="http://convolv.es/blog/2012/09/29/splines/"/>
-    <updated>2012-09-29T08:17:00-04:00</updated>
+    <updated>2012-09-29T08:17:00-05:00</updated>
     <id>http://convolv.es/blog/2012/09/29/splines</id>
     <content type="html"><![CDATA[<h3>Overview</h3>
 
@@ -140,10 +136,6 @@ models.  Below you can see the island huts from before, but with a few
 additional decorations, such as some scary wiring / branches, as well as door
 knobs and roof ornaments.</p>
 
-<p><img src="http://convolv.es/images/posts/env-ss1.png" alt="Env 1" />
-<img src="http://convolv.es/images/posts/env-ss2.png" alt="Env 2" />
-<img src="http://convolv.es/images/posts/env-ss3.png" alt="Env 3" /></p>
-
 <h3>Lathe and Loft</h3>
 
 <p>We also learned how to take 2D paths and morph them into 3D shapes in several
@@ -152,24 +144,18 @@ to a torus.</p>
 
 <p>I used this technique to create a pot, an inflatable pool, and a spyglass.</p>
 
-<p><img src="http://convolv.es/images/posts/lathe.png" alt="Lathe" /></p>
-
 <p>We also learned about loft, which will take a shape and replicate it in 3D
 across whatever path you define.  This is another very powerful feature, with
 many ways you can customize and tune its behavior.</p>
 
 <p>I made several tracks and other shapes using this process:</p>
-
-<p><img src="http://convolv.es/images/posts/loft1.png" alt="Loft 1" />
-<img src="http://convolv.es/images/posts/loft2.png" alt="Loft 2" />
-<img src="http://convolv.es/images/posts/loft3.png" alt="Loft 3" /></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Basic Game with Unity]]></title>
     <link href="http://convolv.es/blog/2012/09/22/basic-game-with-unity/"/>
-    <updated>2012-09-22T04:42:00-04:00</updated>
+    <updated>2012-09-22T04:42:00-05:00</updated>
     <id>http://convolv.es/blog/2012/09/22/basic-game-with-unity</id>
     <content type="html"><![CDATA[<h3>Overview</h3>
 
@@ -197,15 +183,13 @@ represent them accurately.</p>
 
 <p>There&#8217;s definitely room for improvement along many aspects, but it&#8217;s really
 exciting to see something playable come together so quickly.</p>
-
-<p><img src="http://convolv.es/images/posts/level1.png" alt="Level 1" /></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[3D Modeling: Robot in the Ruins]]></title>
     <link href="http://convolv.es/blog/2012/09/15/3d-modeling-robot-in-the-ruins/"/>
-    <updated>2012-09-15T05:43:00-04:00</updated>
+    <updated>2012-09-15T05:43:00-05:00</updated>
     <id>http://convolv.es/blog/2012/09/15/3d-modeling-robot-in-the-ruins</id>
     <content type="html"><![CDATA[<h3>Overview</h3>
 
@@ -221,10 +205,6 @@ since you have to think of clever ways to build what want from just a few
 shapes. With two shapes and a few filters, I arrived at a convincing version of
 propeller blades.</p>
 
-<p><img src="http://convolv.es/images/posts/robot1.png" alt="Robot 1" />
-<img src="http://convolv.es/images/posts/robot2.png" alt="Robot 2" />
-<img src="http://convolv.es/images/posts/robot3.png" alt="Robot 3" /></p>
-
 <h3>Environment</h3>
 
 <p>For the environment, we had a budget of 10,000 polygons. I thought it would be
@@ -233,17 +213,13 @@ water quickly eats up a lot of polygons!</p>
 
 <p>My thoughts here were that several of the robots might be used to transport
 various items between the islands as needed.</p>
-
-<p><img src="http://convolv.es/images/posts/env1.png" alt="Environment 1" />
-<img src="http://convolv.es/images/posts/env2.png" alt="Environment 2" />
-<img src="http://convolv.es/images/posts/env3.png" alt="Environment 3" /></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[3D Modeling and Rendering 1]]></title>
     <link href="http://convolv.es/blog/2012/09/07/3d-modeling-and-rendering-1/"/>
-    <updated>2012-09-07T23:20:00-04:00</updated>
+    <updated>2012-09-07T23:20:00-05:00</updated>
     <id>http://convolv.es/blog/2012/09/07/3d-modeling-and-rendering-1</id>
     <content type="html"><![CDATA[<p>I&#8217;ve started taking classes at ACC to learn some visual design skills and
 generally extend my knowledge of how games and other media are built.</p>
@@ -264,7 +240,7 @@ the past.</p>
   <entry>
     <title type="html"><![CDATA[Exciting new blog thing]]></title>
     <link href="http://convolv.es/blog/2012/05/07/exciting-new-blog-thing/"/>
-    <updated>2012-05-07T23:28:00-04:00</updated>
+    <updated>2012-05-07T23:28:00-05:00</updated>
     <id>http://convolv.es/blog/2012/05/07/exciting-new-blog-thing</id>
     <content type="html"><![CDATA[<p>&#8230;to replace what exactly? My LiveJournal from college&#8230;? I&#8217;ve never been great at maintaining any kind of journal / blog / whatever, but <a href="http://octopress.org">Octopress</a> just looks like so much fun, so I had to give it a shot. Tonight I finally ripped the default theme up a bit to create a more minimalist look, which I think turned out quite well.</p>
 
