@@ -33,9 +33,5 @@ represent them accurately.
 There's definitely room for improvement along many aspects, but it's really
 exciting to see something playable come together so quickly.
 
-![Level 1][level1]
-
-
 [a2]: http://viscom3d.blogspot.com/2012/09/unity-101.html
-[level1]: /images/posts/level1.png
 

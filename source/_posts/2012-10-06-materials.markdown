@@ -25,8 +25,6 @@ a rustic feel.  The door particularly look much more believable now.  Also, the
 islands look much less like strange brains now there's a grassy appearance
 applied, instead of just the flat green.
 
-![Env 1][env]
-
 ### Robot
 
 For the robot, I gave him a weathered, rusty metal appearance that seems to tie
@@ -39,8 +37,4 @@ the transparency.
 It was fun to experiment with the various parameters and material types that can
 give a metallic appearance.
 
-![Robot 1][robot]
-
 [a4]: http://viscom3d.blogspot.com/2012/09/materials-maps-and-surfacing.html
-[env]: /images/posts/env-mat.png
-[robot]: /images/posts/robot-mat.png

@@ -20,10 +20,6 @@ models.  Below you can see the island huts from before, but with a few
 additional decorations, such as some scary wiring / branches, as well as door
 knobs and roof ornaments.
 
-![Env 1][env-ss1]
-![Env 2][env-ss2]
-![Env 3][env-ss3]
-
 ### Lathe and Loft
 
 We also learned how to take 2D paths and morph them into 3D shapes in several
@@ -32,23 +28,10 @@ to a torus.
 
 I used this technique to create a pot, an inflatable pool, and a spyglass.
 
-![Lathe][lathe]
-
 We also learned about loft, which will take a shape and replicate it in 3D
 across whatever path you define.  This is another very powerful feature, with
 many ways you can customize and tune its behavior.
 
 I made several tracks and other shapes using this process:
 
-![Loft 1][loft1]
-![Loft 2][loft2]
-![Loft 3][loft3]
-
 [a3]: http://viscom3d.blogspot.com/2012/09/spline-modeling-and-compound-objects.html
-[env-ss1]: /images/posts/env-ss1.png
-[env-ss2]: /images/posts/env-ss2.png
-[env-ss3]: /images/posts/env-ss3.png
-[lathe]: /images/posts/lathe.png
-[loft1]: /images/posts/loft1.png
-[loft2]: /images/posts/loft2.png
-[loft3]: /images/posts/loft3.png
