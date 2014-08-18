@@ -4,7 +4,7 @@
   <title><![CDATA[J. Ryan Stinnett]]></title>
   <link href="http://convolv.es/atom.xml" rel="self"/>
   <link href="http://convolv.es/"/>
-  <updated>2014-08-18T12:56:00-05:00</updated>
+  <updated>2014-08-18T13:02:23-05:00</updated>
   <id>http://convolv.es/</id>
   <author>
     <name><![CDATA[J. Ryan Stinnett]]></name>
@@ -22,6 +22,9 @@
     <content type="html"><![CDATA[<p>I am excited to announce that <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> is now enabled by default in Nightly
 (Firefox 34)!  Everyone on the App Tools team has been working hard to polish
 this new tool that we originally <a href="https://hacks.mozilla.org/2014/06/webide-lands-in-nightly/">announced</a> back in June.</p>
+
+<iframe src="http://convolv.es//www.youtube-nocookie.com/embed/n8c34wk4OnY?rel=0" allowfullscreen="" frameborder="0" height="315" width="560"></iframe>
+
 
 <h2>Features</h2>
 
@@ -57,6 +60,8 @@ DevTools</li>
 </li>
 </ul>
 
+
+<p><img src="https://thefiletree.com/jan/shots/monitor/monitor.png"/></p>
 
 <h2>Transition</h2>
 
