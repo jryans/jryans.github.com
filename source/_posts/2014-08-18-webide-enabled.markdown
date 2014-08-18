@@ -32,7 +32,7 @@ All projects you may have created previously in the App Manager are also
 available in WebIDE.
 
 While the App Manager is now hidden, it's accessible for now at
-`about:app-manager`.  We do intend to remove it entirely in the near future, so
+`about:app-manager`.  We do intend to remove it entirely in the future, so
 it's best to start using WebIDE today.  If you find any issues, please [file bugs][3]!
 
 ## What's Next
