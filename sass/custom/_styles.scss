@@ -21,12 +21,4 @@ body > footer {
 #disqus_thread {
   color: $sidebar-color;
   font-family: $sans;
-  a {
-    color: inherit;
-    @include transition(color .5s);
-  }
-  &:hover a {
-    color: $sidebar-link-color;
-    &:hover { color: $sidebar-link-color-hover; }
-  }
 }

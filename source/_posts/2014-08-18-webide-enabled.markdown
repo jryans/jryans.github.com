@@ -10,6 +10,8 @@ I am excited to announce that [WebIDE][1] is now enabled by default in Nightly
 (Firefox 34)!  Everyone on the App Tools team has been working hard to polish
 this new tool that we originally [announced][2] back in June.
 
+<iframe src="//www.youtube-nocookie.com/embed/n8c34wk4OnY?rel=0" allowfullscreen="" frameborder="0" height="315" width="560"></iframe>
+
 ## Features
 
 While the previous App Manager tool was great, that tool's UX held us
@@ -25,6 +27,8 @@ we've already been able to add:
     DevTools
 * [Monitor][4]
   * Live memory graphs help diagnose performance issues
+
+<img src="https://thefiletree.com/jan/shots/monitor/monitor.png"/>
 
 ## Transition
 
