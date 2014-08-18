@@ -59,9 +59,9 @@ default_asides: [custom/asides/about.html, custom/asides/categories.html, asides
 
 # Github repositories
 github_user: jryans
-github_repo_count: 0
+github_repo_count: 10
 github_show_profile_link: true
-github_skip_forks: true
+github_skip_forks: false
 
 # Twitter
 twitter_user: jryans
