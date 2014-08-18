@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Open Source | J. Ryan Stinnett]]></title>
   <link href="http://convolv.es/blog/categories/open-source/atom.xml" rel="self"/>
   <link href="http://convolv.es/"/>
-  <updated>2014-08-18T10:43:57-05:00</updated>
+  <updated>2014-08-18T12:49:19-05:00</updated>
   <id>http://convolv.es/</id>
   <author>
     <name><![CDATA[J. Ryan Stinnett]]></name>
@@ -13,6 +13,75 @@
   <icon>https://secure.gravatar.com/avatar/da74cfd81f892e34f7e3926f2c56f908?s=32</icon>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[WebIDE enabled in Nightly]]></title>
+    <link href="http://convolv.es/blog/2014/08/18/webide-enabled/"/>
+    <updated>2014-08-18T10:44:00-05:00</updated>
+    <id>http://convolv.es/blog/2014/08/18/webide-enabled</id>
+    <content type="html"><![CDATA[<p>I am excited to announce that <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> is now enabled by default in Nightly
+(Firefox 34)!  Everyone on the App Tools team has been working hard to polish
+this new tool that we originally <a href="https://hacks.mozilla.org/2014/06/webide-lands-in-nightly/">announced</a> back in June.</p>
+
+<h2>Features</h2>
+
+<p>While the previous App Manager tool was great, that tool's UX held us
+back when trying support more complex workflows.  With the redesign into WebIDE,
+we've already been able to add:</p>
+
+<ul>
+<li>Project Editing
+
+<ul>
+<li>Great for getting started without worrying about an external editor</li>
+</ul>
+</li>
+<li>Project Templates
+
+<ul>
+<li>Easy to focus on content from the start by using a template</li>
+</ul>
+</li>
+<li>Improved DevTools Toolbox integration
+
+<ul>
+<li>Many UX issues arose from the non-standard way that App Manager used the
+DevTools</li>
+</ul>
+</li>
+<li><a href="https://developer.mozilla.org/docs/Tools/WebIDE/Monitor">Monitor</a>
+
+<ul>
+<li>Live memory graphs help diagnose performance issues</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Transition</h2>
+
+<p>All projects you may have created previously in the App Manager are also
+available in WebIDE.</p>
+
+<p>While the App Manager is now hidden, it's accessible for now at
+<code>about:app-manager</code>.  We do intend to remove it entirely in the near future, so
+it's best to start using WebIDE today.  If you find any issues, please <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a>!</p>
+
+<h2>What's Next</h2>
+
+<p>Looking ahead, we have many more exciting things planned for WebIDE, such as:</p>
+
+<ul>
+<li>Command line integration</li>
+<li>Improved support for app frameworks like Cordova</li>
+<li>Validation that matches the Firefox Marketplace</li>
+</ul>
+
+
+<p>If there are features you'd like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
+team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">various channels</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Mozilla]]></title>
