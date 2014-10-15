@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mozilla | J. Ryan Stinnett]]></title>
   <link href="http://convolv.es/blog/categories/mozilla/atom.xml" rel="self"/>
   <link href="http://convolv.es/"/>
-  <updated>2014-10-06T09:06:50-05:00</updated>
+  <updated>2014-10-14T19:09:49-05:00</updated>
   <id>http://convolv.es/</id>
   <author>
     <name><![CDATA[J. Ryan Stinnett]]></name>
@@ -13,6 +13,46 @@
   <icon>https://secure.gravatar.com/avatar/da74cfd81f892e34f7e3926f2c56f908?s=32</icon>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[DevTools for Firefox OS browser tabs]]></title>
+    <link href="http://convolv.es/blog/2014/10/14/debug-fxos-tabs/"/>
+    <updated>2014-10-14T13:29:00-05:00</updated>
+    <id>http://convolv.es/blog/2014/10/14/debug-fxos-tabs</id>
+    <content type="html"><![CDATA[<p>We've had various tools for inspecting apps on remote devices for some time now,
+but for a long time we've not had the same support for remote browser tabs.</p>
+
+<p>To remedy this, <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> now supports inspecting browser tabs running on Firefox OS devices.</p>
+
+<p><img src="/images/posts/webide-tab.png" alt="Inspecting a tab in WebIDE" /></p>
+
+<p>A few weeks back, WebIDE gained support for <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1009604">inspecting tabs</a> on the remote
+device, but many of the likely suspects to connect to weren't quite ready for
+various reasons.</p>
+
+<p>We've just <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=975084">landed</a> the necessary server-side bits for Firefox OS, so you
+should be able try this out by updating your device to the next nightly build
+after 2014-10-14.</p>
+
+<h2>How to Use</h2>
+
+<p>After connecting to your device in WebIDE, any open browser tabs will appear at
+the bottom of WebIDE's project list.</p>
+
+<p><img src="/images/posts/webide-tab-list.png" alt="Browser tab list in WebIDE" /></p>
+
+<p>The toolbox should open automatically after choosing a tab.  You can also toggle
+the toolbox via the "Pause" icon in the top toolbar.</p>
+
+<h2>What's Next</h2>
+
+<p>We're planning to make this work for Firefox for Android as well.  Much of
+that work is already done, so I am hopeful that it will be available soon.</p>
+
+<p>If there are features you'd like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
+team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">various channels</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[WebIDE enabled in Nightly]]></title>
