@@ -3,7 +3,7 @@ layout: post
 title: "DevTools for Firefox OS browser tabs"
 date: 2014-10-14 13:29
 comments: true
-categories: [Open Source, Mozilla, Developer Tools]
+categories: [Open Source, Mozilla, Developer Tools, Firefox OS]
 ---
 
 We've had various tools for inspecting apps on remote devices for some time now,

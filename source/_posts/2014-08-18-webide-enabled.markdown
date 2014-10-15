@@ -3,7 +3,7 @@ layout: post
 title: "WebIDE enabled in Nightly"
 date: 2014-08-18 10:44
 comments: true
-categories: [Open Source, Mozilla, Developer Tools]
+categories: [Open Source, Mozilla, Developer Tools, Firefox OS]
 ---
 
 I am excited to announce that [WebIDE][1] is now enabled by default in Nightly
