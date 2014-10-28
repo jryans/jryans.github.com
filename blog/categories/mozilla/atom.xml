@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mozilla | J. Ryan Stinnett]]></title>
   <link href="http://convolv.es/blog/categories/mozilla/atom.xml" rel="self"/>
   <link href="http://convolv.es/"/>
-  <updated>2014-10-28T16:16:21-05:00</updated>
+  <updated>2014-10-28T18:20:44-05:00</updated>
   <id>http://convolv.es/</id>
   <author>
     <name><![CDATA[J. Ryan Stinnett]]></name>
@@ -59,7 +59,7 @@ instead of a specific tab, you can do that with the "Main Process" option.</p>
 
 <h2>What's Next</h2>
 
-<p>We have even more connection UX improvements on the way, so I'll hope have more
+<p>We have even more connection UX improvements on the way, so I hope to have more
 to share soon!</p>
 
 <p>If there are features you'd like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
