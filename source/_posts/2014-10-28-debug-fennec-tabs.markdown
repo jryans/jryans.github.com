@@ -43,7 +43,7 @@ instead of a specific tab, you can do that with the "Main Process" option.
 
 ## What's Next
 
-We have even more connection UX improvements on the way, so I'll hope have more
+We have even more connection UX improvements on the way, so I hope to have more
 to share soon!
 
 If there are features you'd like to see added, [file bugs][bugs] or contact the
