@@ -9,8 +9,8 @@
   <meta name="author" content="J. Ryan Stinnett">
 
   
-  <meta name="description" content="We&#8217;ve had various tools for inspecting apps on remote devices for some time now,
-but for a long time we&#8217;ve not had the same support for &hellip;">
+  <meta name="description" content="For quite a while, it has been possible to debug tabs on Firefox for Android
+devices, but there were many steps involved, including manual port &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -76,6 +76,86 @@ but for a long time we&#8217;ve not had the same support for &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/28/debug-fennec-tabs/">Debugging Tabs With Firefox for Android</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-28T16:08:00-05:00" pubdate data-updated="true">Oct 28<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>For quite a while, it has been possible to debug tabs on Firefox for Android
+devices, but there were many steps involved, including manual port forwarding
+from the terminal.</p>
+
+<p>As I <a href="/blog/2014/10/14/debug-fxos-tabs/">hinted</a> a few weeks ago, <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> would soon support connecting
+to Firefox for Android via ADB Helper support, and that time is now!</p>
+
+<h2>How to Use</h2>
+
+<p>You&#8217;ll need to assemble the following bits and bobs:</p>
+
+<ul>
+<li>Firefox 36 (2014-10-25 or later)</li>
+<li>ADB Helper 0.7.0 or later</li>
+<li>Firefox for Android 35 or later</li>
+</ul>
+
+
+<p>Opening WebIDE for the first time should install ADB Helper if you don&#8217;t already
+have it, but double-check it is the right version in the add-on manager.</p>
+
+<p><img src="/images/posts/fennec-usb-runtime.png" alt="Firefox for Android runtime appears" /></p>
+
+<p>Inside WebIDE, you&#8217;ll see an entry for Firefox for Android in the Runtime menu.</p>
+
+<p><img src="/images/posts/fennec-tab-list.png" alt="Firefox for Android tab list" /></p>
+
+<p>Once you select the runtime, tabs from Firefox for Android will be available in
+the (now poorly labelled) apps menu on the left.</p>
+
+<p><img src="/images/posts/fennec-tab-toolbox.png" alt="Inspecting a tab in WebIDE" /></p>
+
+<p>Choosing a tab will open up the DevTools toolbox for that tab.  You can also
+toggle the toolbox via the &#8220;Pause&#8221; icon in the top toolbar.</p>
+
+<p>If you would like to debug Firefox for Android&#8217;s system-level / chrome code,
+instead of a specific tab, you can do that with the &#8220;Main Process&#8221; option.</p>
+
+<h2>What&#8217;s Next</h2>
+
+<p>We have even more connection UX improvements on the way, so I&#8217;ll hope have more
+to share soon!</p>
+
+<p>If there are features you&#8217;d like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
+team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">various channels</a>.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -657,47 +737,9 @@ the past.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/05/07/exciting-new-blog-thing/">Exciting New Blog Thing</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-07T23:28:00-05:00" pubdate data-updated="true">May 7<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>&#8230;to replace what exactly? My LiveJournal from college&#8230;? I&#8217;ve never been great at maintaining any kind of journal / blog / whatever, but <a href="http://octopress.org">Octopress</a> just looks like so much fun, so I had to give it a shot. Tonight I finally ripped the default theme up a bit to create a more minimalist look, which I think turned out quite well.</p>
-
-<p>I&#8217;m hoping to start talking about all the crazy tech projects I&#8217;ve got brewing in my mind that I&#8217;ll one day sit down and make progress on, along with a few bits of life, work, and everything else mixed in.</p>
-
-<p>Even writing this tiny thing is more than I&#8217;ve done in ages. Any guesses how long until the next one?</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -732,13 +774,17 @@ the past.</p>
   <h1>Categories</h1>
   <ul>
     <li>
-      <a class='category' href='/blog/categories/developer-tools/'>Developer Tools</a>, <a class='category' href='/blog/categories/education/'>Education</a>, <a class='category' href='/blog/categories/firefox-os/'>Firefox OS</a>, <a class='category' href='/blog/categories/mozilla/'>Mozilla</a>, <a class='category' href='/blog/categories/open-source/'>Open Source</a>
+      <a class='category' href='/blog/categories/developer-tools/'>Developer Tools</a>, <a class='category' href='/blog/categories/education/'>Education</a>, <a class='category' href='/blog/categories/firefox-os/'>Firefox OS</a>, <a class='category' href='/blog/categories/firefox-for-android/'>Firefox for Android</a>, <a class='category' href='/blog/categories/mozilla/'>Mozilla</a>, <a class='category' href='/blog/categories/open-source/'>Open Source</a>
     </li>
   </ul>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/10/28/debug-fennec-tabs/">Debugging Tabs with Firefox for Android</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/10/14/debug-fxos-tabs/">DevTools for Firefox OS browser tabs</a>
@@ -754,10 +800,6 @@ the past.</p>
     
       <li class="post">
         <a href="/blog/2013/02/17/into-the-open/">Into the Open</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/10/06/materials/">Materials, Maps, and Surfacing</a>
       </li>
     
   </ul>

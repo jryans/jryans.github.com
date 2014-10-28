@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>WebIDE enabled in Nightly - J. Ryan Stinnett</title>
+  <title>Debugging Tabs with Firefox for Android - J. Ryan Stinnett</title>
   <meta name="author" content="J. Ryan Stinnett">
 
   
-  <meta name="description" content="I am excited to announce that WebIDE is now enabled by default in Nightly
-(Firefox 34)! Everyone on the App Tools team has been working hard to &hellip;">
+  <meta name="description" content="For quite a while, it has been possible to debug tabs on Firefox for Android
+devices, but there were many steps involved, including manual port &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://convolv.es/blog/2014/08/18/webide-enabled">
+  <link rel="canonical" href="http://convolv.es/blog/2014/10/28/debug-fennec-tabs">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="/javascripts/ender.js"></script>
@@ -79,7 +79,7 @@
   
   <header>
     
-      <h1 class="entry-title">WebIDE Enabled in Nightly</h1>
+      <h1 class="entry-title">Debugging Tabs With Firefox for Android</h1>
     
     
       <p class="meta">
@@ -95,76 +95,55 @@
   
 
 
-<time datetime="2014-08-18T10:44:00-05:00" pubdate data-updated="true">Aug 18<span>th</span>, 2014</time>
+<time datetime="2014-10-28T16:08:00-05:00" pubdate data-updated="true">Oct 28<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>I am excited to announce that <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> is now enabled by default in Nightly
-(Firefox 34)!  Everyone on the App Tools team has been working hard to polish
-this new tool that we originally <a href="https://hacks.mozilla.org/2014/06/webide-lands-in-nightly/">announced</a> back in June.</p>
+<div class="entry-content"><p>For quite a while, it has been possible to debug tabs on Firefox for Android
+devices, but there were many steps involved, including manual port forwarding
+from the terminal.</p>
 
-<iframe src="//www.youtube-nocookie.com/embed/n8c34wk4OnY?rel=0" allowfullscreen="" frameborder="0" height="315" width="560"></iframe>
+<p>As I <a href="/blog/2014/10/14/debug-fxos-tabs/">hinted</a> a few weeks ago, <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> would soon support connecting
+to Firefox for Android via ADB Helper support, and that time is now!</p>
 
+<h2>How to Use</h2>
 
-<h2>Features</h2>
-
-<p>While the previous App Manager tool was great, that tool&#8217;s UX held us
-back when trying support more complex workflows.  With the redesign into WebIDE,
-we&#8217;ve already been able to add:</p>
+<p>You&#8217;ll need to assemble the following bits and bobs:</p>
 
 <ul>
-<li>Project Editing
-
-<ul>
-<li>Great for getting started without worrying about an external editor</li>
-</ul>
-</li>
-<li>Project Templates
-
-<ul>
-<li>Easy to focus on content from the start by using a template</li>
-</ul>
-</li>
-<li>Improved DevTools Toolbox integration
-
-<ul>
-<li>Many UX issues arose from the non-standard way that App Manager used the
-DevTools</li>
-</ul>
-</li>
-<li><a href="https://developer.mozilla.org/docs/Tools/WebIDE/Monitor">Monitor</a>
-
-<ul>
-<li>Live memory graphs help diagnose performance issues</li>
-</ul>
-</li>
+<li>Firefox 36 (2014-10-25 or later)</li>
+<li>ADB Helper 0.7.0 or later</li>
+<li>Firefox for Android 35 or later</li>
 </ul>
 
 
-<p><img src="https://thefiletree.com/jan/shots/monitor/monitor.png"/></p>
+<p>Opening WebIDE for the first time should install ADB Helper if you don&#8217;t already
+have it, but double-check it is the right version in the add-on manager.</p>
 
-<h2>Transition</h2>
+<p><img src="/images/posts/fennec-usb-runtime.png" alt="Firefox for Android runtime appears" /></p>
 
-<p>All projects you may have created previously in the App Manager are also
-available in WebIDE.</p>
+<p>Inside WebIDE, you&#8217;ll see an entry for Firefox for Android in the Runtime menu.</p>
 
-<p>While the App Manager is now hidden, it&#8217;s accessible for now at
-<code>about:app-manager</code>.  We do intend to remove it entirely in the future, so
-it&#8217;s best to start using WebIDE today.  If you find any issues, please <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a>!</p>
+<p><img src="/images/posts/fennec-tab-list.png" alt="Firefox for Android tab list" /></p>
+
+<p>Once you select the runtime, tabs from Firefox for Android will be available in
+the (now poorly labelled) apps menu on the left.</p>
+
+<p><img src="/images/posts/fennec-tab-toolbox.png" alt="Inspecting a tab in WebIDE" /></p>
+
+<p>Choosing a tab will open up the DevTools toolbox for that tab.  You can also
+toggle the toolbox via the &#8220;Pause&#8221; icon in the top toolbar.</p>
+
+<p>If you would like to debug Firefox for Android&#8217;s system-level / chrome code,
+instead of a specific tab, you can do that with the &#8220;Main Process&#8221; option.</p>
 
 <h2>What&#8217;s Next</h2>
 
-<p>Looking ahead, we have many more exciting things planned for WebIDE, such as:</p>
-
-<ul>
-<li>Command line integration</li>
-<li>Improved support for app frameworks like Cordova</li>
-<li>Validation that matches the Firefox Marketplace</li>
-</ul>
-
+<p>We have even more connection UX improvements on the way, so I&#8217;ll hope have more
+to share soon!</p>
 
 <p>If there are features you&#8217;d like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
 team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">various channels</a>.</p>
@@ -190,12 +169,12 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
   
 
 
-<time datetime="2014-08-18T10:44:00-05:00" pubdate data-updated="true">Aug 18<span>th</span>, 2014</time>
+<time datetime="2014-10-28T16:08:00-05:00" pubdate data-updated="true">Oct 28<span>th</span>, 2014</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/developer-tools/'>Developer Tools</a>, <a class='category' href='/blog/categories/firefox-os/'>Firefox OS</a>, <a class='category' href='/blog/categories/mozilla/'>Mozilla</a>, <a class='category' href='/blog/categories/open-source/'>Open Source</a>
+    <a class='category' href='/blog/categories/developer-tools/'>Developer Tools</a>, <a class='category' href='/blog/categories/firefox-for-android/'>Firefox for Android</a>, <a class='category' href='/blog/categories/mozilla/'>Mozilla</a>, <a class='category' href='/blog/categories/open-source/'>Open Source</a>
   
 </span>
 
@@ -204,7 +183,7 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://convolv.es/blog/2014/08/18/webide-enabled/" data-via="jryans" data-counturl="http://convolv.es/blog/2014/08/18/webide-enabled/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://convolv.es/blog/2014/10/28/debug-fennec-tabs/" data-via="jryans" data-counturl="http://convolv.es/blog/2014/10/28/debug-fennec-tabs/" >Tweet</a>
   
   
   
@@ -213,10 +192,8 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/08/25/mozilla/" title="Previous Post: Mozilla">&laquo; Mozilla</a>
+        <a class="basic-alignment left" href="/blog/2014/10/14/debug-fxos-tabs/" title="Previous Post: DevTools for Firefox OS browser tabs">&laquo; DevTools for Firefox OS browser tabs</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/10/14/debug-fxos-tabs/" title="Next Post: DevTools for Firefox OS browser tabs">DevTools for Firefox OS browser tabs &raquo;</a>
       
     </p>
   </footer>
@@ -355,8 +332,8 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://convolv.es/blog/2014/08/18/webide-enabled/';
-        var disqus_url = 'http://convolv.es/blog/2014/08/18/webide-enabled/';
+        var disqus_identifier = 'http://convolv.es/blog/2014/10/28/debug-fennec-tabs/';
+        var disqus_url = 'http://convolv.es/blog/2014/10/28/debug-fennec-tabs/';
         var disqus_script = 'embed.js';
       
     (function () {
