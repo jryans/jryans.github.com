@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Firefox OS | J. Ryan Stinnett]]></title>
   <link href="http://convolv.es/blog/categories/firefox-os/atom.xml" rel="self"/>
   <link href="http://convolv.es/"/>
-  <updated>2015-03-27T12:07:34-05:00</updated>
+  <updated>2015-03-27T12:22:00-05:00</updated>
   <id>http://convolv.es/</id>
   <author>
     <name><![CDATA[J. Ryan Stinnett]]></name>
@@ -104,8 +104,8 @@ it on the Flame and Nexus 4.</p>
 
 <h2>Known Issues</h2>
 
-<p>The QR code scanner can be a bit frustrating at the moment, as the real devices
-appear to be capture a very low resolution picture.  <a href="https://bugzil.la/1145772">Bug 1145772</a> aims
+<p>The QR code scanner can be a bit frustrating at the moment, as real devices
+appear to capture a very low resolution picture.  <a href="https://bugzil.la/1145772">Bug 1145772</a> aims
 to improve this soon.  You should be able to scan with the Flame by trying a few
 different orientations.  I would suggest using "Scan and Remember", so that
 scanning is only needed for the first connection.</p>
