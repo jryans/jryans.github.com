@@ -78,8 +78,8 @@ it on the Flame and Nexus 4.
 
 ## Known Issues
 
-The QR code scanner can be a bit frustrating at the moment, as the real devices
-appear to be capture a very low resolution picture.  [Bug 1145772][low-res] aims
+The QR code scanner can be a bit frustrating at the moment, as real devices
+appear to capture a very low resolution picture.  [Bug 1145772][low-res] aims
 to improve this soon.  You should be able to scan with the Flame by trying a few
 different orientations.  I would suggest using "Scan and Remember", so that
 scanning is only needed for the first connection.
