@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Open Source | J. Ryan Stinnett]]></title>
   <link href="http://convolv.es/blog/categories/open-source/atom.xml" rel="self"/>
   <link href="http://convolv.es/"/>
-  <updated>2015-01-05T11:24:56-06:00</updated>
+  <updated>2015-03-27T12:07:34-05:00</updated>
   <id>http://convolv.es/</id>
   <author>
     <name><![CDATA[J. Ryan Stinnett]]></name>
@@ -13,6 +13,137 @@
   <icon>https://secure.gravatar.com/avatar/da74cfd81f892e34f7e3926f2c56f908?s=32</icon>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[WiFi Debugging for Firefox OS]]></title>
+    <link href="http://convolv.es/blog/2015/03/25/wifi-debug-fxos/"/>
+    <updated>2015-03-25T08:51:00-05:00</updated>
+    <id>http://convolv.es/blog/2015/03/25/wifi-debug-fxos</id>
+    <content type="html"><![CDATA[<p>I am excited to announce that we're now shipping WiFi debugging for Firefox OS!
+It's available in <a href="https://developer.mozilla.org/en-US/Firefox_OS/Building">Firefox OS 3.0 / master</a> with <a href="https://nightly.mozilla.org/">Firefox Nightly</a> on desktop.</p>
+
+<p>WiFi debugging allows <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> to connect to your Firefox OS device via your local
+WiFi network instead of a USB cable.</p>
+
+<p>The connection experience is generally more straightforward (especially after
+connecting to a device the first time) than with USB and also more convenient to
+use since you're no longer tied down by a cable.</p>
+
+<h2>Security</h2>
+
+<p>A large portion of this project has gone towards making the debugging
+connection secure, so that you can use it safely on shared network, such as an
+office or coffee shop.</p>
+
+<p>We use TLS for encryption and authentication.  The computer and device both
+create self-signed certificates.  When you connect, a QR code is scanned to
+verify that the certificates can be trusted.  During the connection process, you
+can choose to remember this information and connect immediately in the future if
+desired.</p>
+
+<h2>How to Use</h2>
+
+<p>You'll need to assemble the following bits and bobs:</p>
+
+<ul>
+<li><a href="https://nightly.mozilla.org/">Firefox 39</a> (2015-03-27 or later)</li>
+<li>Firefox OS 3.0 (2015-03-27 or later)
+
+<ul>
+<li>Option A: <a href="https://developer.mozilla.org/en-US/Firefox_OS/Phone_guide/Flame/Updating_your_Flame#Updating_your_Flame_to_a_nightly_build">Update your Flame</a> to 3.0 / master</li>
+<li>Option B: <a href="https://developer.mozilla.org/en-US/Firefox_OS/Building">Build for your device</a> from source</li>
+</ul>
+</li>
+</ul>
+
+
+<p>On Firefox OS, enable WiFi debugging:</p>
+
+<ol>
+<li>Go to Developer Settings on device (Settings -> Developer)</li>
+<li>Enable DevTools via Wi-Fi</li>
+<li>Edit the device name if desired</li>
+</ol>
+
+
+<p><img src="/images/posts/fxos-wifi-opts.png" alt="Firefox OS WiFi Debugging Options" /></p>
+
+<p>To connect from Firefox Desktop:</p>
+
+<ol>
+<li>Open WebIDE in Firefox Nightly (Tools -> Web Developer -> WebIDE)</li>
+<li>Click "Select Runtime" to open the runtimes panel</li>
+<li>Your Firefox OS device should show up in the "WiFi Devices" section</li>
+<li>A connection prompt will appear on device, choose "Scan" or "Scan and Remember"</li>
+<li>Scan the QR code displayed in WebIDE</li>
+</ol>
+
+
+<p><img src="/images/posts/webide-wifi-runtime.png" alt="WebIDE WiFi Runtimes" />
+<img src="/images/posts/webide-qr-code.png" alt="WebIDE Displays the QR Code" /></p>
+
+<p>After scanning the QR code, the QR display should disappear and the "device"
+icon in WebIDE will turn blue for "connected".</p>
+
+<p>You can then access all of your remote apps and browser tabs just as you can
+today over USB.</p>
+
+<h2>Technical Aside</h2>
+
+<p>This process does not use ADB at all on the device, so if you find ADB
+inconvenient while debugging or would rather not install ADB at all, then
+WiFi debugging is the way to go.</p>
+
+<p>By skipping ADB, we don't have to worry about driver confusion, especially on
+Windows and Linux.</p>
+
+<h2>Supported Devices</h2>
+
+<p>This feature should be supported on any Firefox OS device.  So far, I've tested
+it on the Flame and Nexus 4.</p>
+
+<h2>Known Issues</h2>
+
+<p>The QR code scanner can be a bit frustrating at the moment, as the real devices
+appear to be capture a very low resolution picture.  <a href="https://bugzil.la/1145772">Bug 1145772</a> aims
+to improve this soon.  You should be able to scan with the Flame by trying a few
+different orientations.  I would suggest using "Scan and Remember", so that
+scanning is only needed for the first connection.</p>
+
+<p>If you find other issues while testing, please <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact me
+on IRC.</p>
+
+<h2>Acknowledgments</h2>
+
+<p>This was quite a complex project, and many people provided advice and reviews
+while working on this feature, including (in semi-random order):</p>
+
+<ul>
+<li>Brian Warner</li>
+<li>Trevor Perrin</li>
+<li>David Keeler</li>
+<li>Honza Bambas</li>
+<li>Patrick McManus</li>
+<li>Jason Duell</li>
+<li>Panos Astithas</li>
+<li>Jan Keromnes</li>
+<li>Alexandre Poirot</li>
+<li>Paul Rouget</li>
+<li>Paul Theriault</li>
+</ul>
+
+
+<p>I am probably forgetting others as well, so I apologize if you were omitted.</p>
+
+<h2>What's Next</h2>
+
+<p>I'd like to add this ability for Firefox for Android next.  Thankfully, most of
+the work done here can be reused there.</p>
+
+<p>If there are features you'd like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
+team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">various channels</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Debugging Tabs with Firefox for Android]]></title>
@@ -212,37 +343,6 @@ to shake things up by looking towards the future of web development and the
 tools that people don't even know they need.</p>
 
 <p>It's going to be a blast! Hopefully I'll have to some fun things to share.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Into the Open]]></title>
-    <link href="http://convolv.es/blog/2013/02/17/into-the-open/"/>
-    <updated>2013-02-17T22:52:00-06:00</updated>
-    <id>http://convolv.es/blog/2013/02/17/into-the-open</id>
-    <content type="html"><![CDATA[<p>I'm excited to start to focusing what time I do have on the side towards open
-source projects.  I'm always on the lookout for good projects to help out with,
-but these days I always seem to come back to web browsers.</p>
-
-<p>In particular, I really enjoy working on tools that improve the lives of other
-every day.  In that vein, I'd like to focus on improvements to the developer
-tools in browsers today, though they are vastly better today than even a few
-years ago.</p>
-
-<p>The main open source options as far as web browsers go are Chrome / Chromium and
-the various Mozilla projects, like Firefox. Near the end of 2011, I started
-ramping up on the Chromium project, mainly because Chrome is the main browser I
-used then.</p>
-
-<p>However, now that Opera has decided to switch to Chromium for future versions of
-their browser, I've been reminded that Mozilla is the only party in the web
-development game that truly seems to be doing their best to fight for the user.
-The main reason I stopped using Firefox was due to Chrome's impressive developer
-tools, so I'd like to help improve Firefox tools to bring them up to the level
-we've now come to expect and beyond.</p>
-
-<p>Likely I'll dabble in both Chromium and Firefox, but no matter what it should be
-an exciting time ahead!</p>
 ]]></content>
   </entry>
   

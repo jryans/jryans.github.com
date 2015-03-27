@@ -9,8 +9,8 @@
   <meta name="author" content="J. Ryan Stinnett">
 
   
-  <meta name="description" content="For quite a while, it has been possible to debug tabs on Firefox for Android
-devices, but there were many steps involved, including manual port &hellip;">
+  <meta name="description" content="I am excited to announce that we&#8217;re now shipping WiFi debugging for Firefox OS!
+It&#8217;s available in Firefox OS 3.0 / master with Firefox &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +77,164 @@ devices, but there were many steps involved, including manual port &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/03/25/wifi-debug-fxos/">WiFi Debugging for Firefox OS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-25T08:51:00-05:00" pubdate data-updated="true">Mar 25<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I am excited to announce that we&#8217;re now shipping WiFi debugging for Firefox OS!
+It&#8217;s available in <a href="https://developer.mozilla.org/en-US/Firefox_OS/Building">Firefox OS 3.0 / master</a> with <a href="https://nightly.mozilla.org/">Firefox Nightly</a> on desktop.</p>
+
+<p>WiFi debugging allows <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> to connect to your Firefox OS device via your local
+WiFi network instead of a USB cable.</p>
+
+<p>The connection experience is generally more straightforward (especially after
+connecting to a device the first time) than with USB and also more convenient to
+use since you&#8217;re no longer tied down by a cable.</p>
+
+<h2>Security</h2>
+
+<p>A large portion of this project has gone towards making the debugging
+connection secure, so that you can use it safely on shared network, such as an
+office or coffee shop.</p>
+
+<p>We use TLS for encryption and authentication.  The computer and device both
+create self-signed certificates.  When you connect, a QR code is scanned to
+verify that the certificates can be trusted.  During the connection process, you
+can choose to remember this information and connect immediately in the future if
+desired.</p>
+
+<h2>How to Use</h2>
+
+<p>You&#8217;ll need to assemble the following bits and bobs:</p>
+
+<ul>
+<li><a href="https://nightly.mozilla.org/">Firefox 39</a> (2015-03-27 or later)</li>
+<li>Firefox OS 3.0 (2015-03-27 or later)
+
+<ul>
+<li>Option A: <a href="https://developer.mozilla.org/en-US/Firefox_OS/Phone_guide/Flame/Updating_your_Flame#Updating_your_Flame_to_a_nightly_build">Update your Flame</a> to 3.0 / master</li>
+<li>Option B: <a href="https://developer.mozilla.org/en-US/Firefox_OS/Building">Build for your device</a> from source</li>
+</ul>
+</li>
+</ul>
+
+
+<p>On Firefox OS, enable WiFi debugging:</p>
+
+<ol>
+<li>Go to Developer Settings on device (Settings -> Developer)</li>
+<li>Enable DevTools via Wi-Fi</li>
+<li>Edit the device name if desired</li>
+</ol>
+
+
+<p><img src="/images/posts/fxos-wifi-opts.png" alt="Firefox OS WiFi Debugging Options" /></p>
+
+<p>To connect from Firefox Desktop:</p>
+
+<ol>
+<li>Open WebIDE in Firefox Nightly (Tools -> Web Developer -> WebIDE)</li>
+<li>Click &#8220;Select Runtime&#8221; to open the runtimes panel</li>
+<li>Your Firefox OS device should show up in the &#8220;WiFi Devices&#8221; section</li>
+<li>A connection prompt will appear on device, choose &#8220;Scan&#8221; or &#8220;Scan and Remember&#8221;</li>
+<li>Scan the QR code displayed in WebIDE</li>
+</ol>
+
+
+<p><img src="/images/posts/webide-wifi-runtime.png" alt="WebIDE WiFi Runtimes" />
+<img src="/images/posts/webide-qr-code.png" alt="WebIDE Displays the QR Code" /></p>
+
+<p>After scanning the QR code, the QR display should disappear and the &#8220;device&#8221;
+icon in WebIDE will turn blue for &#8220;connected&#8221;.</p>
+
+<p>You can then access all of your remote apps and browser tabs just as you can
+today over USB.</p>
+
+<h2>Technical Aside</h2>
+
+<p>This process does not use ADB at all on the device, so if you find ADB
+inconvenient while debugging or would rather not install ADB at all, then
+WiFi debugging is the way to go.</p>
+
+<p>By skipping ADB, we don&#8217;t have to worry about driver confusion, especially on
+Windows and Linux.</p>
+
+<h2>Supported Devices</h2>
+
+<p>This feature should be supported on any Firefox OS device.  So far, I&#8217;ve tested
+it on the Flame and Nexus 4.</p>
+
+<h2>Known Issues</h2>
+
+<p>The QR code scanner can be a bit frustrating at the moment, as the real devices
+appear to be capture a very low resolution picture.  <a href="https://bugzil.la/1145772">Bug 1145772</a> aims
+to improve this soon.  You should be able to scan with the Flame by trying a few
+different orientations.  I would suggest using &#8220;Scan and Remember&#8221;, so that
+scanning is only needed for the first connection.</p>
+
+<p>If you find other issues while testing, please <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact me
+on IRC.</p>
+
+<h2>Acknowledgments</h2>
+
+<p>This was quite a complex project, and many people provided advice and reviews
+while working on this feature, including (in semi-random order):</p>
+
+<ul>
+<li>Brian Warner</li>
+<li>Trevor Perrin</li>
+<li>David Keeler</li>
+<li>Honza Bambas</li>
+<li>Patrick McManus</li>
+<li>Jason Duell</li>
+<li>Panos Astithas</li>
+<li>Jan Keromnes</li>
+<li>Alexandre Poirot</li>
+<li>Paul Rouget</li>
+<li>Paul Theriault</li>
+</ul>
+
+
+<p>I am probably forgetting others as well, so I apologize if you were omitted.</p>
+
+<h2>What&#8217;s Next</h2>
+
+<p>I&#8217;d like to add this ability for Firefox for Android next.  Thankfully, most of
+the work done here can be reused there.</p>
+
+<p>If there are features you&#8217;d like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
+team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">various channels</a>.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -690,54 +848,6 @@ various items between the islands as needed.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/09/07/3d-modeling-and-rendering-1/">3D Modeling and Rendering 1</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-07T23:20:00-05:00" pubdate data-updated="true">Sep 7<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&#8217;ve started taking classes at ACC to learn some visual design skills and
-generally extend my knowledge of how games and other media are built.</p>
-
-<p>The first one is this 3D modeling class, and I&#8217;ll be maintaining a portfolio of
-my work as this class goes on. I&#8217;m excited to see what I can come up with!
-Undoubtedly my work won&#8217;t win too many awards, but hopefully I can pick up the
-principles and develop them further over time.</p>
-
-<p>I think this will also give me a better understanding of the thought process that
-design and creative teams go through at the various places I&#8217;ve worked now and in
-the past.</p>
-
-<p>Anyway, should be fun! :D</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -766,7 +876,7 @@ the past.</p>
 
   
     
-    <iframe src="http://ghbtns.com/github-btn.html?user=jryans&type=follow"
+    <iframe src="//ghbtns.com/github-btn.html?user=jryans&type=follow"
       allowtransparency="true" frameborder="0" scrolling="0" width="132px" height="20px"></iframe>
     
   
@@ -784,6 +894,10 @@ the past.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/03/25/wifi-debug-fxos/">WiFi Debugging for Firefox OS</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/10/28/debug-fennec-tabs/">Debugging Tabs with Firefox for Android</a>
       </li>
     
@@ -799,10 +913,6 @@ the past.</p>
         <a href="/blog/2013/08/25/mozilla/">Mozilla</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2013/02/17/into-the-open/">Into the Open</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -812,7 +922,7 @@ the past.</p>
     <li class="loading">Status updating&#8230;</li>
   </ul>
   
-  <iframe src="http://ghbtns.com/github-btn.html?user=jryans&type=follow"
+  <iframe src="//ghbtns.com/github-btn.html?user=jryans&type=follow"
     allowtransparency="true" frameborder="0" scrolling="0" width="132px" height="20px"></iframe>
   
   <script type="text/javascript">

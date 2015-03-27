@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Basic Game with Unity - J. Ryan Stinnett</title>
+  <title>WiFi Debugging for Firefox OS - J. Ryan Stinnett</title>
   <meta name="author" content="J. Ryan Stinnett">
 
   
-  <meta name="description" content="Overview For this week&#8217;s assignment, we jumped out of the normal curriculum and
-went straight to using a game engine with our models from last &hellip;">
+  <meta name="description" content="I am excited to announce that we&#8217;re now shipping WiFi debugging for Firefox OS!
+It&#8217;s available in Firefox OS 3.0 / master with Firefox &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +19,7 @@ went straight to using a game engine with our models from last &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://convolv.es/blog/2012/09/22/basic-game-with-unity">
+  <link rel="canonical" href="http://convolv.es/blog/2015/03/25/wifi-debug-fxos">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="/javascripts/ender.js"></script>
@@ -80,7 +80,7 @@ went straight to using a game engine with our models from last &hellip;">
   
   <header>
     
-      <h1 class="entry-title">Basic Game with Unity</h1>
+      <h1 class="entry-title">WiFi Debugging for Firefox OS</h1>
     
     
       <p class="meta">
@@ -96,39 +96,136 @@ went straight to using a game engine with our models from last &hellip;">
   
 
 
-<time datetime="2012-09-22T04:42:00-05:00" pubdate data-updated="true">Sep 22<span>nd</span>, 2012</time>
+<time datetime="2015-03-25T08:51:00-05:00" pubdate data-updated="true">Mar 25<span>th</span>, 2015</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h3>Overview</h3>
+<div class="entry-content"><p>I am excited to announce that we&#8217;re now shipping WiFi debugging for Firefox OS!
+It&#8217;s available in <a href="https://developer.mozilla.org/en-US/Firefox_OS/Building">Firefox OS 3.0 / master</a> with <a href="https://nightly.mozilla.org/">Firefox Nightly</a> on desktop.</p>
 
-<p>For this week&#8217;s <a href="http://viscom3d.blogspot.com/2012/09/unity-101.html">assignment</a>, we jumped out of the normal curriculum and
-went straight to using a game engine with our models from last time.  We added a
-few common elements, like terrain and fog.</p>
+<p>WiFi debugging allows <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> to connect to your Firefox OS device via your local
+WiFi network instead of a USB cable.</p>
 
-<h3>Unity</h3>
+<p>The connection experience is generally more straightforward (especially after
+connecting to a device the first time) than with USB and also more convenient to
+use since you&#8217;re no longer tied down by a cable.</p>
 
-<p>Unity is a lot of fun to work with! It&#8217;s quite easy to assemble something pretty
-cool, and yet it is also has a lot of depth to allow you to refine details. I
-can definitely see myself working with this down the road, especially given the
-wide multi-platform support.</p>
+<h2>Security</h2>
 
-<h3>Game Level</h3>
+<p>A large portion of this project has gone towards making the debugging
+connection secure, so that you can use it safely on shared network, such as an
+office or coffee shop.</p>
 
-<p>For the level itself, I modified the environment to remove the static water I
-made before and surround the island with mountainous terrain.  Then I added the
-animated water to get back to the original environment idea.</p>
+<p>We use TLS for encryption and authentication.  The computer and device both
+create self-signed certificates.  When you connect, a QR code is scanned to
+verify that the certificates can be trusted.  During the connection process, you
+can choose to remember this information and connect immediately in the future if
+desired.</p>
 
-<p>From there, I added some basic lighting and fog to match the skybox I chose.  It
-was actually a bit tricky to map a collider to the island huts.  For now I used
-spheres, but perhaps I&#8217;ll need to flatten those into a single mesh for Unity to
-represent them accurately.</p>
+<h2>How to Use</h2>
 
-<p>There&#8217;s definitely room for improvement along many aspects, but it&#8217;s really
-exciting to see something playable come together so quickly.</p>
+<p>You&#8217;ll need to assemble the following bits and bobs:</p>
+
+<ul>
+<li><a href="https://nightly.mozilla.org/">Firefox 39</a> (2015-03-27 or later)</li>
+<li>Firefox OS 3.0 (2015-03-27 or later)
+
+<ul>
+<li>Option A: <a href="https://developer.mozilla.org/en-US/Firefox_OS/Phone_guide/Flame/Updating_your_Flame#Updating_your_Flame_to_a_nightly_build">Update your Flame</a> to 3.0 / master</li>
+<li>Option B: <a href="https://developer.mozilla.org/en-US/Firefox_OS/Building">Build for your device</a> from source</li>
+</ul>
+</li>
+</ul>
+
+
+<p>On Firefox OS, enable WiFi debugging:</p>
+
+<ol>
+<li>Go to Developer Settings on device (Settings -> Developer)</li>
+<li>Enable DevTools via Wi-Fi</li>
+<li>Edit the device name if desired</li>
+</ol>
+
+
+<p><img src="/images/posts/fxos-wifi-opts.png" alt="Firefox OS WiFi Debugging Options" /></p>
+
+<p>To connect from Firefox Desktop:</p>
+
+<ol>
+<li>Open WebIDE in Firefox Nightly (Tools -> Web Developer -> WebIDE)</li>
+<li>Click &#8220;Select Runtime&#8221; to open the runtimes panel</li>
+<li>Your Firefox OS device should show up in the &#8220;WiFi Devices&#8221; section</li>
+<li>A connection prompt will appear on device, choose &#8220;Scan&#8221; or &#8220;Scan and Remember&#8221;</li>
+<li>Scan the QR code displayed in WebIDE</li>
+</ol>
+
+
+<p><img src="/images/posts/webide-wifi-runtime.png" alt="WebIDE WiFi Runtimes" />
+<img src="/images/posts/webide-qr-code.png" alt="WebIDE Displays the QR Code" /></p>
+
+<p>After scanning the QR code, the QR display should disappear and the &#8220;device&#8221;
+icon in WebIDE will turn blue for &#8220;connected&#8221;.</p>
+
+<p>You can then access all of your remote apps and browser tabs just as you can
+today over USB.</p>
+
+<h2>Technical Aside</h2>
+
+<p>This process does not use ADB at all on the device, so if you find ADB
+inconvenient while debugging or would rather not install ADB at all, then
+WiFi debugging is the way to go.</p>
+
+<p>By skipping ADB, we don&#8217;t have to worry about driver confusion, especially on
+Windows and Linux.</p>
+
+<h2>Supported Devices</h2>
+
+<p>This feature should be supported on any Firefox OS device.  So far, I&#8217;ve tested
+it on the Flame and Nexus 4.</p>
+
+<h2>Known Issues</h2>
+
+<p>The QR code scanner can be a bit frustrating at the moment, as the real devices
+appear to be capture a very low resolution picture.  <a href="https://bugzil.la/1145772">Bug 1145772</a> aims
+to improve this soon.  You should be able to scan with the Flame by trying a few
+different orientations.  I would suggest using &#8220;Scan and Remember&#8221;, so that
+scanning is only needed for the first connection.</p>
+
+<p>If you find other issues while testing, please <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact me
+on IRC.</p>
+
+<h2>Acknowledgments</h2>
+
+<p>This was quite a complex project, and many people provided advice and reviews
+while working on this feature, including (in semi-random order):</p>
+
+<ul>
+<li>Brian Warner</li>
+<li>Trevor Perrin</li>
+<li>David Keeler</li>
+<li>Honza Bambas</li>
+<li>Patrick McManus</li>
+<li>Jason Duell</li>
+<li>Panos Astithas</li>
+<li>Jan Keromnes</li>
+<li>Alexandre Poirot</li>
+<li>Paul Rouget</li>
+<li>Paul Theriault</li>
+</ul>
+
+
+<p>I am probably forgetting others as well, so I apologize if you were omitted.</p>
+
+<h2>What&#8217;s Next</h2>
+
+<p>I&#8217;d like to add this ability for Firefox for Android next.  Thankfully, most of
+the work done here can be reused there.</p>
+
+<p>If there are features you&#8217;d like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
+team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">various channels</a>.</p>
 </div>
 
 
@@ -151,12 +248,12 @@ exciting to see something playable come together so quickly.</p>
   
 
 
-<time datetime="2012-09-22T04:42:00-05:00" pubdate data-updated="true">Sep 22<span>nd</span>, 2012</time>
+<time datetime="2015-03-25T08:51:00-05:00" pubdate data-updated="true">Mar 25<span>th</span>, 2015</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/education/'>Education</a>
+    <a class='category' href='/blog/categories/developer-tools/'>Developer Tools</a>, <a class='category' href='/blog/categories/firefox-os/'>Firefox OS</a>, <a class='category' href='/blog/categories/mozilla/'>Mozilla</a>, <a class='category' href='/blog/categories/open-source/'>Open Source</a>
   
 </span>
 
@@ -165,7 +262,7 @@ exciting to see something playable come together so quickly.</p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://convolv.es/blog/2012/09/22/basic-game-with-unity/" data-via="jryans" data-counturl="http://convolv.es/blog/2012/09/22/basic-game-with-unity/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://convolv.es/blog/2015/03/25/wifi-debug-fxos/" data-via="jryans" data-counturl="http://convolv.es/blog/2015/03/25/wifi-debug-fxos/" >Tweet</a>
   
   
   
@@ -174,10 +271,8 @@ exciting to see something playable come together so quickly.</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/09/15/3d-modeling-robot-in-the-ruins/" title="Previous Post: 3D Modeling: Robot in the Ruins">&laquo; 3D Modeling: Robot in the Ruins</a>
+        <a class="basic-alignment left" href="/blog/2014/10/28/debug-fennec-tabs/" title="Previous Post: Debugging Tabs with Firefox for Android">&laquo; Debugging Tabs with Firefox for Android</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/09/29/splines/" title="Next Post: Splines, Loft, and Lathe">Splines, Loft, and Lathe &raquo;</a>
       
     </p>
   </footer>
@@ -316,8 +411,8 @@ exciting to see something playable come together so quickly.</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://convolv.es/blog/2012/09/22/basic-game-with-unity/';
-        var disqus_url = 'http://convolv.es/blog/2012/09/22/basic-game-with-unity/';
+        var disqus_identifier = 'http://convolv.es/blog/2015/03/25/wifi-debug-fxos/';
+        var disqus_url = 'http://convolv.es/blog/2015/03/25/wifi-debug-fxos/';
         var disqus_script = 'embed.js';
       
     (function () {
