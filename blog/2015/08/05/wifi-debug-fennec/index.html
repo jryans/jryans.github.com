@@ -5,12 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>WiFi Debugging for Firefox OS - J. Ryan Stinnett</title>
+  <title>WiFi Debugging for Firefox for Android - J. Ryan Stinnett</title>
   <meta name="author" content="J. Ryan Stinnett">
 
   
-  <meta name="description" content="I am excited to announce that we&#8217;re now shipping WiFi debugging for Firefox OS!
-It&#8217;s available in Firefox OS 3.0 / master with Firefox &hellip;">
+  <meta name="description" content="I am excited to announce that we&#8217;re now shipping WiFi debugging for
+Firefox for Android! It&#8217;s available in Firefox for Android 42
+with &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +20,7 @@ It&#8217;s available in Firefox OS 3.0 / master with Firefox &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://convolv.es/blog/2015/03/25/wifi-debug-fxos">
+  <link rel="canonical" href="http://convolv.es/blog/2015/08/05/wifi-debug-fennec">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="/javascripts/ender.js"></script>
@@ -80,7 +81,7 @@ It&#8217;s available in Firefox OS 3.0 / master with Firefox &hellip;">
   
   <header>
     
-      <h1 class="entry-title">WiFi Debugging for Firefox OS</h1>
+      <h1 class="entry-title">WiFi Debugging for Firefox for Android</h1>
     
     
       <p class="meta">
@@ -96,18 +97,22 @@ It&#8217;s available in Firefox OS 3.0 / master with Firefox &hellip;">
   
 
 
-<time datetime="2015-03-25T08:51:00-05:00" pubdate data-updated="true">Mar 25<span>th</span>, 2015</time>
+<time datetime="2015-08-05T15:33:00-05:00" pubdate data-updated="true">Aug 5<span>th</span>, 2015</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>I am excited to announce that we&#8217;re now shipping WiFi debugging for Firefox OS!
-It&#8217;s available in <a href="https://developer.mozilla.org/en-US/Firefox_OS/Building">Firefox OS 3.0 / master</a> with <a href="https://nightly.mozilla.org/">Firefox Nightly</a> on desktop.</p>
+<div class="entry-content"><p>I am excited to announce that we&#8217;re now <a href="https://bugzil.la/1180996">shipping</a> WiFi debugging for
+Firefox for Android!  It&#8217;s available in <a href="https://nightly.mozilla.org/">Firefox for Android 42</a>
+with <a href="https://nightly.mozilla.org/">Firefox Nightly</a> on desktop.</p>
 
-<p>WiFi debugging allows <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> to connect to your Firefox OS device via your local
-WiFi network instead of a USB cable.</p>
+<p>The rest of this post will sound quite similar to the <a href="/blog/2015/03/25/wifi-debug-fxos/">previous announcement for
+Firefox OS</a> support.</p>
+
+<p>WiFi debugging allows <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> to connect to Firefox for Android via
+your local WiFi network instead of a USB cable.</p>
 
 <p>The connection experience is generally more straightforward (especially after
 connecting to a device the first time) than with USB and also more convenient to
@@ -130,34 +135,30 @@ desired.</p>
 <p>You&#8217;ll need to assemble the following bits and bobs:</p>
 
 <ul>
-<li><a href="https://nightly.mozilla.org/">Firefox 39</a> (2015-03-27 or later)</li>
-<li>Firefox OS 3.0 (2015-03-27 or later)
-
-<ul>
-<li>Option A: <a href="https://developer.mozilla.org/en-US/Firefox_OS/Phone_guide/Flame/Updating_your_Flame#Updating_your_Flame_to_a_nightly_build">Update your Flame</a> to 3.0 / master</li>
-<li>Option B: <a href="https://developer.mozilla.org/en-US/Firefox_OS/Building">Build for your device</a> from source</li>
-</ul>
-</li>
+<li><a href="https://nightly.mozilla.org/">Firefox 42</a></li>
+<li><a href="https://nightly.mozilla.org/">Firefox for Android 42</a></li>
+<li><a href="https://play.google.com/store/apps/details?id=com.google.zxing.client.android">Barcode Scanner Android app by ZXing Team</a> (for QR code scanning)</li>
 </ul>
 
 
-<p>On Firefox OS, enable WiFi debugging:</p>
+<p>On your Android device:</p>
 
 <ol>
-<li>Go to Developer Settings on device (Settings -> Developer)</li>
-<li>Enable DevTools via Wi-Fi</li>
-<li>Edit the device name if desired</li>
+<li>Install the <a href="https://play.google.com/store/apps/details?id=com.google.zxing.client.android">Barcode Scanner Android app by ZXing Team</a></li>
+<li>Open Firefox for Android</li>
+<li>Go to Developer Tools Settings on device (Settings -> Developer Tools)</li>
+<li>Enable Remote Debugging via Wi-Fi</li>
 </ol>
 
 
-<p><img src="/images/posts/fxos-wifi-opts.png" alt="Firefox OS WiFi Debugging Options" /></p>
+<p><img src="/images/posts/fennec-wifi-opts.png" alt="Firefox for Android WiFi Debugging Options" /></p>
 
 <p>To connect from Firefox Desktop:</p>
 
 <ol>
 <li>Open WebIDE in Firefox Nightly (Tools -> Web Developer -> WebIDE)</li>
 <li>Click &#8220;Select Runtime&#8221; to open the runtimes panel</li>
-<li>Your Firefox OS device should show up in the &#8220;WiFi Devices&#8221; section</li>
+<li>Your Firefox for Android device should show up in the &#8220;WiFi Devices&#8221; section</li>
 <li>A connection prompt will appear on device, choose &#8220;Scan&#8221; or &#8220;Scan and Remember&#8221;</li>
 <li>Scan the QR code displayed in WebIDE</li>
 </ol>
@@ -169,8 +170,8 @@ desired.</p>
 <p>After scanning the QR code, the QR display should disappear and the &#8220;device&#8221;
 icon in WebIDE will turn blue for &#8220;connected&#8221;.</p>
 
-<p>You can then access all of your remote apps and browser tabs just as you can
-today over USB.</p>
+<p>You can then access all of your remote browser tabs just as you can today over
+USB.</p>
 
 <h2>Technical Aside</h2>
 
@@ -183,24 +184,21 @@ Windows and Linux.</p>
 
 <h2>Supported Devices</h2>
 
-<p>This feature should be supported on any Firefox OS device.  So far, I&#8217;ve tested
-it on the Flame and Nexus 4.</p>
-
-<h2>Known Issues</h2>
-
-<p>The QR code scanner can be a bit frustrating at the moment, as real devices
-appear to capture a very low resolution picture.  <a href="https://bugzil.la/1145772">Bug 1145772</a> aims
-to improve this soon.  You should be able to scan with the Flame by trying a few
-different orientations.  I would suggest using &#8220;Scan and Remember&#8221;, so that
-scanning is only needed for the first connection.</p>
-
-<p>If you find other issues while testing, please <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact me
-on IRC.</p>
+<p>This feature should be supported on any Firefox for Android device.  So far,
+I&#8217;ve tested it on the LG G2.</p>
 
 <h2>Acknowledgments</h2>
 
-<p>This was quite a complex project, and many people provided advice and reviews
-while working on this feature, including (in semi-random order):</p>
+<p>Thanks to all who helped via advice and reviews while working on Android support,
+including (in semi-random order):</p>
+
+<ul>
+<li>Margaret Leibovic</li>
+<li>Karim Benhmida</li>
+</ul>
+
+
+<p>And from the larger WiFi debugging effort:</p>
 
 <ul>
 <li>Brian Warner</li>
@@ -220,9 +218,6 @@ while working on this feature, including (in semi-random order):</p>
 <p>I am probably forgetting others as well, so I apologize if you were omitted.</p>
 
 <h2>What&#8217;s Next</h2>
-
-<p>I&#8217;d like to add this ability for Firefox for Android next.  Thankfully, most of
-the work done here can be reused there.</p>
 
 <p>If there are features you&#8217;d like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
 team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">various channels</a>.</p>
@@ -248,12 +243,12 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
   
 
 
-<time datetime="2015-03-25T08:51:00-05:00" pubdate data-updated="true">Mar 25<span>th</span>, 2015</time>
+<time datetime="2015-08-05T15:33:00-05:00" pubdate data-updated="true">Aug 5<span>th</span>, 2015</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/developer-tools/'>Developer Tools</a>, <a class='category' href='/blog/categories/firefox-os/'>Firefox OS</a>, <a class='category' href='/blog/categories/mozilla/'>Mozilla</a>, <a class='category' href='/blog/categories/open-source/'>Open Source</a>
+    <a class='category' href='/blog/categories/developer-tools/'>Developer Tools</a>, <a class='category' href='/blog/categories/firefox-for-android/'>Firefox for Android</a>, <a class='category' href='/blog/categories/mozilla/'>Mozilla</a>, <a class='category' href='/blog/categories/open-source/'>Open Source</a>
   
 </span>
 
@@ -262,7 +257,7 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://convolv.es/blog/2015/03/25/wifi-debug-fxos/" data-via="jryans" data-counturl="http://convolv.es/blog/2015/03/25/wifi-debug-fxos/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://convolv.es/blog/2015/08/05/wifi-debug-fennec/" data-via="jryans" data-counturl="http://convolv.es/blog/2015/08/05/wifi-debug-fennec/" >Tweet</a>
   
   
   
@@ -271,10 +266,8 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/10/28/debug-fennec-tabs/" title="Previous Post: Debugging Tabs with Firefox for Android">&laquo; Debugging Tabs with Firefox for Android</a>
+        <a class="basic-alignment left" href="/blog/2015/03/25/wifi-debug-fxos/" title="Previous Post: WiFi Debugging for Firefox OS">&laquo; WiFi Debugging for Firefox OS</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2015/08/05/wifi-debug-fennec/" title="Next Post: WiFi Debugging for Firefox for Android">WiFi Debugging for Firefox for Android &raquo;</a>
       
     </p>
   </footer>
@@ -413,8 +406,8 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://convolv.es/blog/2015/03/25/wifi-debug-fxos/';
-        var disqus_url = 'http://convolv.es/blog/2015/03/25/wifi-debug-fxos/';
+        var disqus_identifier = 'http://convolv.es/blog/2015/08/05/wifi-debug-fennec/';
+        var disqus_url = 'http://convolv.es/blog/2015/08/05/wifi-debug-fennec/';
         var disqus_script = 'embed.js';
       
     (function () {

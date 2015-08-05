@@ -9,8 +9,9 @@
   <meta name="author" content="J. Ryan Stinnett">
 
   
-  <meta name="description" content="I am excited to announce that we&#8217;re now shipping WiFi debugging for Firefox OS!
-It&#8217;s available in Firefox OS 3.0 / master with Firefox &hellip;">
+  <meta name="description" content="I am excited to announce that we&#8217;re now shipping WiFi debugging for
+Firefox for Android! It&#8217;s available in Firefox for Android 42
+with &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +78,158 @@ It&#8217;s available in Firefox OS 3.0 / master with Firefox &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/08/05/wifi-debug-fennec/">WiFi Debugging for Firefox for Android</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-08-05T15:33:00-05:00" pubdate data-updated="true">Aug 5<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I am excited to announce that we&#8217;re now <a href="https://bugzil.la/1180996">shipping</a> WiFi debugging for
+Firefox for Android!  It&#8217;s available in <a href="https://nightly.mozilla.org/">Firefox for Android 42</a>
+with <a href="https://nightly.mozilla.org/">Firefox Nightly</a> on desktop.</p>
+
+<p>The rest of this post will sound quite similar to the <a href="/blog/2015/03/25/wifi-debug-fxos/">previous announcement for
+Firefox OS</a> support.</p>
+
+<p>WiFi debugging allows <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> to connect to Firefox for Android via
+your local WiFi network instead of a USB cable.</p>
+
+<p>The connection experience is generally more straightforward (especially after
+connecting to a device the first time) than with USB and also more convenient to
+use since you&#8217;re no longer tied down by a cable.</p>
+
+<h2>Security</h2>
+
+<p>A large portion of this project has gone towards making the debugging
+connection secure, so that you can use it safely on shared network, such as an
+office or coffee shop.</p>
+
+<p>We use TLS for encryption and authentication.  The computer and device both
+create self-signed certificates.  When you connect, a QR code is scanned to
+verify that the certificates can be trusted.  During the connection process, you
+can choose to remember this information and connect immediately in the future if
+desired.</p>
+
+<h2>How to Use</h2>
+
+<p>You&#8217;ll need to assemble the following bits and bobs:</p>
+
+<ul>
+<li><a href="https://nightly.mozilla.org/">Firefox 42</a></li>
+<li><a href="https://nightly.mozilla.org/">Firefox for Android 42</a></li>
+<li><a href="https://play.google.com/store/apps/details?id=com.google.zxing.client.android">Barcode Scanner Android app by ZXing Team</a> (for QR code scanning)</li>
+</ul>
+
+
+<p>On your Android device:</p>
+
+<ol>
+<li>Install the <a href="https://play.google.com/store/apps/details?id=com.google.zxing.client.android">Barcode Scanner Android app by ZXing Team</a></li>
+<li>Open Firefox for Android</li>
+<li>Go to Developer Tools Settings on device (Settings -> Developer Tools)</li>
+<li>Enable Remote Debugging via Wi-Fi</li>
+</ol>
+
+
+<p><img src="/images/posts/fennec-wifi-opts.png" alt="Firefox for Android WiFi Debugging Options" /></p>
+
+<p>To connect from Firefox Desktop:</p>
+
+<ol>
+<li>Open WebIDE in Firefox Nightly (Tools -> Web Developer -> WebIDE)</li>
+<li>Click &#8220;Select Runtime&#8221; to open the runtimes panel</li>
+<li>Your Firefox for Android device should show up in the &#8220;WiFi Devices&#8221; section</li>
+<li>A connection prompt will appear on device, choose &#8220;Scan&#8221; or &#8220;Scan and Remember&#8221;</li>
+<li>Scan the QR code displayed in WebIDE</li>
+</ol>
+
+
+<p><img src="/images/posts/webide-wifi-runtime.png" alt="WebIDE WiFi Runtimes" />
+<img src="/images/posts/webide-qr-code.png" alt="WebIDE Displays the QR Code" /></p>
+
+<p>After scanning the QR code, the QR display should disappear and the &#8220;device&#8221;
+icon in WebIDE will turn blue for &#8220;connected&#8221;.</p>
+
+<p>You can then access all of your remote browser tabs just as you can today over
+USB.</p>
+
+<h2>Technical Aside</h2>
+
+<p>This process does not use ADB at all on the device, so if you find ADB
+inconvenient while debugging or would rather not install ADB at all, then
+WiFi debugging is the way to go.</p>
+
+<p>By skipping ADB, we don&#8217;t have to worry about driver confusion, especially on
+Windows and Linux.</p>
+
+<h2>Supported Devices</h2>
+
+<p>This feature should be supported on any Firefox for Android device.  So far,
+I&#8217;ve tested it on the LG G2.</p>
+
+<h2>Acknowledgments</h2>
+
+<p>Thanks to all who helped via advice and reviews while working on Android support,
+including (in semi-random order):</p>
+
+<ul>
+<li>Margaret Leibovic</li>
+<li>Karim Benhmida</li>
+</ul>
+
+
+<p>And from the larger WiFi debugging effort:</p>
+
+<ul>
+<li>Brian Warner</li>
+<li>Trevor Perrin</li>
+<li>David Keeler</li>
+<li>Honza Bambas</li>
+<li>Patrick McManus</li>
+<li>Jason Duell</li>
+<li>Panos Astithas</li>
+<li>Jan Keromnes</li>
+<li>Alexandre Poirot</li>
+<li>Paul Rouget</li>
+<li>Paul Theriault</li>
+</ul>
+
+
+<p>I am probably forgetting others as well, so I apologize if you were omitted.</p>
+
+<h2>What&#8217;s Next</h2>
+
+<p>If there are features you&#8217;d like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
+team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">various channels</a>.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -791,63 +944,6 @@ exciting to see something playable come together so quickly.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/09/15/3d-modeling-robot-in-the-ruins/">3D Modeling: Robot in the Ruins</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-15T05:43:00-05:00" pubdate data-updated="true">Sep 15<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Overview</h3>
-
-<p>For our <a href="http://viscom3d.blogspot.com/2012/01/robot-in-ruins.html">first assignment</a>, we had to build a robot and an environment for the it to inhabit.</p>
-
-<h3>Robot</h3>
-
-<p>The robot had to use exactly 1000 polygons. I chose to create a kind of
-transport robot with a cute appearance. I used an elongated egg shape, and gave
-it two propellers to maneuver. The robot is shown at an angle to suggest
-movement.  The propellers were fun to construct, especially with the primitives,
-since you have to think of clever ways to build what want from just a few
-shapes. With two shapes and a few filters, I arrived at a convincing version of
-propeller blades.</p>
-
-<h3>Environment</h3>
-
-<p>For the environment, we had a budget of 10,000 polygons. I thought it would be
-fun to create a water / island environment. However, even a poor simulation of
-water quickly eats up a lot of polygons!</p>
-
-<p>My thoughts here were that several of the robots might be used to transport
-various items between the islands as needed.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -894,6 +990,10 @@ various items between the islands as needed.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/08/05/wifi-debug-fennec/">WiFi Debugging for Firefox for Android</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/03/25/wifi-debug-fxos/">WiFi Debugging for Firefox OS</a>
       </li>
     
@@ -907,10 +1007,6 @@ various items between the islands as needed.</p>
     
       <li class="post">
         <a href="/blog/2014/08/18/webide-enabled/">WebIDE enabled in Nightly</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/08/25/mozilla/">Mozilla</a>
       </li>
     
   </ul>
