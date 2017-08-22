@@ -18,3 +18,7 @@ body > footer {
   color: $sidebar-color;
   font-family: $sans;
 }
+
+aside.sidebar:hover a {
+  color: inherit;
+}
