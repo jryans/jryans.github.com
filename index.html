@@ -9,9 +9,8 @@
   <meta name="author" content="J. Ryan Stinnett">
 
   
-  <meta name="description" content="I am excited to announce that we&#8217;re now shipping WiFi debugging for
-Firefox for Android! It&#8217;s available in Firefox for Android 42
-with &hellip;">
+  <meta name="description" content="Background As part of my work on the Stylo / Quantum CSS team at Mozilla, I needed to be
+able to test changes to Firefox that only affect Linux 32- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +19,7 @@ with &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://convolv.es">
+  <link rel="canonical" href="https://convolv.es">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="/javascripts/ender.js"></script>
@@ -64,10 +63,10 @@ with &hellip;">
   
 </ul>
   
-<form action="http://google.com/search" method="get">
+<form action="https://duckduckgo.com" method="get">
   <fieldset role="search">
-    <input type="hidden" name="q" value="site:convolv.es" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+    <input class="search" type="text" name="q" results="0" placeholder="Search"
+           onfocus="if (!this.value) { this.value = 'site:convolv.es '; }"/>
   </fieldset>
 </form>
   
@@ -82,6 +81,357 @@ with &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2017/08/25/building-firefox-for-linux-32-bit/">Building Firefox for Linux 32-bit</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2017-08-25T19:33:00-05:00" pubdate data-updated="true">Aug 25<span>th</span>, 2017</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Background</h2>
+
+<p>As part of my work on the Stylo / Quantum CSS team at Mozilla, I needed to be
+able to test changes to Firefox that only affect Linux 32-bit builds. These
+days, I believe you essentially have to use a 64-bit host to build Firefox to
+avoid OOM issues during linking and potentially other steps, so this means
+some form of cross-compiling from a Linux 64-bit host to a Linux 32-bit
+target.</p>
+
+<p>I already had a Linux 64-bit machine running Ubuntu 16.04 LTS, so I set about
+attempting to make it build Firefox targeting Linux 32-bit.</p>
+
+<p>I should note that I only use Linux occasionally at the moment, so there could
+certainly be a better solution than the one I describe.  Also, I recreated these
+steps after the fact, so I might have missed something.  Please let me know in
+the comments.</p>
+
+<p>This article assumes you are already set up to build Firefox when targeting
+64-bit.</p>
+
+<h2>Multiarch Packages (Or: How It&#8217;s Supposed to Work)</h2>
+
+<p>Recent versions of Debian and Ubuntu support the concept of
+<a href="https://wiki.debian.org/Multiarch">&#8220;multiarch packages&#8221;</a> which are intended to allow installing multiple
+architectures together to support use cases including&#8230; cross-compiling!
+Great, sounds like just the thing we need.</p>
+
+<p>We should be able to install<sup id="a1"><a href="#f1">1</a></sup> the
+<a href="http://searchfox.org/mozilla-central/rev/48ea452803907f2575d81021e8678634e8067fc2/python/mozboot/mozboot/debian.py#50-61">core Gecko development dependencies</a> with an extra <code>:i386</code> suffix to get
+the 32-bit version on our 64-bit host:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ sudo apt install libasound2-dev:i386 libcurl4-openssl-dev:i386 libdbus-1-dev:i386 libdbus-glib-1-dev:i386 libgconf2-dev:i386 libgtk-3-dev:i386 libgtk2.0-dev:i386 libiw-dev:i386 libnotify-dev:i386 libpulse-dev:i386 libx11-xcb-dev:i386 libxt-dev:i386 mesa-common-dev:i386
+</span><span class='line'>Reading package lists... Done
+</span><span class='line'>Building dependency tree
+</span><span class='line'>Reading state information... Done
+</span><span class='line'>Some packages could not be installed. This may mean that you have
+</span><span class='line'>requested an impossible situation or if you are using the unstable
+</span><span class='line'>distribution that some required packages have not yet been created
+</span><span class='line'>or been moved out of Incoming.
+</span><span class='line'>The following information may help to resolve the situation:
+</span><span class='line'>
+</span><span class='line'>The following packages have unmet dependencies:
+</span><span class='line'> libgtk-3-dev:i386 : Depends: gir1.2-gtk-3.0:i386 (= 3.18.9-1ubuntu3.3) but it is not going to be installed
+</span><span class='line'>                     Depends: libatk1.0-dev:i386 (&gt;= 2.15.1) but it is not going to be installed
+</span><span class='line'>                     Depends: libatk-bridge2.0-dev:i386 but it is not going to be installed
+</span><span class='line'>                     Depends: libegl1-mesa-dev:i386 but it is not going to be installed
+</span><span class='line'>                     Depends: libxkbcommon-dev:i386 but it is not going to be installed
+</span><span class='line'>                     Depends: libmirclient-dev:i386 (&gt;= 0.13.3) but it is not going to be installed
+</span><span class='line'> libgtk2.0-dev:i386 : Depends: gir1.2-gtk-2.0:i386 (= 2.24.30-1ubuntu1.16.04.2) but it is not going to be installed
+</span><span class='line'>                      Depends: libatk1.0-dev:i386 (&gt;= 1.29.2) but it is not going to be installed
+</span><span class='line'>                      Recommends: python:i386 (&gt;= 2.4) but it is not going to be installed
+</span><span class='line'> libnotify-dev:i386 : Depends: gir1.2-notify-0.7:i386 (= 0.7.6-2svn1) but it is not going to be installed
+</span><span class='line'>E: Unable to correct problems, you have held broken packages.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Well, that doesn&#8217;t look good.  It appears some of the Gecko libraries we need
+aren&#8217;t happy about being installed for multiple architectures.</p>
+
+<h2>Switch Approaches to <code>chroot</code></h2>
+
+<p>Since multiarch packages don&#8217;t appear to be working here, I looked around for
+other approaches.  Ideally, I would have something fairly self-contained so that
+it would be easy to remove when I no longer need 32-bit support.</p>
+
+<p>One approach to multiple architectures that has been around for a while is to
+create a <a href="https://en.wikipedia.org/wiki/Chroot">chroot</a> environment: effectively, a separate installation of
+Linux for a different architecture.  A utility like <code>schroot</code> can then be used
+to issue the <code>chroot(2)</code> system call which makes the current session believe
+this sub-installation is the root filesystem.</p>
+
+<p>Let&#8217;s grab <code>schroot</code> so we&#8217;ll be able to enter the chroot once it&#8217;s set up:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ sudo apt install schroot</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There are several different <a href="http://manpages.ubuntu.com/manpages/xenial/man5/schroot.conf.5.html">types of chroots</a> you can use with <code>schroot</code>.
+We&#8217;ll use the <code>directory</code> type, as it&#8217;s the simplest to understand (just another
+directory on the existing filesystem), and it will make it simpler to expose a
+few things to the host later on.</p>
+
+<p>You can place the directory wherever, but some existing filesystems are mapped
+into the chroot for convenience, so avoiding <code>/home</code> is probably a good idea.  I
+went with <code>/var/chroot/linux32</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ sudo mkdir -p /var/chroot/linux32</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We need to update <code>schroot.conf</code> to configure the new chroot:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ sudo cat &lt;&lt; EOF &gt;&gt; /etc/schroot/schroot.conf
+</span><span class='line'>[linux32]
+</span><span class='line'>description=Linux32 build environment
+</span><span class='line'>aliases=default
+</span><span class='line'>type=directory
+</span><span class='line'>directory=/var/chroot/linux32
+</span><span class='line'>personality=linux32
+</span><span class='line'>profile=desktop
+</span><span class='line'>users=jryans
+</span><span class='line'>root-users=jryans
+</span><span class='line'>EOF</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In particular, <code>personality</code> is important to set for this multi-arch use case.
+(Make sure to replace the user names with your own!)</p>
+
+<p>Firefox will want access to shared memory as well, so we&#8217;ll need to add that to
+the set of mapped filesystems in the chroot:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ sudo cat &lt;&lt; EOF &gt;&gt; /etc/schroot/desktop/fstab
+</span><span class='line'>/dev/shm       /dev/shm        none    rw,bind         0       0
+</span><span class='line'>EOF</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we need to <a href="https://help.ubuntu.com/community/DebootstrapChroot">install the 32-bit system</a> inside the chroot.  We can do
+that with a utility called <code>debootstrap</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ sudo apt install debootstrap
+</span><span class='line'>(host) $ sudo debootstrap --variant=buildd --arch=i386 --foreign xenial /var/chroot/linux32 http://archive.ubuntu.com/ubuntu</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will fetch all the packages for a 32-bit installation and place them in the
+chroot.  For a cross-arch bootstrap, we need to add <code>--foreign</code> to skip the
+unpacking step, which we will do momentarily from inside the chroot.
+<code>--variant=buildd</code> will help us out a bit by including common build tools.</p>
+
+<p>To finish installation, we have to enter the chroot.  You can enter the chroot
+with <code>schroot</code> and it remains active until you <code>exit</code>.  Any snippets that say
+<code>(chroot)</code> instead of <code>(host)</code> are meant to be run inside the chroot.</p>
+
+<p>So, inside the chroot, run the second stage of <code>debootstrap</code> to actually unpack
+everything:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(chroot) $ sudo /debootstrap/debootstrap --second-stage</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Let&#8217;s double-check that things are working like we expect:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(chroot) $ arch
+</span><span class='line'>i686</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Great, we&#8217;re getting closer!</p>
+
+<h2>Install packages</h2>
+
+<p>Now that we have a basic 32-bit installation, let&#8217;s install the packages we need
+for development.  The <code>apt</code> source list inside the chroot is pretty bare bones,
+so we&#8217;ll want to expand it a bit to reach everything we need:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(chroot) $ sudo cat &lt;&lt; EOF &gt; /etc/apt/sources.list
+</span><span class='line'>deb http://archive.ubuntu.com/ubuntu xenial main universe
+</span><span class='line'>deb http://archive.ubuntu.com/ubuntu xenial-updates main universe
+</span><span class='line'>EOF
+</span><span class='line'>(chroot) $ sudo apt update</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Let&#8217;s grab the same packages from before (without <code>:i386</code> since that&#8217;s the
+default inside the chroot):</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(chroot) $ sudo apt install libasound2-dev libcurl4-openssl-dev libdbus-1-dev libdbus-glib-1-dev libgconf2-dev libgtk-3-dev libgtk2.0-dev libiw-dev libnotify-dev libpulse-dev libx11-xcb-dev libxt-dev mesa-common-dev python-dbus xvfb yasm</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You may need to install the 32-bit version of your graphics card&#8217;s GL library to
+get reasonable graphics output when running in the 32-bit environment.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(chroot) $ sudo apt install nvidia-384</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We&#8217;ll also want to have access to the X display inside the chroot.  The simple
+way to achieve this is to disable X security in the host and expose the same
+display in the chroot:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ xhost +
+</span><span class='line'>(chroot) $ export DISPLAY=:0</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We can verify that we have accelerated graphics:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(chroot) $ sudo apt install mesa-utils
+</span><span class='line'>(chroot) $ glxinfo | grep renderer
+</span><span class='line'>OpenGL renderer string: GeForce GTX 1080/PCIe/SSE2</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Building Firefox</h2>
+
+<p>In order for the host to build Firefox for the 32-bit target, it needs to access
+various 32-bit libraries and include files.  We already have these installed in
+the chroot, so let&#8217;s cheat and expose them to the host via symlinks into the
+chroot&#8217;s file structure:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ sudo ln -s /var/chroot/linux32/lib/i386-linux-gnu /lib/
+</span><span class='line'>(host) $ sudo ln -s /var/chroot/linux32/usr/lib/i386-linux-gnu /usr/lib/
+</span><span class='line'>(host) $ sudo ln -s /var/chroot/linux32/usr/include/i386-linux-gnu /usr/include/</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We also need Rust to be able to target 32-bit from the host, so let&#8217;s install
+support for that:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ rustup target add i686-unknown-linux-gnu</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We&#8217;ll need a specialized <code>.mozconfig</code> for Firefox to target 32-bit.  Something
+like the following:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ cat &lt;&lt; EOF &gt; ~/projects/gecko/.mozconfig
+</span><span class='line'>export PKG_CONFIG_PATH="/var/chroot/linux32/usr/lib/i386-linux-gnu/pkgconfig:/var/chroot/linux32/usr/share/pkgconfig"
+</span><span class='line'>export MOZ_LINUX_32_SSE2_STARTUP_ERROR=1
+</span><span class='line'>CFLAGS="$CFLAGS -msse -msse2 -mfpmath=sse"
+</span><span class='line'>CXXFLAGS="$CXXFLAGS -msse -msse2 -mfpmath=sse"
+</span><span class='line'>if test `uname -m` = "x86_64"; then
+</span><span class='line'>  CFLAGS="$CFLAGS -m32 -march=pentium-m"
+</span><span class='line'>  CXXFLAGS="$CXXFLAGS -m32 -march=pentium-m"
+</span><span class='line'>  ac_add_options --target=i686-pc-linux
+</span><span class='line'>  ac_add_options --host=i686-pc-linux
+</span><span class='line'>  ac_add_options --x-libraries=/usr/lib
+</span><span class='line'>fi
+</span><span class='line'>EOF</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This was <a href="http://searchfox.org/mozilla-central/rev/89e125b817c5d493babbc58ea526be970bd3748e/build/unix/mozconfig.linux32">adapted</a> from the <code>mozconfig.linux32</code> used for official 32-bit
+builds.  I modified the <code>PKG_CONFIG_PATH</code> to point at more 32-bit files
+installed inside the chroot, similar to the library and include changes above.</p>
+
+<p>Now, we should be able to build successfully:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ ./mach build</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then, from the chroot, you can run Firefox and other tests:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(chroot) $ ./mach run</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="/images/posts/firefox-linux32.png" alt="Firefox running on Linux 32-bit" /></p>
+
+<h2>Footnotes</h2>
+
+<p><b id="f1">1.</b> It&#8217;s commonly suggested that people should use <code>./mach
+bootstrap</code> to install the Firefox build dependencies, so feel free to try that
+if you wish.  I dislike scripts that install system packages, so I&#8217;ve done it
+manually here.  The bootstrap script would likely need various adjustments to
+support this use case. <a href="#a1">↩</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -887,67 +1237,6 @@ many ways you can customize and tune its behavior.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/09/22/basic-game-with-unity/">Basic Game with Unity</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-22T04:42:00-05:00" pubdate data-updated="true">Sep 22<span>nd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Overview</h3>
-
-<p>For this week&#8217;s <a href="http://viscom3d.blogspot.com/2012/09/unity-101.html">assignment</a>, we jumped out of the normal curriculum and
-went straight to using a game engine with our models from last time.  We added a
-few common elements, like terrain and fog.</p>
-
-<h3>Unity</h3>
-
-<p>Unity is a lot of fun to work with! It&#8217;s quite easy to assemble something pretty
-cool, and yet it is also has a lot of depth to allow you to refine details. I
-can definitely see myself working with this down the road, especially given the
-wide multi-platform support.</p>
-
-<h3>Game Level</h3>
-
-<p>For the level itself, I modified the environment to remove the static water I
-made before and surround the island with mountainous terrain.  Then I added the
-animated water to get back to the original environment idea.</p>
-
-<p>From there, I added some basic lighting and fog to match the skybox I chose.  It
-was actually a bit tricky to map a collider to the island huts.  For now I used
-spheres, but perhaps I&#8217;ll need to flatten those into a single mesh for Unity to
-represent them accurately.</p>
-
-<p>There&#8217;s definitely room for improvement along many aspects, but it&#8217;s really
-exciting to see something playable come together so quickly.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -986,13 +1275,17 @@ exciting to see something playable come together so quickly.</p>
   <h1>Categories</h1>
   <ul>
     <li>
-      <a class='category' href='/blog/categories/developer-tools/'>Developer Tools</a>, <a class='category' href='/blog/categories/education/'>Education</a>, <a class='category' href='/blog/categories/firefox-os/'>Firefox OS</a>, <a class='category' href='/blog/categories/firefox-for-android/'>Firefox for Android</a>, <a class='category' href='/blog/categories/mozilla/'>Mozilla</a>, <a class='category' href='/blog/categories/open-source/'>Open Source</a>
+      <a class='category' href='/blog/categories/developer-tools/'>Developer Tools</a>, <a class='category' href='/blog/categories/education/'>Education</a>, <a class='category' href='/blog/categories/firefox/'>Firefox</a>, <a class='category' href='/blog/categories/firefox-os/'>Firefox OS</a>, <a class='category' href='/blog/categories/firefox-for-android/'>Firefox for Android</a>, <a class='category' href='/blog/categories/linux/'>Linux</a>, <a class='category' href='/blog/categories/mozilla/'>Mozilla</a>, <a class='category' href='/blog/categories/open-source/'>Open Source</a>
     </li>
   </ul>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/08/25/building-firefox-for-linux-32-bit/">Building Firefox for Linux 32-bit</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/08/05/wifi-debug-fennec/">WiFi Debugging for Firefox for Android</a>
@@ -1008,10 +1301,6 @@ exciting to see something playable come together so quickly.</p>
     
       <li class="post">
         <a href="/blog/2014/10/14/debug-fxos-tabs/">DevTools for Firefox OS browser tabs</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/08/18/webide-enabled/">WebIDE enabled in Nightly</a>
       </li>
     
   </ul>

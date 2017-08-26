@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Linux | J. Ryan Stinnett]]></title>
+  <link href="https://convolv.es/blog/categories/linux/atom.xml" rel="self"/>
+  <link href="https://convolv.es/"/>
+  <updated>2017-08-25T20:40:38-05:00</updated>
+  <id>https://convolv.es/</id>
+  <author>
+    <name><![CDATA[J. Ryan Stinnett]]></name>
+    
+  </author>
+  <icon>https://secure.gravatar.com/avatar/da74cfd81f892e34f7e3926f2c56f908?s=32</icon>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Building Firefox for Linux 32-bit]]></title>
+    <link href="https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit/"/>
+    <updated>2017-08-25T19:33:00-05:00</updated>
+    <id>https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit</id>
+    <content type="html"><![CDATA[<h2>Background</h2>
+
+<p>As part of my work on the Stylo / Quantum CSS team at Mozilla, I needed to be
+able to test changes to Firefox that only affect Linux 32-bit builds. These
+days, I believe you essentially have to use a 64-bit host to build Firefox to
+avoid OOM issues during linking and potentially other steps, so this means
+some form of cross-compiling from a Linux 64-bit host to a Linux 32-bit
+target.</p>
+
+<p>I already had a Linux 64-bit machine running Ubuntu 16.04 LTS, so I set about
+attempting to make it build Firefox targeting Linux 32-bit.</p>
+
+<p>I should note that I only use Linux occasionally at the moment, so there could
+certainly be a better solution than the one I describe.  Also, I recreated these
+steps after the fact, so I might have missed something.  Please let me know in
+the comments.</p>
+
+<p>This article assumes you are already set up to build Firefox when targeting
+64-bit.</p>
+
+<h2>Multiarch Packages (Or: How It's Supposed to Work)</h2>
+
+<p>Recent versions of Debian and Ubuntu support the concept of
+<a href="https://wiki.debian.org/Multiarch">"multiarch packages"</a> which are intended to allow installing multiple
+architectures together to support use cases including... cross-compiling!
+Great, sounds like just the thing we need.</p>
+
+<p>We should be able to install<sup id="a1"><a href="#f1">1</a></sup> the
+<a href="http://searchfox.org/mozilla-central/rev/48ea452803907f2575d81021e8678634e8067fc2/python/mozboot/mozboot/debian.py#50-61">core Gecko development dependencies</a> with an extra <code>:i386</code> suffix to get
+the 32-bit version on our 64-bit host:</p>
+
+<p>```
+(host) $ sudo apt install libasound2-dev:i386 libcurl4-openssl-dev:i386 libdbus-1-dev:i386 libdbus-glib-1-dev:i386 libgconf2-dev:i386 libgtk-3-dev:i386 libgtk2.0-dev:i386 libiw-dev:i386 libnotify-dev:i386 libpulse-dev:i386 libx11-xcb-dev:i386 libxt-dev:i386 mesa-common-dev:i386
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+Some packages could not be installed. This may mean that you have
+requested an impossible situation or if you are using the unstable
+distribution that some required packages have not yet been created
+or been moved out of Incoming.
+The following information may help to resolve the situation:</p>
+
+<p>The following packages have unmet dependencies:
+ libgtk-3-dev:i386 : Depends: gir1.2-gtk-3.0:i386 (= 3.18.9-1ubuntu3.3) but it is not going to be installed</p>
+
+<pre><code>                 Depends: libatk1.0-dev:i386 (&gt;= 2.15.1) but it is not going to be installed
+                 Depends: libatk-bridge2.0-dev:i386 but it is not going to be installed
+                 Depends: libegl1-mesa-dev:i386 but it is not going to be installed
+                 Depends: libxkbcommon-dev:i386 but it is not going to be installed
+                 Depends: libmirclient-dev:i386 (&gt;= 0.13.3) but it is not going to be installed
+</code></pre>
+
+<p> libgtk2.0-dev:i386 : Depends: gir1.2-gtk-2.0:i386 (= 2.24.30-1ubuntu1.16.04.2) but it is not going to be installed</p>
+
+<pre><code>                  Depends: libatk1.0-dev:i386 (&gt;= 1.29.2) but it is not going to be installed
+                  Recommends: python:i386 (&gt;= 2.4) but it is not going to be installed
+</code></pre>
+
+<p> libnotify-dev:i386 : Depends: gir1.2-notify-0.7:i386 (= 0.7.6-2svn1) but it is not going to be installed
+E: Unable to correct problems, you have held broken packages.
+```</p>
+
+<p>Well, that doesn't look good.  It appears some of the Gecko libraries we need
+aren't happy about being installed for multiple architectures.</p>
+
+<h2>Switch Approaches to <code>chroot</code></h2>
+
+<p>Since multiarch packages don't appear to be working here, I looked around for
+other approaches.  Ideally, I would have something fairly self-contained so that
+it would be easy to remove when I no longer need 32-bit support.</p>
+
+<p>One approach to multiple architectures that has been around for a while is to
+create a <a href="https://en.wikipedia.org/wiki/Chroot">chroot</a> environment: effectively, a separate installation of
+Linux for a different architecture.  A utility like <code>schroot</code> can then be used
+to issue the <code>chroot(2)</code> system call which makes the current session believe
+this sub-installation is the root filesystem.</p>
+
+<p>Let's grab <code>schroot</code> so we'll be able to enter the chroot once it's set up:</p>
+
+<p><code>
+(host) $ sudo apt install schroot
+</code></p>
+
+<p>There are several different <a href="http://manpages.ubuntu.com/manpages/xenial/man5/schroot.conf.5.html">types of chroots</a> you can use with <code>schroot</code>.
+We'll use the <code>directory</code> type, as it's the simplest to understand (just another
+directory on the existing filesystem), and it will make it simpler to expose a
+few things to the host later on.</p>
+
+<p>You can place the directory wherever, but some existing filesystems are mapped
+into the chroot for convenience, so avoiding <code>/home</code> is probably a good idea.  I
+went with <code>/var/chroot/linux32</code>:</p>
+
+<p><code>
+(host) $ sudo mkdir -p /var/chroot/linux32
+</code></p>
+
+<p>We need to update <code>schroot.conf</code> to configure the new chroot:</p>
+
+<p><code>
+(host) $ sudo cat &lt;&lt; EOF &gt;&gt; /etc/schroot/schroot.conf
+[linux32]
+description=Linux32 build environment
+aliases=default
+type=directory
+directory=/var/chroot/linux32
+personality=linux32
+profile=desktop
+users=jryans
+root-users=jryans
+EOF
+</code></p>
+
+<p>In particular, <code>personality</code> is important to set for this multi-arch use case.
+(Make sure to replace the user names with your own!)</p>
+
+<p>Firefox will want access to shared memory as well, so we'll need to add that to
+the set of mapped filesystems in the chroot:</p>
+
+<p><code>
+(host) $ sudo cat &lt;&lt; EOF &gt;&gt; /etc/schroot/desktop/fstab
+/dev/shm       /dev/shm        none    rw,bind         0       0
+EOF
+</code></p>
+
+<p>Now we need to <a href="https://help.ubuntu.com/community/DebootstrapChroot">install the 32-bit system</a> inside the chroot.  We can do
+that with a utility called <code>debootstrap</code>:</p>
+
+<p><code>
+(host) $ sudo apt install debootstrap
+(host) $ sudo debootstrap --variant=buildd --arch=i386 --foreign xenial /var/chroot/linux32 http://archive.ubuntu.com/ubuntu
+</code></p>
+
+<p>This will fetch all the packages for a 32-bit installation and place them in the
+chroot.  For a cross-arch bootstrap, we need to add <code>--foreign</code> to skip the
+unpacking step, which we will do momentarily from inside the chroot.
+<code>--variant=buildd</code> will help us out a bit by including common build tools.</p>
+
+<p>To finish installation, we have to enter the chroot.  You can enter the chroot
+with <code>schroot</code> and it remains active until you <code>exit</code>.  Any snippets that say
+<code>(chroot)</code> instead of <code>(host)</code> are meant to be run inside the chroot.</p>
+
+<p>So, inside the chroot, run the second stage of <code>debootstrap</code> to actually unpack
+everything:</p>
+
+<p><code>
+(chroot) $ sudo /debootstrap/debootstrap --second-stage
+</code></p>
+
+<p>Let's double-check that things are working like we expect:</p>
+
+<p><code>
+(chroot) $ arch
+i686
+</code></p>
+
+<p>Great, we're getting closer!</p>
+
+<h2>Install packages</h2>
+
+<p>Now that we have a basic 32-bit installation, let's install the packages we need
+for development.  The <code>apt</code> source list inside the chroot is pretty bare bones,
+so we'll want to expand it a bit to reach everything we need:</p>
+
+<p><code>
+(chroot) $ sudo cat &lt;&lt; EOF &gt; /etc/apt/sources.list
+deb http://archive.ubuntu.com/ubuntu xenial main universe
+deb http://archive.ubuntu.com/ubuntu xenial-updates main universe
+EOF
+(chroot) $ sudo apt update
+</code></p>
+
+<p>Let's grab the same packages from before (without <code>:i386</code> since that's the
+default inside the chroot):</p>
+
+<p><code>
+(chroot) $ sudo apt install libasound2-dev libcurl4-openssl-dev libdbus-1-dev libdbus-glib-1-dev libgconf2-dev libgtk-3-dev libgtk2.0-dev libiw-dev libnotify-dev libpulse-dev libx11-xcb-dev libxt-dev mesa-common-dev python-dbus xvfb yasm
+</code></p>
+
+<p>You may need to install the 32-bit version of your graphics card's GL library to
+get reasonable graphics output when running in the 32-bit environment.</p>
+
+<p><code>
+(chroot) $ sudo apt install nvidia-384
+</code></p>
+
+<p>We'll also want to have access to the X display inside the chroot.  The simple
+way to achieve this is to disable X security in the host and expose the same
+display in the chroot:</p>
+
+<p><code>
+(host) $ xhost +
+(chroot) $ export DISPLAY=:0
+</code></p>
+
+<p>We can verify that we have accelerated graphics:</p>
+
+<p><code>
+(chroot) $ sudo apt install mesa-utils
+(chroot) $ glxinfo | grep renderer
+OpenGL renderer string: GeForce GTX 1080/PCIe/SSE2
+</code></p>
+
+<h2>Building Firefox</h2>
+
+<p>In order for the host to build Firefox for the 32-bit target, it needs to access
+various 32-bit libraries and include files.  We already have these installed in
+the chroot, so let's cheat and expose them to the host via symlinks into the
+chroot's file structure:</p>
+
+<p><code>
+(host) $ sudo ln -s /var/chroot/linux32/lib/i386-linux-gnu /lib/
+(host) $ sudo ln -s /var/chroot/linux32/usr/lib/i386-linux-gnu /usr/lib/
+(host) $ sudo ln -s /var/chroot/linux32/usr/include/i386-linux-gnu /usr/include/
+</code></p>
+
+<p>We also need Rust to be able to target 32-bit from the host, so let's install
+support for that:</p>
+
+<p><code>
+(host) $ rustup target add i686-unknown-linux-gnu
+</code></p>
+
+<p>We'll need a specialized <code>.mozconfig</code> for Firefox to target 32-bit.  Something
+like the following:</p>
+
+<p><code>
+(host) $ cat &lt;&lt; EOF &gt; ~/projects/gecko/.mozconfig
+export PKG_CONFIG_PATH="/var/chroot/linux32/usr/lib/i386-linux-gnu/pkgconfig:/var/chroot/linux32/usr/share/pkgconfig"
+export MOZ_LINUX_32_SSE2_STARTUP_ERROR=1
+CFLAGS="$CFLAGS -msse -msse2 -mfpmath=sse"
+CXXFLAGS="$CXXFLAGS -msse -msse2 -mfpmath=sse"
+if test `uname -m` = "x86_64"; then
+  CFLAGS="$CFLAGS -m32 -march=pentium-m"
+  CXXFLAGS="$CXXFLAGS -m32 -march=pentium-m"
+  ac_add_options --target=i686-pc-linux
+  ac_add_options --host=i686-pc-linux
+  ac_add_options --x-libraries=/usr/lib
+fi
+EOF
+</code></p>
+
+<p>This was <a href="http://searchfox.org/mozilla-central/rev/89e125b817c5d493babbc58ea526be970bd3748e/build/unix/mozconfig.linux32">adapted</a> from the <code>mozconfig.linux32</code> used for official 32-bit
+builds.  I modified the <code>PKG_CONFIG_PATH</code> to point at more 32-bit files
+installed inside the chroot, similar to the library and include changes above.</p>
+
+<p>Now, we should be able to build successfully:</p>
+
+<p><code>
+(host) $ ./mach build
+</code></p>
+
+<p>Then, from the chroot, you can run Firefox and other tests:</p>
+
+<p><code>
+(chroot) $ ./mach run
+</code></p>
+
+<p><img src="/images/posts/firefox-linux32.png" alt="Firefox running on Linux 32-bit" /></p>
+
+<h2>Footnotes</h2>
+
+<p><b id="f1">1.</b> It's commonly suggested that people should use <code>./mach
+bootstrap</code> to install the Firefox build dependencies, so feel free to try that
+if you wish.  I dislike scripts that install system packages, so I've done it
+manually here.  The bootstrap script would likely need various adjustments to
+support this use case. <a href="#a1">↩</a></p>
+]]></content>
+  </entry>
+  
+</feed>

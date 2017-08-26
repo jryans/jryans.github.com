@@ -19,7 +19,7 @@ time on the side working on the developer tools in web browsers, &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://convolv.es/blog/2013/08/25/mozilla">
+  <link rel="canonical" href="https://convolv.es/blog/2013/08/25/mozilla">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="/javascripts/ender.js"></script>
@@ -63,10 +63,10 @@ time on the side working on the developer tools in web browsers, &hellip;">
   
 </ul>
   
-<form action="http://google.com/search" method="get">
+<form action="https://duckduckgo.com" method="get">
   <fieldset role="search">
-    <input type="hidden" name="q" value="site:convolv.es" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+    <input class="search" type="text" name="q" results="0" placeholder="Search"
+           onfocus="if (!this.value) { this.value = 'site:convolv.es '; }"/>
   </fieldset>
 </form>
   
@@ -223,13 +223,17 @@ tools that people don&#8217;t even know they need.</p>
   <h1>Categories</h1>
   <ul>
     <li>
-      <a class='category' href='/blog/categories/developer-tools/'>Developer Tools</a>, <a class='category' href='/blog/categories/education/'>Education</a>, <a class='category' href='/blog/categories/firefox-os/'>Firefox OS</a>, <a class='category' href='/blog/categories/firefox-for-android/'>Firefox for Android</a>, <a class='category' href='/blog/categories/mozilla/'>Mozilla</a>, <a class='category' href='/blog/categories/open-source/'>Open Source</a>
+      <a class='category' href='/blog/categories/developer-tools/'>Developer Tools</a>, <a class='category' href='/blog/categories/education/'>Education</a>, <a class='category' href='/blog/categories/firefox/'>Firefox</a>, <a class='category' href='/blog/categories/firefox-os/'>Firefox OS</a>, <a class='category' href='/blog/categories/firefox-for-android/'>Firefox for Android</a>, <a class='category' href='/blog/categories/linux/'>Linux</a>, <a class='category' href='/blog/categories/mozilla/'>Mozilla</a>, <a class='category' href='/blog/categories/open-source/'>Open Source</a>
     </li>
   </ul>
 </section>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/08/25/building-firefox-for-linux-32-bit/">Building Firefox for Linux 32-bit</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/08/05/wifi-debug-fennec/">WiFi Debugging for Firefox for Android</a>
@@ -245,10 +249,6 @@ tools that people don&#8217;t even know they need.</p>
     
       <li class="post">
         <a href="/blog/2014/10/14/debug-fxos-tabs/">DevTools for Firefox OS browser tabs</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/08/18/webide-enabled/">WebIDE enabled in Nightly</a>
       </li>
     
   </ul>
@@ -304,8 +304,8 @@ tools that people don&#8217;t even know they need.</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://convolv.es/blog/2013/08/25/mozilla/';
-        var disqus_url = 'http://convolv.es/blog/2013/08/25/mozilla/';
+        var disqus_identifier = 'https://convolv.es/blog/2013/08/25/mozilla/';
+        var disqus_url = 'https://convolv.es/blog/2013/08/25/mozilla/';
         var disqus_script = 'embed.js';
       
     (function () {

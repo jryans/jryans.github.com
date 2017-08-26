@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[J. Ryan Stinnett]]></title>
-  <link href="http://convolv.es/atom.xml" rel="self"/>
-  <link href="http://convolv.es/"/>
-  <updated>2017-08-22T17:35:55-05:00</updated>
-  <id>http://convolv.es/</id>
+  <link href="https://convolv.es/atom.xml" rel="self"/>
+  <link href="https://convolv.es/"/>
+  <updated>2017-08-25T20:40:38-05:00</updated>
+  <id>https://convolv.es/</id>
   <author>
     <name><![CDATA[J. Ryan Stinnett]]></name>
     
@@ -15,15 +15,339 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Building Firefox for Linux 32-bit]]></title>
+    <link href="https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit/"/>
+    <updated>2017-08-25T19:33:00-05:00</updated>
+    <id>https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit</id>
+    <content type="html"><![CDATA[<h2>Background</h2>
+
+<p>As part of my work on the Stylo / Quantum CSS team at Mozilla, I needed to be
+able to test changes to Firefox that only affect Linux 32-bit builds. These
+days, I believe you essentially have to use a 64-bit host to build Firefox to
+avoid OOM issues during linking and potentially other steps, so this means
+some form of cross-compiling from a Linux 64-bit host to a Linux 32-bit
+target.</p>
+
+<p>I already had a Linux 64-bit machine running Ubuntu 16.04 LTS, so I set about
+attempting to make it build Firefox targeting Linux 32-bit.</p>
+
+<p>I should note that I only use Linux occasionally at the moment, so there could
+certainly be a better solution than the one I describe.  Also, I recreated these
+steps after the fact, so I might have missed something.  Please let me know in
+the comments.</p>
+
+<p>This article assumes you are already set up to build Firefox when targeting
+64-bit.</p>
+
+<h2>Multiarch Packages (Or: How It&#8217;s Supposed to Work)</h2>
+
+<p>Recent versions of Debian and Ubuntu support the concept of
+<a href="https://wiki.debian.org/Multiarch">&#8220;multiarch packages&#8221;</a> which are intended to allow installing multiple
+architectures together to support use cases including&#8230; cross-compiling!
+Great, sounds like just the thing we need.</p>
+
+<p>We should be able to install<sup id="a1"><a href="#f1">1</a></sup> the
+<a href="http://searchfox.org/mozilla-central/rev/48ea452803907f2575d81021e8678634e8067fc2/python/mozboot/mozboot/debian.py#50-61">core Gecko development dependencies</a> with an extra <code>:i386</code> suffix to get
+the 32-bit version on our 64-bit host:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ sudo apt install libasound2-dev:i386 libcurl4-openssl-dev:i386 libdbus-1-dev:i386 libdbus-glib-1-dev:i386 libgconf2-dev:i386 libgtk-3-dev:i386 libgtk2.0-dev:i386 libiw-dev:i386 libnotify-dev:i386 libpulse-dev:i386 libx11-xcb-dev:i386 libxt-dev:i386 mesa-common-dev:i386
+</span><span class='line'>Reading package lists... Done
+</span><span class='line'>Building dependency tree
+</span><span class='line'>Reading state information... Done
+</span><span class='line'>Some packages could not be installed. This may mean that you have
+</span><span class='line'>requested an impossible situation or if you are using the unstable
+</span><span class='line'>distribution that some required packages have not yet been created
+</span><span class='line'>or been moved out of Incoming.
+</span><span class='line'>The following information may help to resolve the situation:
+</span><span class='line'>
+</span><span class='line'>The following packages have unmet dependencies:
+</span><span class='line'> libgtk-3-dev:i386 : Depends: gir1.2-gtk-3.0:i386 (= 3.18.9-1ubuntu3.3) but it is not going to be installed
+</span><span class='line'>                     Depends: libatk1.0-dev:i386 (&gt;= 2.15.1) but it is not going to be installed
+</span><span class='line'>                     Depends: libatk-bridge2.0-dev:i386 but it is not going to be installed
+</span><span class='line'>                     Depends: libegl1-mesa-dev:i386 but it is not going to be installed
+</span><span class='line'>                     Depends: libxkbcommon-dev:i386 but it is not going to be installed
+</span><span class='line'>                     Depends: libmirclient-dev:i386 (&gt;= 0.13.3) but it is not going to be installed
+</span><span class='line'> libgtk2.0-dev:i386 : Depends: gir1.2-gtk-2.0:i386 (= 2.24.30-1ubuntu1.16.04.2) but it is not going to be installed
+</span><span class='line'>                      Depends: libatk1.0-dev:i386 (&gt;= 1.29.2) but it is not going to be installed
+</span><span class='line'>                      Recommends: python:i386 (&gt;= 2.4) but it is not going to be installed
+</span><span class='line'> libnotify-dev:i386 : Depends: gir1.2-notify-0.7:i386 (= 0.7.6-2svn1) but it is not going to be installed
+</span><span class='line'>E: Unable to correct problems, you have held broken packages.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Well, that doesn&#8217;t look good.  It appears some of the Gecko libraries we need
+aren&#8217;t happy about being installed for multiple architectures.</p>
+
+<h2>Switch Approaches to <code>chroot</code></h2>
+
+<p>Since multiarch packages don&#8217;t appear to be working here, I looked around for
+other approaches.  Ideally, I would have something fairly self-contained so that
+it would be easy to remove when I no longer need 32-bit support.</p>
+
+<p>One approach to multiple architectures that has been around for a while is to
+create a <a href="https://en.wikipedia.org/wiki/Chroot">chroot</a> environment: effectively, a separate installation of
+Linux for a different architecture.  A utility like <code>schroot</code> can then be used
+to issue the <code>chroot(2)</code> system call which makes the current session believe
+this sub-installation is the root filesystem.</p>
+
+<p>Let&#8217;s grab <code>schroot</code> so we&#8217;ll be able to enter the chroot once it&#8217;s set up:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ sudo apt install schroot</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There are several different <a href="http://manpages.ubuntu.com/manpages/xenial/man5/schroot.conf.5.html">types of chroots</a> you can use with <code>schroot</code>.
+We&#8217;ll use the <code>directory</code> type, as it&#8217;s the simplest to understand (just another
+directory on the existing filesystem), and it will make it simpler to expose a
+few things to the host later on.</p>
+
+<p>You can place the directory wherever, but some existing filesystems are mapped
+into the chroot for convenience, so avoiding <code>/home</code> is probably a good idea.  I
+went with <code>/var/chroot/linux32</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ sudo mkdir -p /var/chroot/linux32</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We need to update <code>schroot.conf</code> to configure the new chroot:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ sudo cat &lt;&lt; EOF &gt;&gt; /etc/schroot/schroot.conf
+</span><span class='line'>[linux32]
+</span><span class='line'>description=Linux32 build environment
+</span><span class='line'>aliases=default
+</span><span class='line'>type=directory
+</span><span class='line'>directory=/var/chroot/linux32
+</span><span class='line'>personality=linux32
+</span><span class='line'>profile=desktop
+</span><span class='line'>users=jryans
+</span><span class='line'>root-users=jryans
+</span><span class='line'>EOF</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In particular, <code>personality</code> is important to set for this multi-arch use case.
+(Make sure to replace the user names with your own!)</p>
+
+<p>Firefox will want access to shared memory as well, so we&#8217;ll need to add that to
+the set of mapped filesystems in the chroot:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ sudo cat &lt;&lt; EOF &gt;&gt; /etc/schroot/desktop/fstab
+</span><span class='line'>/dev/shm       /dev/shm        none    rw,bind         0       0
+</span><span class='line'>EOF</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we need to <a href="https://help.ubuntu.com/community/DebootstrapChroot">install the 32-bit system</a> inside the chroot.  We can do
+that with a utility called <code>debootstrap</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ sudo apt install debootstrap
+</span><span class='line'>(host) $ sudo debootstrap --variant=buildd --arch=i386 --foreign xenial /var/chroot/linux32 http://archive.ubuntu.com/ubuntu</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will fetch all the packages for a 32-bit installation and place them in the
+chroot.  For a cross-arch bootstrap, we need to add <code>--foreign</code> to skip the
+unpacking step, which we will do momentarily from inside the chroot.
+<code>--variant=buildd</code> will help us out a bit by including common build tools.</p>
+
+<p>To finish installation, we have to enter the chroot.  You can enter the chroot
+with <code>schroot</code> and it remains active until you <code>exit</code>.  Any snippets that say
+<code>(chroot)</code> instead of <code>(host)</code> are meant to be run inside the chroot.</p>
+
+<p>So, inside the chroot, run the second stage of <code>debootstrap</code> to actually unpack
+everything:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(chroot) $ sudo /debootstrap/debootstrap --second-stage</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Let&#8217;s double-check that things are working like we expect:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(chroot) $ arch
+</span><span class='line'>i686</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Great, we&#8217;re getting closer!</p>
+
+<h2>Install packages</h2>
+
+<p>Now that we have a basic 32-bit installation, let&#8217;s install the packages we need
+for development.  The <code>apt</code> source list inside the chroot is pretty bare bones,
+so we&#8217;ll want to expand it a bit to reach everything we need:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(chroot) $ sudo cat &lt;&lt; EOF &gt; /etc/apt/sources.list
+</span><span class='line'>deb http://archive.ubuntu.com/ubuntu xenial main universe
+</span><span class='line'>deb http://archive.ubuntu.com/ubuntu xenial-updates main universe
+</span><span class='line'>EOF
+</span><span class='line'>(chroot) $ sudo apt update</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Let&#8217;s grab the same packages from before (without <code>:i386</code> since that&#8217;s the
+default inside the chroot):</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(chroot) $ sudo apt install libasound2-dev libcurl4-openssl-dev libdbus-1-dev libdbus-glib-1-dev libgconf2-dev libgtk-3-dev libgtk2.0-dev libiw-dev libnotify-dev libpulse-dev libx11-xcb-dev libxt-dev mesa-common-dev python-dbus xvfb yasm</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You may need to install the 32-bit version of your graphics card&#8217;s GL library to
+get reasonable graphics output when running in the 32-bit environment.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(chroot) $ sudo apt install nvidia-384</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We&#8217;ll also want to have access to the X display inside the chroot.  The simple
+way to achieve this is to disable X security in the host and expose the same
+display in the chroot:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ xhost +
+</span><span class='line'>(chroot) $ export DISPLAY=:0</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We can verify that we have accelerated graphics:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(chroot) $ sudo apt install mesa-utils
+</span><span class='line'>(chroot) $ glxinfo | grep renderer
+</span><span class='line'>OpenGL renderer string: GeForce GTX 1080/PCIe/SSE2</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Building Firefox</h2>
+
+<p>In order for the host to build Firefox for the 32-bit target, it needs to access
+various 32-bit libraries and include files.  We already have these installed in
+the chroot, so let&#8217;s cheat and expose them to the host via symlinks into the
+chroot&#8217;s file structure:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ sudo ln -s /var/chroot/linux32/lib/i386-linux-gnu /lib/
+</span><span class='line'>(host) $ sudo ln -s /var/chroot/linux32/usr/lib/i386-linux-gnu /usr/lib/
+</span><span class='line'>(host) $ sudo ln -s /var/chroot/linux32/usr/include/i386-linux-gnu /usr/include/</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We also need Rust to be able to target 32-bit from the host, so let&#8217;s install
+support for that:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ rustup target add i686-unknown-linux-gnu</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We&#8217;ll need a specialized <code>.mozconfig</code> for Firefox to target 32-bit.  Something
+like the following:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ cat &lt;&lt; EOF &gt; ~/projects/gecko/.mozconfig
+</span><span class='line'>export PKG_CONFIG_PATH="/var/chroot/linux32/usr/lib/i386-linux-gnu/pkgconfig:/var/chroot/linux32/usr/share/pkgconfig"
+</span><span class='line'>export MOZ_LINUX_32_SSE2_STARTUP_ERROR=1
+</span><span class='line'>CFLAGS="$CFLAGS -msse -msse2 -mfpmath=sse"
+</span><span class='line'>CXXFLAGS="$CXXFLAGS -msse -msse2 -mfpmath=sse"
+</span><span class='line'>if test `uname -m` = "x86_64"; then
+</span><span class='line'>  CFLAGS="$CFLAGS -m32 -march=pentium-m"
+</span><span class='line'>  CXXFLAGS="$CXXFLAGS -m32 -march=pentium-m"
+</span><span class='line'>  ac_add_options --target=i686-pc-linux
+</span><span class='line'>  ac_add_options --host=i686-pc-linux
+</span><span class='line'>  ac_add_options --x-libraries=/usr/lib
+</span><span class='line'>fi
+</span><span class='line'>EOF</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This was <a href="http://searchfox.org/mozilla-central/rev/89e125b817c5d493babbc58ea526be970bd3748e/build/unix/mozconfig.linux32">adapted</a> from the <code>mozconfig.linux32</code> used for official 32-bit
+builds.  I modified the <code>PKG_CONFIG_PATH</code> to point at more 32-bit files
+installed inside the chroot, similar to the library and include changes above.</p>
+
+<p>Now, we should be able to build successfully:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(host) $ ./mach build</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then, from the chroot, you can run Firefox and other tests:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(chroot) $ ./mach run</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="https://convolv.es/images/posts/firefox-linux32.png" alt="Firefox running on Linux 32-bit" /></p>
+
+<h2>Footnotes</h2>
+
+<p><b id="f1">1.</b> It&#8217;s commonly suggested that people should use <code>./mach
+bootstrap</code> to install the Firefox build dependencies, so feel free to try that
+if you wish.  I dislike scripts that install system packages, so I&#8217;ve done it
+manually here.  The bootstrap script would likely need various adjustments to
+support this use case. <a href="#a1">↩</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[WiFi Debugging for Firefox for Android]]></title>
-    <link href="http://convolv.es/blog/2015/08/05/wifi-debug-fennec/"/>
+    <link href="https://convolv.es/blog/2015/08/05/wifi-debug-fennec/"/>
     <updated>2015-08-05T15:33:00-05:00</updated>
-    <id>http://convolv.es/blog/2015/08/05/wifi-debug-fennec</id>
+    <id>https://convolv.es/blog/2015/08/05/wifi-debug-fennec</id>
     <content type="html"><![CDATA[<p>I am excited to announce that we&#8217;re now <a href="https://bugzil.la/1180996">shipping</a> WiFi debugging for
 Firefox for Android!  It&#8217;s available in <a href="https://nightly.mozilla.org/">Firefox for Android 42</a>
 with <a href="https://nightly.mozilla.org/">Firefox Nightly</a> on desktop.</p>
 
-<p>The rest of this post will sound quite similar to the <a href="http://convolv.es/blog/2015/03/25/wifi-debug-fxos/">previous announcement for
+<p>The rest of this post will sound quite similar to the <a href="https://convolv.es/blog/2015/03/25/wifi-debug-fxos/">previous announcement for
 Firefox OS</a> support.</p>
 
 <p>WiFi debugging allows <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> to connect to Firefox for Android via
@@ -66,7 +390,7 @@ desired.</p>
 </ol>
 
 
-<p><img src="http://convolv.es/images/posts/fennec-wifi-opts.png" alt="Firefox for Android WiFi Debugging Options" /></p>
+<p><img src="https://convolv.es/images/posts/fennec-wifi-opts.png" alt="Firefox for Android WiFi Debugging Options" /></p>
 
 <p>To connect from Firefox Desktop:</p>
 
@@ -79,8 +403,8 @@ desired.</p>
 </ol>
 
 
-<p><img src="http://convolv.es/images/posts/webide-wifi-runtime.png" alt="WebIDE WiFi Runtimes" />
-<img src="http://convolv.es/images/posts/webide-qr-code.png" alt="WebIDE Displays the QR Code" /></p>
+<p><img src="https://convolv.es/images/posts/webide-wifi-runtime.png" alt="WebIDE WiFi Runtimes" />
+<img src="https://convolv.es/images/posts/webide-qr-code.png" alt="WebIDE Displays the QR Code" /></p>
 
 <p>After scanning the QR code, the QR display should disappear and the &#8220;device&#8221;
 icon in WebIDE will turn blue for &#8220;connected&#8221;.</p>
@@ -141,9 +465,9 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
   
   <entry>
     <title type="html"><![CDATA[WiFi Debugging for Firefox OS]]></title>
-    <link href="http://convolv.es/blog/2015/03/25/wifi-debug-fxos/"/>
+    <link href="https://convolv.es/blog/2015/03/25/wifi-debug-fxos/"/>
     <updated>2015-03-25T08:51:00-05:00</updated>
-    <id>http://convolv.es/blog/2015/03/25/wifi-debug-fxos</id>
+    <id>https://convolv.es/blog/2015/03/25/wifi-debug-fxos</id>
     <content type="html"><![CDATA[<p>I am excited to announce that we&#8217;re now shipping WiFi debugging for Firefox OS!
 It&#8217;s available in <a href="https://developer.mozilla.org/en-US/Firefox_OS/Building">Firefox OS 3.0 / master</a> with <a href="https://nightly.mozilla.org/">Firefox Nightly</a> on desktop.</p>
 
@@ -191,7 +515,7 @@ desired.</p>
 </ol>
 
 
-<p><img src="http://convolv.es/images/posts/fxos-wifi-opts.png" alt="Firefox OS WiFi Debugging Options" /></p>
+<p><img src="https://convolv.es/images/posts/fxos-wifi-opts.png" alt="Firefox OS WiFi Debugging Options" /></p>
 
 <p>To connect from Firefox Desktop:</p>
 
@@ -204,8 +528,8 @@ desired.</p>
 </ol>
 
 
-<p><img src="http://convolv.es/images/posts/webide-wifi-runtime.png" alt="WebIDE WiFi Runtimes" />
-<img src="http://convolv.es/images/posts/webide-qr-code.png" alt="WebIDE Displays the QR Code" /></p>
+<p><img src="https://convolv.es/images/posts/webide-wifi-runtime.png" alt="WebIDE WiFi Runtimes" />
+<img src="https://convolv.es/images/posts/webide-qr-code.png" alt="WebIDE Displays the QR Code" /></p>
 
 <p>After scanning the QR code, the QR display should disappear and the &#8220;device&#8221;
 icon in WebIDE will turn blue for &#8220;connected&#8221;.</p>
@@ -272,14 +596,14 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
   
   <entry>
     <title type="html"><![CDATA[Debugging Tabs with Firefox for Android]]></title>
-    <link href="http://convolv.es/blog/2014/10/28/debug-fennec-tabs/"/>
+    <link href="https://convolv.es/blog/2014/10/28/debug-fennec-tabs/"/>
     <updated>2014-10-28T16:08:00-05:00</updated>
-    <id>http://convolv.es/blog/2014/10/28/debug-fennec-tabs</id>
+    <id>https://convolv.es/blog/2014/10/28/debug-fennec-tabs</id>
     <content type="html"><![CDATA[<p>For quite a while, it has been possible to debug tabs on Firefox for Android
 devices, but there were many steps involved, including manual port forwarding
 from the terminal.</p>
 
-<p>As I <a href="http://convolv.es/blog/2014/10/14/debug-fxos-tabs/">hinted</a> a few weeks ago, <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> would soon support connecting
+<p>As I <a href="https://convolv.es/blog/2014/10/14/debug-fxos-tabs/">hinted</a> a few weeks ago, <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> would soon support connecting
 to Firefox for Android via ADB Helper support, and that time is now!</p>
 
 <h2>How to Use</h2>
@@ -296,16 +620,16 @@ to Firefox for Android via ADB Helper support, and that time is now!</p>
 <p>Opening WebIDE for the first time should install ADB Helper if you don&#8217;t already
 have it, but double-check it is the right version in the add-on manager.</p>
 
-<p><img src="http://convolv.es/images/posts/fennec-usb-runtime.png" alt="Firefox for Android runtime appears" /></p>
+<p><img src="https://convolv.es/images/posts/fennec-usb-runtime.png" alt="Firefox for Android runtime appears" /></p>
 
 <p>Inside WebIDE, you&#8217;ll see an entry for Firefox for Android in the Runtime menu.</p>
 
-<p><img src="http://convolv.es/images/posts/fennec-tab-list.png" alt="Firefox for Android tab list" /></p>
+<p><img src="https://convolv.es/images/posts/fennec-tab-list.png" alt="Firefox for Android tab list" /></p>
 
 <p>Once you select the runtime, tabs from Firefox for Android will be available in
 the (now poorly labelled) apps menu on the left.</p>
 
-<p><img src="http://convolv.es/images/posts/fennec-tab-toolbox.png" alt="Inspecting a tab in WebIDE" /></p>
+<p><img src="https://convolv.es/images/posts/fennec-tab-toolbox.png" alt="Inspecting a tab in WebIDE" /></p>
 
 <p>Choosing a tab will open up the DevTools toolbox for that tab.  You can also
 toggle the toolbox via the &#8220;Pause&#8221; icon in the top toolbar.</p>
@@ -325,15 +649,15 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
   
   <entry>
     <title type="html"><![CDATA[DevTools for Firefox OS browser tabs]]></title>
-    <link href="http://convolv.es/blog/2014/10/14/debug-fxos-tabs/"/>
+    <link href="https://convolv.es/blog/2014/10/14/debug-fxos-tabs/"/>
     <updated>2014-10-14T13:29:00-05:00</updated>
-    <id>http://convolv.es/blog/2014/10/14/debug-fxos-tabs</id>
+    <id>https://convolv.es/blog/2014/10/14/debug-fxos-tabs</id>
     <content type="html"><![CDATA[<p>We&#8217;ve had various tools for inspecting apps on remote devices for some time now,
 but for a long time we&#8217;ve not had the same support for remote browser tabs.</p>
 
 <p>To remedy this, <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> now supports inspecting browser tabs running on Firefox OS devices.</p>
 
-<p><img src="http://convolv.es/images/posts/webide-tab.png" alt="Inspecting a tab in WebIDE" /></p>
+<p><img src="https://convolv.es/images/posts/webide-tab.png" alt="Inspecting a tab in WebIDE" /></p>
 
 <p>A few weeks back, WebIDE gained support for <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1009604">inspecting tabs</a> on the remote
 device, but many of the likely suspects to connect to weren&#8217;t quite ready for
@@ -348,7 +672,7 @@ after 2014-10-14.</p>
 <p>After connecting to your device in WebIDE, any open browser tabs will appear at
 the bottom of WebIDE&#8217;s project list.</p>
 
-<p><img src="http://convolv.es/images/posts/webide-tab-list.png" alt="Browser tab list in WebIDE" /></p>
+<p><img src="https://convolv.es/images/posts/webide-tab-list.png" alt="Browser tab list in WebIDE" /></p>
 
 <p>The toolbox should open automatically after choosing a tab.  You can also toggle
 the toolbox via the &#8220;Pause&#8221; icon in the top toolbar.</p>
@@ -365,14 +689,14 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
   
   <entry>
     <title type="html"><![CDATA[WebIDE enabled in Nightly]]></title>
-    <link href="http://convolv.es/blog/2014/08/18/webide-enabled/"/>
+    <link href="https://convolv.es/blog/2014/08/18/webide-enabled/"/>
     <updated>2014-08-18T10:44:00-05:00</updated>
-    <id>http://convolv.es/blog/2014/08/18/webide-enabled</id>
+    <id>https://convolv.es/blog/2014/08/18/webide-enabled</id>
     <content type="html"><![CDATA[<p>I am excited to announce that <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> is now enabled by default in Nightly
 (Firefox 34)!  Everyone on the App Tools team has been working hard to polish
 this new tool that we originally <a href="https://hacks.mozilla.org/2014/06/webide-lands-in-nightly/">announced</a> back in June.</p>
 
-<iframe src="http://convolv.es//www.youtube-nocookie.com/embed/n8c34wk4OnY?rel=0" allowfullscreen="" frameborder="0" height="315" width="560"></iframe>
+<iframe src="https://convolv.es//www.youtube-nocookie.com/embed/n8c34wk4OnY?rel=0" allowfullscreen="" frameborder="0" height="315" width="560"></iframe>
 
 
 <h2>Features</h2>
@@ -439,10 +763,10 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
   
   <entry>
     <title type="html"><![CDATA[Mozilla]]></title>
-    <link href="http://convolv.es/blog/2013/08/25/mozilla/"/>
+    <link href="https://convolv.es/blog/2013/08/25/mozilla/"/>
     <updated>2013-08-25T01:27:00-05:00</updated>
-    <id>http://convolv.es/blog/2013/08/25/mozilla</id>
-    <content type="html"><![CDATA[<p>In my <a href="http://convolv.es/blog/2013/02/17/into-the-open/">last post</a> (back in February&#8230;), I mentioned I was spending a lot of
+    <id>https://convolv.es/blog/2013/08/25/mozilla</id>
+    <content type="html"><![CDATA[<p>In my <a href="https://convolv.es/blog/2013/02/17/into-the-open/">last post</a> (back in February&#8230;), I mentioned I was spending a lot of
 time on the side working on the developer tools in web browsers, particularly
 Firefox.  I find that Mozilla&#8217;s values, which truly put the user first, are
 something I agree with wholeheartedly.  Mozilla is in a unique position in this
@@ -473,9 +797,9 @@ tools that people don&#8217;t even know they need.</p>
   
   <entry>
     <title type="html"><![CDATA[Into the Open]]></title>
-    <link href="http://convolv.es/blog/2013/02/17/into-the-open/"/>
+    <link href="https://convolv.es/blog/2013/02/17/into-the-open/"/>
     <updated>2013-02-17T22:52:00-06:00</updated>
-    <id>http://convolv.es/blog/2013/02/17/into-the-open</id>
+    <id>https://convolv.es/blog/2013/02/17/into-the-open</id>
     <content type="html"><![CDATA[<p>I&#8217;m excited to start to focusing what time I do have on the side towards open
 source projects.  I&#8217;m always on the lookout for good projects to help out with,
 but these days I always seem to come back to web browsers.</p>
@@ -504,9 +828,9 @@ an exciting time ahead!</p>
   
   <entry>
     <title type="html"><![CDATA[Materials, Maps, and Surfacing]]></title>
-    <link href="http://convolv.es/blog/2012/10/06/materials/"/>
+    <link href="https://convolv.es/blog/2012/10/06/materials/"/>
     <updated>2012-10-06T15:13:00-05:00</updated>
-    <id>http://convolv.es/blog/2012/10/06/materials</id>
+    <id>https://convolv.es/blog/2012/10/06/materials</id>
     <content type="html"><![CDATA[<h3>Overview</h3>
 
 <p>For this <a href="http://viscom3d.blogspot.com/2012/09/materials-maps-and-surfacing.html">assignment</a>, we learned how to apply materials to the objects
@@ -542,9 +866,9 @@ give a metallic appearance.</p>
   
   <entry>
     <title type="html"><![CDATA[Splines, Loft, and Lathe]]></title>
-    <link href="http://convolv.es/blog/2012/09/29/splines/"/>
+    <link href="https://convolv.es/blog/2012/09/29/splines/"/>
     <updated>2012-09-29T08:17:00-05:00</updated>
-    <id>http://convolv.es/blog/2012/09/29/splines</id>
+    <id>https://convolv.es/blog/2012/09/29/splines</id>
     <content type="html"><![CDATA[<h3>Overview</h3>
 
 <p>For this <a href="http://viscom3d.blogspot.com/2012/09/spline-modeling-and-compound-objects.html">assignment</a>, we learned a few new techniques, namely how to make
@@ -577,9 +901,9 @@ many ways you can customize and tune its behavior.</p>
   
   <entry>
     <title type="html"><![CDATA[Basic Game with Unity]]></title>
-    <link href="http://convolv.es/blog/2012/09/22/basic-game-with-unity/"/>
+    <link href="https://convolv.es/blog/2012/09/22/basic-game-with-unity/"/>
     <updated>2012-09-22T04:42:00-05:00</updated>
-    <id>http://convolv.es/blog/2012/09/22/basic-game-with-unity</id>
+    <id>https://convolv.es/blog/2012/09/22/basic-game-with-unity</id>
     <content type="html"><![CDATA[<h3>Overview</h3>
 
 <p>For this week&#8217;s <a href="http://viscom3d.blogspot.com/2012/09/unity-101.html">assignment</a>, we jumped out of the normal curriculum and
@@ -611,9 +935,9 @@ exciting to see something playable come together so quickly.</p>
   
   <entry>
     <title type="html"><![CDATA[3D Modeling: Robot in the Ruins]]></title>
-    <link href="http://convolv.es/blog/2012/09/15/3d-modeling-robot-in-the-ruins/"/>
+    <link href="https://convolv.es/blog/2012/09/15/3d-modeling-robot-in-the-ruins/"/>
     <updated>2012-09-15T05:43:00-05:00</updated>
-    <id>http://convolv.es/blog/2012/09/15/3d-modeling-robot-in-the-ruins</id>
+    <id>https://convolv.es/blog/2012/09/15/3d-modeling-robot-in-the-ruins</id>
     <content type="html"><![CDATA[<h3>Overview</h3>
 
 <p>For our <a href="http://viscom3d.blogspot.com/2012/01/robot-in-ruins.html">first assignment</a>, we had to build a robot and an environment for the it to inhabit.</p>
@@ -641,9 +965,9 @@ various items between the islands as needed.</p>
   
   <entry>
     <title type="html"><![CDATA[3D Modeling and Rendering 1]]></title>
-    <link href="http://convolv.es/blog/2012/09/07/3d-modeling-and-rendering-1/"/>
+    <link href="https://convolv.es/blog/2012/09/07/3d-modeling-and-rendering-1/"/>
     <updated>2012-09-07T23:20:00-05:00</updated>
-    <id>http://convolv.es/blog/2012/09/07/3d-modeling-and-rendering-1</id>
+    <id>https://convolv.es/blog/2012/09/07/3d-modeling-and-rendering-1</id>
     <content type="html"><![CDATA[<p>I&#8217;ve started taking classes at ACC to learn some visual design skills and
 generally extend my knowledge of how games and other media are built.</p>
 
@@ -662,9 +986,9 @@ the past.</p>
   
   <entry>
     <title type="html"><![CDATA[Exciting new blog thing]]></title>
-    <link href="http://convolv.es/blog/2012/05/07/exciting-new-blog-thing/"/>
+    <link href="https://convolv.es/blog/2012/05/07/exciting-new-blog-thing/"/>
     <updated>2012-05-07T23:28:00-05:00</updated>
-    <id>http://convolv.es/blog/2012/05/07/exciting-new-blog-thing</id>
+    <id>https://convolv.es/blog/2012/05/07/exciting-new-blog-thing</id>
     <content type="html"><![CDATA[<p>&#8230;to replace what exactly? My LiveJournal from college&#8230;? I&#8217;ve never been great at maintaining any kind of journal / blog / whatever, but <a href="http://octopress.org">Octopress</a> just looks like so much fun, so I had to give it a shot. Tonight I finally ripped the default theme up a bit to create a more minimalist look, which I think turned out quite well.</p>
 
 <p>I&#8217;m hoping to start talking about all the crazy tech projects I&#8217;ve got brewing in my mind that I&#8217;ll one day sit down and make progress on, along with a few bits of life, work, and everything else mixed in.</p>
