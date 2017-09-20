@@ -145,7 +145,7 @@ So, inside the chroot, run the second stage of `debootstrap` to actually unpack
 everything:
 
 ```
-(chroot) $ sudo /debootstrap/debootstrap --second-stage
+(chroot) $ /debootstrap/debootstrap --second-stage
 ```
 
 Let's double-check that things are working like we expect:
