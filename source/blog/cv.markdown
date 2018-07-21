@@ -177,20 +177,26 @@ fuzzing,” to be submitted, 2018.
 
 J. Ryan Stinnett, “The COMPASS multihop framework for TinyOS,” Technical
 Report, Rice University, Nov. 2007.
+[report](https://convolv.es/compass-dsr-tinyos/)
+[code](https://github.com/jryans/compass-dsr-tinyos)
 
 J. Ryan Stinnett, “Distributed Wavelet Transform for Wireless Sensor
 Networks: TinyOS Implementation,” Technical Report, Rice University,
 Aug. 2007.
+[report](https://github.com/jryans/wavelet-tinyos/blob/master/README.md)
+[code](https://github.com/jryans/wavelet-tinyos)
 
 Raymond Wagner, J. Ryan Stinnett, Marco Duarte, Richard Baraniuk, David
 B. Johnson, T. S. Eugene Ng, “A Network Application Programming
 Interface for Data Processing in Sensor Networks,” Technical Report
 TREE-0705, Rice University, Jan. 2007.
+[report](https://www.cs.rice.edu/~eugeneng/papers/wagnerTREE0705.pdf)
 
 Raymond Wagner, Marco Duarte, J. Ryan Stinnett, T. S. Eugene Ng, David
 B. Johnson, Richard Baraniuk, “A Network API-Driven Survey of
 Communication Requirements of Distributed Data Processing Algorithms for
 Sensor Networks,” Technical Report, Rice University, Nov. 2006.
+[report](http://www-ece.rice.edu/~rwagner/IPSN-API-survey.pdf)
 
 <div class="section">Achievements and Honors</div>
 
