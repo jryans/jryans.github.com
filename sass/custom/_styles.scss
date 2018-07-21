@@ -22,3 +22,25 @@ body > footer {
 aside.sidebar:hover a {
   color: inherit;
 }
+
+// CV
+.section {
+  margin: 1.25em 0 1em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.lr {
+  display: flex;
+}
+.lr > *:first-child {
+  flex: 1;
+}
+.row {
+  margin: 0.5em 0;
+}
+.pri {
+  font-weight: bold;
+}
+.sec {
+  font-size: 80%;
+}
