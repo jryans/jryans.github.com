@@ -6,12 +6,12 @@ footer: false
 
 <div class="section">Profile</div>
 
-I believe security is both a fundamental right and also our biggest
-challenge in today’s computing environment. Tools like KLEE, S²E, and
-angr which allow analysis of binaries are an important path forward. I
-want to push the boundary of what’s possible through new research and
-open source tools that build upon techniques like symbolic execution,
-fuzzing, and formal verification.
+I believe security is both a fundamental right and also our biggest challenge in
+today’s computing environment. Tools like KLEE, S²E, and angr which allow
+analysis of binaries are an important path forward. I want to push the boundary
+of what’s possible through new research and open source tools that apply
+techniques like symbolic execution, fuzzing, and formal verification to
+large-scale systems that people interact with every day.
 
 <div class="section">Education</div>
 
