@@ -48,6 +48,39 @@ large-scale systems that people interact with every day.
   </div>
 </div>
 
+<div class="section">Research Experience</div>
+
+<div class="row">
+  <div class="lr pri">
+    <span>M.Sc. Student Researcher</span>
+    <span>August 2018 – Present</span>
+  </div>
+  <div class="lr sec">
+    <span>EPFL, Dependable Systems Lab</span>
+    <span>Lausanne, Switzerland</span>
+  </div>
+</div>
+
+  - Verifying correctness of VPN software through symbolic execution and formal
+    verification in cooperation with Prof. George Candea’s lab
+
+<div class="row">
+  <div class="lr pri">
+    <span>Undergrad Researcher</span>
+    <span>May 2006 – May 2008</span>
+  </div>
+  <div class="lr sec">
+    <span>Rice University, Wireless Sensor Networks group</span>
+    <span>Houston, USA</span>
+  </div>
+</div>
+
+  - Designed communication API to provide a unified interface for any
+    application
+  - Implemented data compression using wavelets on nodes
+  - Created reference implementation of networking API
+  - Built numerous tools to simplify sensor network research
+
 <div class="section">Industry Experience</div>
 
 <div class="row">
@@ -147,25 +180,6 @@ large-scale systems that people interact with every day.
     <span>Austin, USA</span>
   </div>
 </div>
-
-<div class="section">Research Experience</div>
-
-<div class="row">
-  <div class="lr pri">
-    <span>Undergrad Researcher</span>
-    <span>May 2006 – May 2008</span>
-  </div>
-  <div class="lr sec">
-    <span>Rice University, Wireless Sensor Networks group</span>
-    <span>Houston, USA</span>
-  </div>
-</div>
-
-  - Designed communication API to provide a unified interface for any
-    application
-  - Implemented data compression using wavelets on nodes
-  - Created reference implementation of networking API
-  - Built numerous tools to simplify sensor network research
 
 <div class="section">Manuscripts in Progress</div>
 
