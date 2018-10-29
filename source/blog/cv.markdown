@@ -62,6 +62,8 @@ that people interact with every day.
 
   - Verifying correctness of VPN software through symbolic execution and formal
     verification in cooperation with Prof. George Candea’s lab
+  - Taking courses in decentralized systems, concurrent algorithms, and machine
+    learning
 
 <div class="row">
   <div class="lr pri">
