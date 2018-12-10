@@ -95,6 +95,18 @@ that people interact with every day.
   </div>
 </div>
 
+  - Lead engineer for the end user UI to display and submit user-generated
+    content (UGC)
+  - Led organization-wide effort to reduce release cycle to two weeks
+  - Redesigned media submission flow to support multiple data centers
+  - Created virtualized UI support to simplify testing of simultaneous client
+    changes
+  - Mentored new team members to distribute technical knowledge and improve
+    their skill set
+  - Implemented GWT UI and back end allowing client change deployment at any
+    time
+  - Acted as Agile scrum master for the team
+
 <div class="row">
   <div class="lr pri">
     <span>Associate Software Engineer</span>
@@ -106,6 +118,14 @@ that people interact with every day.
   </div>
 </div>
 
+  - Built a variety of new features for our end user UI from the database layer
+    all the way up to HTML and JavaScript on the client
+  - Implemented code search and cross referencing tool for our entire code base
+    in spare time
+  - Balanced feature flexibility against impact to Client Services organization
+  - Built data generation tools to reduce testing time
+  - Enhanced search i18n through customization of Solr
+
 <div class="row">
   <div class="lr pri">
     <span>Implementation Engineer</span>
@@ -116,6 +136,12 @@ that people interact with every day.
     <span>Austin, USA</span>
   </div>
 </div>
+
+  - Responsible for all technical aspects of client's implementation of end user
+    UGC UI
+  - Configured features and customized design (HTML, CSS, Tapestry, FreeMarker)
+    to match client requirements
+  - Supported clients with any issues they encountered during implementation
 
 <div class="row">
   <div class="lr pri">
