@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Firefox OS | J. Ryan Stinnett]]></title>
   <link href="https://convolv.es/blog/categories/firefox-os/atom.xml" rel="self"/>
   <link href="https://convolv.es/"/>
-  <updated>2018-10-29T13:31:55+01:00</updated>
+  <updated>2018-12-10T08:21:05+00:00</updated>
   <id>https://convolv.es/</id>
   <author>
     <name><![CDATA[J. Ryan Stinnett]]></name>
@@ -17,7 +17,7 @@
   <entry>
     <title type="html"><![CDATA[WiFi Debugging for Firefox OS]]></title>
     <link href="https://convolv.es/blog/2015/03/25/wifi-debug-fxos/"/>
-    <updated>2015-03-25T08:51:00+01:00</updated>
+    <updated>2015-03-25T08:51:00+00:00</updated>
     <id>https://convolv.es/blog/2015/03/25/wifi-debug-fxos</id>
     <content type="html"><![CDATA[<p>I am excited to announce that we're now shipping WiFi debugging for Firefox OS!
 It's available in <a href="https://developer.mozilla.org/en-US/Firefox_OS/Building">Firefox OS 3.0 / master</a> with <a href="https://nightly.mozilla.org/">Firefox Nightly</a> on desktop.</p>
@@ -148,7 +148,7 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
   <entry>
     <title type="html"><![CDATA[DevTools for Firefox OS browser tabs]]></title>
     <link href="https://convolv.es/blog/2014/10/14/debug-fxos-tabs/"/>
-    <updated>2014-10-14T13:29:00+02:00</updated>
+    <updated>2014-10-14T13:29:00+01:00</updated>
     <id>https://convolv.es/blog/2014/10/14/debug-fxos-tabs</id>
     <content type="html"><![CDATA[<p>We've had various tools for inspecting apps on remote devices for some time now,
 but for a long time we've not had the same support for remote browser tabs.</p>
@@ -188,7 +188,7 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
   <entry>
     <title type="html"><![CDATA[WebIDE enabled in Nightly]]></title>
     <link href="https://convolv.es/blog/2014/08/18/webide-enabled/"/>
-    <updated>2014-08-18T10:44:00+02:00</updated>
+    <updated>2014-08-18T10:44:00+01:00</updated>
     <id>https://convolv.es/blog/2014/08/18/webide-enabled</id>
     <content type="html"><![CDATA[<p>I am excited to announce that <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> is now enabled by default in Nightly
 (Firefox 34)!  Everyone on the App Tools team has been working hard to polish

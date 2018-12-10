@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mozilla | J. Ryan Stinnett]]></title>
   <link href="https://convolv.es/blog/categories/mozilla/atom.xml" rel="self"/>
   <link href="https://convolv.es/"/>
-  <updated>2018-10-29T13:31:55+01:00</updated>
+  <updated>2018-12-10T08:21:05+00:00</updated>
   <id>https://convolv.es/</id>
   <author>
     <name><![CDATA[J. Ryan Stinnett]]></name>
@@ -17,7 +17,7 @@
   <entry>
     <title type="html"><![CDATA[Building Firefox for Linux 32-bit]]></title>
     <link href="https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit/"/>
-    <updated>2017-08-25T19:33:00+02:00</updated>
+    <updated>2017-08-25T19:33:00+01:00</updated>
     <id>https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit</id>
     <content type="html"><![CDATA[<h2>Background</h2>
 
@@ -291,7 +291,7 @@ support this use case. <a href="#a1">↩</a></p>
   <entry>
     <title type="html"><![CDATA[WiFi Debugging for Firefox for Android]]></title>
     <link href="https://convolv.es/blog/2015/08/05/wifi-debug-fennec/"/>
-    <updated>2015-08-05T15:33:00+02:00</updated>
+    <updated>2015-08-05T15:33:00+01:00</updated>
     <id>https://convolv.es/blog/2015/08/05/wifi-debug-fennec</id>
     <content type="html"><![CDATA[<p>I am excited to announce that we're now <a href="https://bugzil.la/1180996">shipping</a> WiFi debugging for
 Firefox for Android!  It's available in <a href="https://nightly.mozilla.org/">Firefox for Android 42</a>
@@ -416,7 +416,7 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
   <entry>
     <title type="html"><![CDATA[WiFi Debugging for Firefox OS]]></title>
     <link href="https://convolv.es/blog/2015/03/25/wifi-debug-fxos/"/>
-    <updated>2015-03-25T08:51:00+01:00</updated>
+    <updated>2015-03-25T08:51:00+00:00</updated>
     <id>https://convolv.es/blog/2015/03/25/wifi-debug-fxos</id>
     <content type="html"><![CDATA[<p>I am excited to announce that we're now shipping WiFi debugging for Firefox OS!
 It's available in <a href="https://developer.mozilla.org/en-US/Firefox_OS/Building">Firefox OS 3.0 / master</a> with <a href="https://nightly.mozilla.org/">Firefox Nightly</a> on desktop.</p>
@@ -547,7 +547,7 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
   <entry>
     <title type="html"><![CDATA[Debugging Tabs with Firefox for Android]]></title>
     <link href="https://convolv.es/blog/2014/10/28/debug-fennec-tabs/"/>
-    <updated>2014-10-28T16:08:00+01:00</updated>
+    <updated>2014-10-28T16:08:00+00:00</updated>
     <id>https://convolv.es/blog/2014/10/28/debug-fennec-tabs</id>
     <content type="html"><![CDATA[<p>For quite a while, it has been possible to debug tabs on Firefox for Android
 devices, but there were many steps involved, including manual port forwarding
@@ -600,7 +600,7 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
   <entry>
     <title type="html"><![CDATA[DevTools for Firefox OS browser tabs]]></title>
     <link href="https://convolv.es/blog/2014/10/14/debug-fxos-tabs/"/>
-    <updated>2014-10-14T13:29:00+02:00</updated>
+    <updated>2014-10-14T13:29:00+01:00</updated>
     <id>https://convolv.es/blog/2014/10/14/debug-fxos-tabs</id>
     <content type="html"><![CDATA[<p>We've had various tools for inspecting apps on remote devices for some time now,
 but for a long time we've not had the same support for remote browser tabs.</p>
