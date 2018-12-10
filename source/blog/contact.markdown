@@ -10,8 +10,6 @@ footer: false
 
 ### Email
 
-[ryan.stinnett@epfl.ch][5]
-
 [jryans@gmail.com][1]
 
 ### PGP
@@ -26,4 +24,3 @@ Fingerprint: 0CDC 5D9C DC4D E9C1 1953 9771 2D10 51DA B386 963C
 [2]: https://twitter.com/jryans
 [3]: /keys/jryans.pub.asc
 [4]: https://keybase.io/jryans
-[5]: mailto:ryan.stinnett@epfl.ch

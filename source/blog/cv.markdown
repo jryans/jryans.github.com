@@ -12,47 +12,12 @@ what’s possible through new research and open source tools that apply techniqu
 like symbolic execution, fuzzing, and formal verification to large-scale systems
 that people interact with every day.
 
-<div class="section">Education</div>
-
-<div class="row">
-  <div class="lr pri">
-    <span>M.Sc. in Computer Science</span>
-    <span>Fall 2018 – Present</span>
-  </div>
-  <div class="lr sec">
-    <span>École polytechnique fédérale de Lausanne (EPFL)</span>
-    <span>Lausanne, Switzerland</span>
-  </div>
-</div>
-
-<div class="row">
-  <div class="lr pri">
-    <span>Professional M. in Electrical Engineering (3.83 / 4.0)</span>
-    <span>January 2009</span>
-  </div>
-  <div class="lr sec">
-    <span>Rice University</span>
-    <span>Houston, USA</span>
-  </div>
-</div>
-
-<div class="row">
-  <div class="lr pri">
-    <span>B.S. in Electrical Engineering (3.67 / 4.0)</span>
-    <span>May 2008</span>
-  </div>
-  <div class="lr sec">
-    <span>Rice University</span>
-    <span>Houston, USA</span>
-  </div>
-</div>
-
 <div class="section">Experience</div>
 
 <div class="row">
   <div class="lr pri">
     <span>M.Sc. Student Researcher</span>
-    <span>August 2018 – Present</span>
+    <span>August 2018 – November 2018</span>
   </div>
   <div class="lr sec">
     <span>EPFL, Dependable Systems Lab</span>
@@ -60,9 +25,9 @@ that people interact with every day.
   </div>
 </div>
 
-  - Verifying correctness of VPN software through symbolic execution and formal
+  - Explored correctness of VPN software through symbolic execution and formal
     verification in cooperation with Prof. George Candea’s lab
-  - Taking courses in decentralized systems, concurrent algorithms, and machine
+  - Took courses in decentralized systems, concurrent algorithms, and machine
     learning
 
 <div class="row">
@@ -180,11 +145,29 @@ that people interact with every day.
   - Created reference implementation of networking API
   - Built numerous tools to simplify sensor network research
 
-<div class="section">Manuscripts in Progress</div>
+<div class="section">Education</div>
 
-Daniel Liew, Cristian Cadar, Alastair F. Donaldson, J. Ryan Stinnett,
-“JFS: Solving floating-point constraints using coverage-guided
-fuzzing,” to be submitted, 2018.
+<div class="row">
+  <div class="lr pri">
+    <span>Professional M. in Electrical Engineering (3.83 / 4.0)</span>
+    <span>January 2009</span>
+  </div>
+  <div class="lr sec">
+    <span>Rice University</span>
+    <span>Houston, USA</span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="lr pri">
+    <span>B.S. in Electrical Engineering (3.67 / 4.0)</span>
+    <span>May 2008</span>
+  </div>
+  <div class="lr sec">
+    <span>Rice University</span>
+    <span>Houston, USA</span>
+  </div>
+</div>
 
 <div class="section">Publications</div>
 
