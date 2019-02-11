@@ -16,6 +16,19 @@ that people interact with every day.
 
 <div class="row">
   <div class="lr pri">
+    <span>Senior Software Engineer</span>
+    <span>December 2018 - Present</span>
+  </div>
+  <div class="lr sec">
+    <span>New Vector / JavaScript, Rust, Go</span>
+    <span>Austin, USA & London, UK</span>
+  </div>
+</div>
+
+  - Building open, decentralized, secure communications for all via Matrix
+
+<div class="row">
+  <div class="lr pri">
     <span>M.Sc. Student Researcher</span>
     <span>August 2018 – November 2018</span>
   </div>
