@@ -6,11 +6,11 @@ footer: false
 
 <div class="section">Profile</div>
 
-I believe security and privacy are fundamental rights and also our biggest
-challenges in today’s computing environment. I want to push the boundary of
-what’s possible through new research and open source tools that apply techniques
-like symbolic execution, fuzzing, and formal verification to large-scale systems
-that people interact with every day.
+I enjoy building tools that improve the daily workflow of developers, designers,
+and engineers. I want to work with a first-class team and collaborate with the
+open source community to improve the security and performance of applications
+people build by advancing the state of the art in compilers, visual editors,
+IDEs, and other tooling.
 
 <div class="section">Experience</div>
 
@@ -26,6 +26,8 @@ that people interact with every day.
 </div>
 
   - Building open, decentralized, secure communications for all via Matrix
+  - Planning delivery with product team to ship high quality features on time
+  - Working with the community to gather feedback on features and issues
 
 <div class="row">
   <div class="lr pri">
@@ -39,7 +41,7 @@ that people interact with every day.
 </div>
 
   - Explored correctness of VPN software through symbolic execution and formal
-    verification in cooperation with Prof. George Candea’s lab
+    verification using KLEE, Z3, and LLVM in cooperation with Prof. George Candea’s lab
   - Took courses in decentralized systems, concurrent algorithms, and machine
     learning
 
