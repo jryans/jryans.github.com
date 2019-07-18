@@ -212,6 +212,13 @@ IDEs, and other tooling.
 
 <div class="section">Publications</div>
 
+Daniel Liew, Cristian Cadar, Alastair Donaldson, J. Ryan Stinnett, “Just Fuzz
+It: Solving Floating-Point Constraints using Coverage-Guided Fuzzing,” ACM Joint
+European Software Engineering Conference and Symposium on the Foundations of
+Software Engineering ([ESEC/FSE][esecfse2019]), Tallinn, Estonia, Aug. 2019.
+[paper](/papers/2019/ESEC-FSE/JFS.pdf)
+[code](https://github.com/mc-imperial/jfs)
+
 J. Ryan Stinnett, “The COMPASS multihop framework for TinyOS,” Technical
 Report, Rice University, Nov. 2007.
 [report](https://convolv.es/compass-dsr-tinyos/)
@@ -234,6 +241,8 @@ B. Johnson, Richard Baraniuk, “A Network API-Driven Survey of
 Communication Requirements of Distributed Data Processing Algorithms for
 Sensor Networks,” Technical Report, Rice University, Nov. 2006.
 [report](http://www-ece.rice.edu/~rwagner/IPSN-API-survey.pdf)
+
+[esecfse2019]: https://esec-fse19.ut.ee/
 
 <div class="section">Achievements and Honors</div>
 
