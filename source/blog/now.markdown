@@ -16,7 +16,21 @@ restore some of the magic that mainstream computing has forgotten and give
 people more power to create the computing environment that works for them.
 
 I am planning to add a specific project page about this once I've explored
-existing research in this space and developed my own thoughts further.
+existing research in this space and developed my own thoughts further. Here's
+some of the related work I am examining:
+
+* [Smalltalk][smalltalk] and the many related ideas from Alan Kay's group at
+  Xerox PARC
+* [The Future of Programming][futureprog] by Bret Victor
+* [Cake language for composition][cake] by Stephen Kell
+* Program inspection and reversing tools like [Frida][frida] and
+  [DTrace][dtrace]
+
+[futureprog]: http://worrydream.com/#!/dbx
+[smalltalk]: http://worrydream.com/EarlyHistoryOfSmalltalk/
+[cake]: https://www.cs.kent.ac.uk/people/staff/srk21/research/cake/
+[frida]: https://www.frida.re/
+[dtrace]: https://en.wikipedia.org/wiki/DTrace
 
 ## Learning
 
