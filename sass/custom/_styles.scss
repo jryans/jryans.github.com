@@ -80,23 +80,31 @@ fieldset.mobile-nav {
 }
 
 // CV
+
 .section {
   margin: 1.25em 0 1em;
   font-weight: bold;
-  text-transform: uppercase;
+  font-size: 1.4em;
+  padding: 5px 0;
+  background: #e8e8e8 $noise-bg;
 }
+
 .lr {
   display: flex;
 }
+
 .lr > *:first-child {
   flex: 1;
 }
+
 .row {
   margin: 0.5em 0;
 }
+
 .pri {
   font-weight: bold;
 }
+
 .sec {
   font-size: 80%;
 }
