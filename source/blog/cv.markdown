@@ -190,7 +190,7 @@ IDEs, and other tooling.
 
 <div class="row">
   <div class="lr pri">
-    <span>Professional M. in Electrical Engineering (3.83 / 4.0)</span>
+    <span>Professional M. in Electrical Engineering</span>
     <span>January 2009</span>
   </div>
   <div class="lr sec">
@@ -201,7 +201,7 @@ IDEs, and other tooling.
 
 <div class="row">
   <div class="lr pri">
-    <span>B.S. in Electrical Engineering (3.67 / 4.0)</span>
+    <span>B.S. in Electrical Engineering</span>
     <span>May 2008</span>
   </div>
   <div class="lr sec">
