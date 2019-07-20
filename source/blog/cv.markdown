@@ -12,6 +12,41 @@ open source community to improve the security and performance of applications
 people build by advancing the state of the art in compilers, visual editors,
 IDEs, and other tooling.
 
+<div class="section">Projects</div>
+
+<div class="row">
+  <div class="lr pri">
+    <span>LLVM</span>
+    <span>May 2019 – Present</span>
+  </div>
+  <div class="lr sec">
+    <span>C++</span>
+    <a href="https://reviews.llvm.org/differential/query/sknJfi93xN.l/">patches</a>
+  </div>
+</div>
+
+  - Exploring formal semantics for debugging info
+
+<div class="row">
+  <div class="lr pri">
+    <span>Firefox</span>
+    <span>February 2013 – Present</span>
+  </div>
+  <div class="lr sec">
+    <span>Rust, JavaScript, C++</span>
+    <a href="https://bit.ly/jryans-moz-patches">patches</a>
+  </div>
+</div>
+
+  - Added numerous features to the Firefox Developer Tools
+  - Rewrote portions of Firefox CSS engine in Rust enabling large
+    performance gains from concurrency while preserving memory safety
+  - Led Spectre attack mitigation efforts for Firefox Developer Tools
+  - Leveraged Rust CSS engine in Firefox Developer Tools via WebAssembly
+  - Built new tools to simplify responsive web design for designers and
+    developers
+  - Improved Firefox’s integration with OS features like text shortcuts
+
 <div class="section">Experience</div>
 
 <div class="row">
