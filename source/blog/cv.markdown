@@ -8,9 +8,15 @@ footer: false
 
 I enjoy building tools that improve the daily workflow of developers, designers,
 and engineers. I want to work with a first-class team and collaborate with the
-open source community to improve the security and performance of applications
-people build by advancing the state of the art in compilers, visual editors,
-IDEs, and other tooling.
+open source community to improve the applications people build by advancing the
+state of the art in compilers, visual editors, IDEs, and other tooling.
+
+Modern computing is far too rigid. Applications can only function in preset ways
+determined by some far away team. I am currently exploring how to make computing
+more malleable so that anyone can reshape, extend, compose, and share new
+functionality in ways that were never anticipated or planned for. I hope to
+restore some of the magic that mainstream computing has forgotten and give
+people more power to create the computing environment that works for them.
 
 <div class="section">Projects</div>
 
