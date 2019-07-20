@@ -23,6 +23,31 @@ aside.sidebar:hover a {
   color: inherit;
 }
 
+// Navigation
+
+body > nav {
+  display: flex;
+  align-items: center;
+
+  .main-navigation {
+    flex: 1;
+  }
+
+  form {
+    float: none;
+  }
+
+  ul.subscription {
+    float: none;
+    padding-top: 0;
+  }
+}
+
+.maskImage ul.subscription {
+  position: initial;
+  top: initial;
+}
+
 // CV
 .section {
   margin: 1.25em 0 1em;
