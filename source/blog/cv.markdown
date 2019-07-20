@@ -210,39 +210,99 @@ IDEs, and other tooling.
   </div>
 </div>
 
-<div class="section">Publications</div>
+<div class="section">Refereed Papers</div>
 
-Daniel Liew, Cristian Cadar, Alastair Donaldson, J. Ryan Stinnett, “Just Fuzz
-It: Solving Floating-Point Constraints using Coverage-Guided Fuzzing,” ACM Joint
-European Software Engineering Conference and Symposium on the Foundations of
-Software Engineering ([ESEC/FSE][esecfse2019]), Tallinn, Estonia, Aug. 2019.
-[paper](/papers/2019/ESEC-FSE/JFS.pdf)
-[code](https://github.com/mc-imperial/jfs)
+<div class="row">
+  <div class="lr pri">
+    <span>Just Fuzz It: Solving Floating-Point Constraints using
+    Coverage-Guided Fuzzing</span>
+    <a href="https://esec-fse19.ut.ee/">ESEC/FSE 2019</a>
+  </div>
+  <div class="lr sec">
+    <span>Daniel Liew, Cristian Cadar, Alastair Donaldson,
+    J. Ryan Stinnett</span>
+    <span>Tallinn, Estonia</span>
+  </div>
+  <div class="lr sec">
+    <span>
+      <a href="/papers/2019/ESEC-FSE/JFS.pdf">paper</a>
+      <a href="https://github.com/mc-imperial/jfs">code</a>
+    </span>
+  </div>
+</div>
 
-J. Ryan Stinnett, “The COMPASS multihop framework for TinyOS,” Technical
-Report, Rice University, Nov. 2007.
-[report](https://convolv.es/compass-dsr-tinyos/)
-[code](https://github.com/jryans/compass-dsr-tinyos)
+<div class="section">Technical Reports</div>
 
-J. Ryan Stinnett, “Distributed Wavelet Transform for Wireless Sensor
-Networks: TinyOS Implementation,” Technical Report, Rice University,
-Aug. 2007.
-[report](https://github.com/jryans/wavelet-tinyos/blob/master/README.md)
-[code](https://github.com/jryans/wavelet-tinyos)
+<div class="row">
+  <div class="lr pri">
+    <span>The COMPASS Multihop Framework for TinyOS</span>
+    <span>November 2007</span>
+  </div>
+  <div class="lr sec">
+    <span>J. Ryan Stinnett</span>
+    <span>Houston, USA</span>
+  </div>
+  <div class="lr sec">
+    <span>
+      <a href="https://convolv.es/compass-dsr-tinyos/">report</a>
+      <a href="https://github.com/jryans/compass-dsr-tinyos">code</a>
+    </span>
+  </div>
+</div>
 
-Raymond Wagner, J. Ryan Stinnett, Marco Duarte, Richard Baraniuk, David
-B. Johnson, T. S. Eugene Ng, “A Network Application Programming
-Interface for Data Processing in Sensor Networks,” Technical Report
-TREE-0705, Rice University, Jan. 2007.
-[report](https://www.cs.rice.edu/~eugeneng/papers/wagnerTREE0705.pdf)
+<div class="row">
+  <div class="lr pri">
+    <span>Distributed Wavelet Transform for Wireless Sensor Networks: TinyOS
+    Implementation</span>
+    <span>August 2007</span>
+  </div>
+  <div class="lr sec">
+    <span>J. Ryan Stinnett</span>
+    <span>Houston, USA</span>
+  </div>
+  <div class="lr sec">
+    <span>
+      <a href="https://github.com/jryans/wavelet-tinyos/blob/master/README.md">report</a>
+      <a href="https://github.com/jryans/wavelet-tinyos">code</a>
+    </span>
+  </div>
+</div>
 
-Raymond Wagner, Marco Duarte, J. Ryan Stinnett, T. S. Eugene Ng, David
-B. Johnson, Richard Baraniuk, “A Network API-Driven Survey of
-Communication Requirements of Distributed Data Processing Algorithms for
-Sensor Networks,” Technical Report, Rice University, Nov. 2006.
-[report](http://www-ece.rice.edu/~rwagner/IPSN-API-survey.pdf)
+<div class="row">
+  <div class="lr pri">
+    <span>A Network Application Programming Interface for Data Processing in
+    Sensor Networks</span>
+    <span>January 2007</span>
+  </div>
+  <div class="lr sec">
+    <span>Raymond Wagner, J. Ryan Stinnett, Marco Duarte, Richard Baraniuk,
+    David B. Johnson, T. S. Eugene Ng</span>
+    <span>Houston, USA</span>
+  </div>
+  <div class="lr sec">
+    <span>
+      <a href="https://www.cs.rice.edu/~eugeneng/papers/wagnerTREE0705.pdf">report</a>
+    </span>
+  </div>
+</div>
 
-[esecfse2019]: https://esec-fse19.ut.ee/
+<div class="row">
+  <div class="lr pri">
+    <span>A Network API-Driven Survey of Communication Requirements of
+    Distributed Data Processing Algorithms for Sensor Networks</span>
+    <span>November 2006</span>
+  </div>
+  <div class="lr sec">
+    <span>Raymond Wagner, Marco Duarte, J. Ryan Stinnett, T. S. Eugene Ng,
+    David B. Johnson, Richard Baraniuk</span>
+    <span>Houston, USA</span>
+  </div>
+  <div class="lr sec">
+    <span>
+      <a href="http://www-ece.rice.edu/~rwagner/IPSN-API-survey.pdf">report</a>
+    </span>
+  </div>
+</div>
 
 <div class="section">Achievements and Honors</div>
 
