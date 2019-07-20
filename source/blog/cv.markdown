@@ -17,7 +17,7 @@ IDEs, and other tooling.
 <div class="row">
   <div class="lr pri">
     <span>Senior Software Engineer</span>
-    <span>December 2018 - Present</span>
+    <span>December 2018 – Present</span>
   </div>
   <div class="lr sec">
     <span>New Vector / JavaScript, Rust, Go</span>
