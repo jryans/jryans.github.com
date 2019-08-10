@@ -23,14 +23,22 @@ some of the related work I am examining:
   Xerox PARC
 * [The Future of Programming][futureprog] by Bret Victor
 * [Cake language for composition][cake] by Stephen Kell
-* Program inspection and reversing tools like [Frida][frida] and
-  [DTrace][dtrace]
+* Program inspection and reversing tools like [Frida][frida],
+  [DTrace][dtrace], and [PANDA][panda]
+* Tools for thought that meld the digital and physical worlds, such as
+  [Muse][muse] from Ink and Switch and [Seeing Spaces][seeing] by Bret Victor
+* Desktop environments that are highly adaptable for many kinds of media, such
+  as [Durden][durden]
 
 [futureprog]: http://worrydream.com/#!/dbx
 [smalltalk]: http://worrydream.com/EarlyHistoryOfSmalltalk/
 [cake]: https://www.cs.kent.ac.uk/people/staff/srk21/research/cake/
 [frida]: https://www.frida.re/
 [dtrace]: https://en.wikipedia.org/wiki/DTrace
+[panda]: https://github.com/panda-re/panda
+[muse]: https://www.inkandswitch.com/muse-studio-for-ideas.html
+[seeing]: http://worrydream.com/SeeingSpaces/
+[durden]: http://durden.arcan-fe.com/
 
 ## Learning
 
@@ -49,4 +57,4 @@ lived in a different country. My partner and I are having a great time exploring
 all the different areas of London and traveling to other European cities that
 are now quite easy to get to.
 
-_Last updated 2019-07-20_
+_Last updated 2019-08-11_
