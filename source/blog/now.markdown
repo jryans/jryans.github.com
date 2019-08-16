@@ -2,6 +2,7 @@
 layout: page
 title: Now
 footer: false
+description: Modern computing is far too rigid. I am currently exploring how to make computing more malleable so that anyone can reshape, extend, compose, and share new functionality.
 ---
 
 This is a snapshot of what's on my mind right now. This page was inspired by [Derek Sivers](https://sivers.org/now).

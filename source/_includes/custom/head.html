@@ -5,3 +5,10 @@
 <link rel="me" href="https://twitter.com/jryans">
 <link rel="me" href="https://github.com/jryans">
 <link rel="me" href="mailto:jryans@gmail.com">
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@jryans" />
+<meta name="twitter:title" content="{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}" />
+{% capture description %}{% if page.description %}{{ page.description }}{% else %}{{ content | raw_content }}{% endif %}{% endcapture %}
+<meta name="twitter:description" content="{{ description | strip_html | condense_spaces | truncate:200 }}">
+<meta name="twitter:image" content="https://secure.gravatar.com/avatar/da74cfd81f892e34f7e3926f2c56f908?s=512">
