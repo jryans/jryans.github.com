@@ -10,11 +10,12 @@ This is a snapshot of what's on my mind right now.
 ## Ideas
 
 Modern computing is far too rigid. Applications can only function in preset ways
-determined by some far away team. I am currently exploring how to make computing
-more malleable so that anyone can reshape, extend, compose, and share new
-functionality in ways that were never anticipated or planned for. I hope to
-restore some of the magic that mainstream computing has forgotten and give
-people more power to create the computing environment that works for them.
+determined by some far away team. I am currently exploring how to make programs
+more malleable and computing more humane so that anyone can reshape, extend,
+compose, and share new functionality in ways that were never anticipated or
+planned for. I hope to restore some of the magic that mainstream computing has
+forgotten and give people more power to create the computing environment that
+works for them.
 
 I am planning to add a specific project page about this once I've explored
 existing research in this space and developed my own thoughts further. Here's
@@ -62,4 +63,4 @@ are now quite easy to get to.
 
 This page was inspired by [Derek Sivers](https://sivers.org/now).
 
-_Last updated 2019-08-11_
+_Last updated 2019-08-18_
