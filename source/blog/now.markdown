@@ -5,7 +5,7 @@ footer: false
 description: Modern computing is far too rigid. I am currently exploring how to make computing more malleable so that anyone can reshape, extend, compose, and share new functionality.
 ---
 
-This is a snapshot of what's on my mind right now. This page was inspired by [Derek Sivers](https://sivers.org/now).
+This is a snapshot of what's on my mind right now.
 
 ## Ideas
 
@@ -57,5 +57,9 @@ I recently moved to London, UK in February 2019. This is the first time I have
 lived in a different country. My partner and I are having a great time exploring
 all the different areas of London and traveling to other European cities that
 are now quite easy to get to.
+
+## 
+
+This page was inspired by [Derek Sivers](https://sivers.org/now).
 
 _Last updated 2019-08-11_
