@@ -21,16 +21,18 @@ I am planning to add a specific project page about this once I've explored
 existing research in this space and developed my own thoughts further. Here's
 some of the related work I am examining:
 
-* [Smalltalk][smalltalk] and the many related ideas from Alan Kay's group at
-  Xerox PARC
+* [Smalltalk][smalltalk], [Self][self], and the many related ideas from Alan
+  Kay's group at Xerox PARC
 * [The Future of Programming][futureprog] by Bret Victor
 * [Cake language for composition][cake] by Stephen Kell
 * Program inspection and reversing tools like [Frida][frida],
   [DTrace][dtrace], and [PANDA][panda]
-* Tools for thought that meld the digital and physical worlds, such as
-  [Muse][muse] from Ink and Switch and [Seeing Spaces][seeing] by Bret Victor
+* Tools for thought that meld the digital and physical worlds, such as:
+    * [Muse][muse] and other [end-user programming experiments][eup] from Ink and Switch
+    * [Seeing Spaces][seeing] by Bret Victor
 * Desktop environments that are highly adaptable for many kinds of media, such
   as [Durden][durden]
+* Mozilla's [X-Ray Googles][xray] and other in page inspectors
 
 [futureprog]: http://worrydream.com/#!/dbx
 [smalltalk]: http://worrydream.com/EarlyHistoryOfSmalltalk/
@@ -41,6 +43,9 @@ some of the related work I am examining:
 [muse]: https://www.inkandswitch.com/muse-studio-for-ideas.html
 [seeing]: http://worrydream.com/SeeingSpaces/
 [durden]: http://durden.arcan-fe.com/
+[self]: http://www.selflanguage.org/
+[xray]: https://goggles.mozilla.org/
+[eup]: https://www.inkandswitch.com/end-user-programming.html
 
 ## Learning
 
@@ -63,4 +68,4 @@ are now quite easy to get to.
 
 This page was inspired by [Derek Sivers](https://sivers.org/now).
 
-_Last updated 2019-08-18_
+_Last updated 2019-09-05_
