@@ -29,18 +29,20 @@ I am planning to add a specific project page about this once I've explored
 existing research in this space and developed my own thoughts further. Here's
 some of the related work I am examining:
 
-* [Smalltalk][smalltalk], [Self][self], and the many related ideas from Alan
-  Kay's group at Xerox PARC
-* [The Future of Programming][futureprog] by Bret Victor
-* [Cake language for composition][cake] by Stephen Kell
-* Program inspection and reversing tools like [Frida][frida],
-  [DTrace][dtrace], and [PANDA][panda]
+* [Cake language for composition][cake] and the concept of an "integration
+  domain" from Stephen Kell
+* [Smalltalk][smalltalk], [Self][self], and similar environments that support
+  inspecting and altering capabilities dynamically via late binding and
+  reflection
 * Tools for thought that meld the digital and physical worlds, such as:
     * [Muse][muse] and other [end-user programming experiments][eup] from Ink and Switch
     * [Seeing Spaces][seeing] by Bret Victor
 * Desktop environments that are highly adaptable for many kinds of media, such
   as [Durden][durden]
+* Program inspection and reversing tools like [Frida][frida],
+  [DTrace][dtrace], and [PANDA][panda]
 * Mozilla's [X-Ray Googles][xray] and other in page inspectors
+* [The Future of Programming][futureprog] by Bret Victor
 
 Some use cases under this family of ideas that motivate me to work on this include enabling anyone to:
 
