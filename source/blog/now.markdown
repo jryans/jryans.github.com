@@ -2,6 +2,7 @@
 layout: page
 title: Now
 footer: false
+date: 2019-09-05
 description: Modern computing is far too rigid. I am currently exploring how to make computing more malleable so that anyone can reshape, extend, compose, and share new functionality.
 ---
 
@@ -93,5 +94,3 @@ are now quite easy to get to.
 ## 
 
 This page was inspired by [Derek Sivers](https://sivers.org/now).
-
-_Last updated 2019-09-05_
