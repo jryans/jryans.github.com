@@ -21,17 +21,20 @@
   <a href="https://servo.org">Servo</a>.</p>
 
   <p>
+
+  <a href="{{ site.subscribe_rss }}"><i class="fas fa-rss fa-2x" title="RSS"></i></a>
+
   {% if site.twitter_user %}
     {% if site.twitter_follow_button %}
       <a href="https://twitter.com/{{ site.twitter_user }}" class="twitter-follow-button" data-show-count="{{ site.twitter_show_follower_count }}">Follow @{{ site.twitter_user }}</a>
     {% else %}
-      <a href="https://twitter.com/{{site.twitter_user}}">Twitter</a>
+      <a href="https://twitter.com/{{site.twitter_user}}"><i class="fab fa-twitter fa-2x" title="Twitter"></i></a>
     {% endif %}
   {% endif %}
 
   {% if site.github_user %}
     {% if site.github_show_profile_link %}
-      <a href="https://github.com/{{site.github_user}}">GitHub</a>
+      <a href="https://github.com/{{site.github_user}}"><i class="fab fa-github fa-2x" title="GitHub"></i></a>
     {% endif %}
   {% endif %}
   </p>
