@@ -3,7 +3,7 @@
 <link href="{{ root_url }}/stylesheets/fontawesome/brands.css" rel="stylesheet">
 <link href="{{ root_url }}/stylesheets/fontawesome/solid.css" rel="stylesheet">
 
-<link href="https://secure.gravatar.com/avatar/da74cfd81f892e34f7e3926f2c56f908?s=32" rel="icon">
+<link href="{{ root_url }}/images/avatar_32.jpg" rel="icon">
 
 <link rel="me" href="https://twitter.com/jryans">
 <link rel="me" href="https://github.com/jryans">
@@ -14,4 +14,4 @@
 <meta name="twitter:title" content="{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}" />
 {% capture description %}{% if page.description %}{{ page.description }}{% else %}{{ content | raw_content }}{% endif %}{% endcapture %}
 <meta name="twitter:description" content="{{ description | strip_html | condense_spaces | truncate:200 }}">
-<meta name="twitter:image" content="https://secure.gravatar.com/avatar/da74cfd81f892e34f7e3926f2c56f908?s=512">
+<meta name="twitter:image" content="{{ root_url }}/images/avatar_512.jpg">
