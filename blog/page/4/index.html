@@ -1,0 +1,308 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>J. Ryan Stinnett</title>
+  <meta name="author" content="J. Ryan Stinnett">
+
+  
+  <meta name="description" content="For quite a while, it has been possible to debug tabs on Firefox for Android
+devices, but there were many steps involved, including manual port &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="https://convolv.es/blog/page/4">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="J. Ryan Stinnett" type="application/atom+xml">
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:400,400i,700,700i" rel="stylesheet">
+<link href="/stylesheets/fontawesome/fontawesome.css" rel="stylesheet">
+<link href="/stylesheets/fontawesome/brands.css" rel="stylesheet">
+<link href="/stylesheets/fontawesome/solid.css" rel="stylesheet">
+
+<link href="/images/avatar_32.jpg" rel="icon">
+
+<link rel="me" href="https://twitter.com/jryans">
+<link rel="me" href="https://github.com/jryans">
+<link rel="me" href="mailto:jryans@gmail.com">
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@jryans" />
+<meta name="twitter:title" content="J. Ryan Stinnett" />
+
+<meta name="twitter:description" content="For quite a while, it has been possible to debug tabs on Firefox for Android
+devices, but there were many steps involved, including manual port forwarding
+from the terminal. As I hinted a few weeks &hellip;">
+<meta name="twitter:image" content="/images/avatar_512.jpg">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">J. Ryan Stinnett</a></h1>
+  
+    <h2>Exploring how to make programs more malleable and computing more humane</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="main-navigation">
+  <li><a href="/blog/now">Now</a></li>
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/blog/cv">CV</a></li>
+  <li><a href="/blog/contact">Contact</a></li>
+</ul>
+
+
+<form action="https://duckduckgo.com" method="get">
+  <fieldset role="search">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"
+           onfocus="if (!this.value) { this.value = 'site:convolv.es '; }"/>
+  </fieldset>
+</form>
+
+<!-- <ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" title="subscribe via RSS"><i class="fas fa-rss fa-2x" title="RSS"></i></a></li>
+  
+</ul> -->
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/28/debug-fennec-tabs/">Debugging Tabs with Firefox for Android</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-28T16:08:00+00:00" pubdate data-updated="true">2014-10-28</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>For quite a while, it has been possible to debug tabs on Firefox for Android
+devices, but there were many steps involved, including manual port forwarding
+from the terminal.</p>
+
+<p>As I <a href="/blog/2014/10/14/debug-fxos-tabs/">hinted</a> a few weeks ago, <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> would soon support connecting
+to Firefox for Android via ADB Helper support, and that time is now!</p>
+
+<h2>How to Use</h2>
+
+<p>You&#8217;ll need to assemble the following bits and bobs:</p>
+
+<ul>
+<li>Firefox 36 (2014-10-25 or later)</li>
+<li>ADB Helper 0.7.0 or later</li>
+<li>Firefox for Android 35 or later</li>
+</ul>
+
+
+<p>Opening WebIDE for the first time should install ADB Helper if you don&#8217;t already
+have it, but double-check it is the right version in the add-on manager.</p>
+
+<p><img src="/images/posts/fennec-usb-runtime.png" alt="Firefox for Android runtime appears" /></p>
+
+<p>Inside WebIDE, you&#8217;ll see an entry for Firefox for Android in the Runtime menu.</p>
+
+<p><img src="/images/posts/fennec-tab-list.png" alt="Firefox for Android tab list" /></p>
+
+<p>Once you select the runtime, tabs from Firefox for Android will be available in
+the (now poorly labelled) apps menu on the left.</p>
+
+<p><img src="/images/posts/fennec-tab-toolbox.png" alt="Inspecting a tab in WebIDE" /></p>
+
+<p>Choosing a tab will open up the DevTools toolbox for that tab.  You can also
+toggle the toolbox via the &#8220;Pause&#8221; icon in the top toolbar.</p>
+
+<p>If you would like to debug Firefox for Android&#8217;s system-level / chrome code,
+instead of a specific tab, you can do that with the &#8220;Main Process&#8221; option.</p>
+
+<h2>What&#8217;s Next</h2>
+
+<p>We have even more connection UX improvements on the way, so I hope to have more
+to share soon!</p>
+
+<p>If there are features you&#8217;d like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
+team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">various channels</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/5/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/3/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+
+  <p>I enjoy building tools that improve the daily workflow of developers,
+  designers, and engineers. I want to work with a first-class team and
+  collaborate with the open source community to improve the applications people
+  build by advancing the state of the art in compilers, visual editors, IDEs,
+  and other tooling.</p>
+
+  <p>I am currently building open, decentralized, secure communications for all
+  via <a href="https://matrix.org">Matrix</a> at
+  <a href="https://vector.im">New Vector</a> in London, UK.</p>
+
+  <p>I previously worked at <a href="https://www.mozilla.org">Mozilla</a> on
+  <a href="https://twitter.com/FirefoxDevTools">developer tools</a> for Firefox
+  and Firefox OS.</p>
+
+  <p>I also worked on overhauling the Firefox
+  <a href="https://wiki.mozilla.org/Quantum/Stylo">CSS system</a> using
+  <a href="https://www.rust-lang.org">Rust</a> and tech from
+  <a href="https://servo.org">Servo</a>.</p>
+
+  <p>
+
+  <a href="/atom.xml"><i class="fas fa-rss fa-2x" title="RSS"></i></a>
+
+  
+    
+      <a href="https://twitter.com/jryans"><i class="fab fa-twitter fa-2x" title="Twitter"></i></a>
+    
+  
+
+  
+    
+      <a href="https://github.com/jryans"><i class="fab fa-github fa-2x" title="GitHub"></i></a>
+    
+  
+  </p>
+</section>
+<section>
+  <h1>Categories</h1>
+  <ul>
+    <li>
+      <a class='category' href='/blog/categories/developer-tools/'>Developer Tools</a>, <a class='category' href='/blog/categories/education/'>Education</a>, <a class='category' href='/blog/categories/firefox/'>Firefox</a>, <a class='category' href='/blog/categories/firefox-os/'>Firefox OS</a>, <a class='category' href='/blog/categories/firefox-for-android/'>Firefox for Android</a>, <a class='category' href='/blog/categories/linux/'>Linux</a>, <a class='category' href='/blog/categories/mozilla/'>Mozilla</a>, <a class='category' href='/blog/categories/open-source/'>Open Source</a>
+    </li>
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/08/25/building-firefox-for-linux-32-bit/">Building Firefox for Linux 32-bit</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/05/wifi-debug-fennec/">WiFi Debugging for Firefox for Android</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/25/wifi-debug-fxos/">WiFi Debugging for Firefox OS</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/28/debug-fennec-tabs/">Debugging Tabs with Firefox for Android</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/14/debug-fxos-tabs/">DevTools for Firefox OS browser tabs</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'jryans',
+            count: 10,
+            skip_forks: false,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2019 - J. Ryan Stinnett -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
