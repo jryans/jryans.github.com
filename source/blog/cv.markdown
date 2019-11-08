@@ -32,8 +32,6 @@ works for them.
   </div>
 </div>
 
-  - Exploring formal semantics for debugging info
-
 <div class="row">
   <div class="lr pri">
     <span>Firefox</span>
@@ -70,6 +68,19 @@ works for them.
   - Building open, decentralized, secure communications for all via Matrix
   - Planning delivery with product team to ship high quality features on time
   - Working with the community to gather feedback on features and issues
+
+<div class="row">
+  <div class="lr pri">
+    <span>Visiting Researcher</span>
+    <span>October 2019 – Present</span>
+  </div>
+  <div class="lr sec">
+    <span>University of Kent</span>
+    <span>Canterbury, UK</span>
+  </div>
+</div>
+
+  - Exploring formal semantics for debugging info with Dr. Stephen Kell
 
 <div class="row">
   <div class="lr pri">
