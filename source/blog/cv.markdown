@@ -357,6 +357,20 @@ works for them.
   </div>
 </div>
 
+<div class="section">Service</div>
+
+<div class="row">
+  <div class="lr pri">
+    <span>Program Committee Member</span>
+  </div>
+  <div class="lr sec">
+    <span>
+      <a href="https://2020.programming-conference.org/home/salon-2020">Convivial Computing Salon 2020</a>
+    </span>
+    <span>Porto, Portugal</span>
+  </div>
+  </div>
+
 <div class="section">Achievements and Honors</div>
 
 <div class="lr">
