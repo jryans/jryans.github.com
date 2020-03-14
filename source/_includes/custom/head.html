@@ -14,4 +14,4 @@
 <meta name="twitter:title" content="{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}" />
 {% capture description %}{% if page.description %}{{ page.description }}{% else %}{{ content | raw_content }}{% endif %}{% endcapture %}
 <meta name="twitter:description" content="{{ description | strip_html | condense_spaces | truncate:200 }}">
-<meta name="twitter:image" content="{{ root_url }}/images/avatar_512.jpg">
+<meta name="twitter:image" content="{{ site.url }}/images/avatar_512.jpg">
