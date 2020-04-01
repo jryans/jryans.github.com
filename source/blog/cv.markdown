@@ -11,26 +11,26 @@ and engineers. I want to work with a first-class team and collaborate with the
 open source community to improve the applications people build by advancing the
 state of the art in compilers, visual editors, IDEs, and other tooling.
 
-Modern computing is far too rigid. Applications can only function in preset ways
-determined by some far away team. I am currently exploring how to make programs
-more malleable and computing more humane so that anyone can reshape, extend,
-compose, and share new functionality in ways that were never anticipated or
-planned for. I hope to restore some of the magic that mainstream computing has
-forgotten and give people more power to create the computing environment that
-works for them.
-
 <div class="section">Projects</div>
 
 <div class="row">
   <div class="lr pri">
-    <span>LLVM</span>
-    <span>May 2019 – Present</span>
+    <span>Malleable Systems Collective</span>
+    <span>July 2019 – Present</span>
   </div>
   <div class="lr sec">
-    <span>C++</span>
-    <a href="https://reviews.llvm.org/differential/query/sknJfi93xN.l/">patches</a>
+    <span>Community</span>
+    <a href="https://malleable.systems">site</a>,&nbsp;
+    <a href="https://twitter.com/malleablesys">news</a>,&nbsp;
+    <a href="https://matrix.to/#/#malleable-systems:matrix.org">chat</a>
   </div>
 </div>
+
+Modern computing is far too rigid. Applications can only function in preset ways
+determined by some far away team. Software is trapped in hermetically sealed
+silos and is rewritten many times over rather than recomposed. This community
+catalogs and experiments with malleable software and systems that reset the
+balance of power.
 
 <div class="row">
   <div class="lr pri">
