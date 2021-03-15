@@ -6,10 +6,9 @@ footer: false
 
 <div class="section">Profile</div>
 
-I enjoy building tools that improve the daily workflow of developers, designers,
-and engineers. I want to work with a first-class team and collaborate with the
-open source community to improve the applications people build by advancing the
-state of the art in compilers, visual editors, IDEs, and other tooling.
+I enjoy building tools as part of a community that empowers domain experts to
+control and modify their digital workflows by tearing down the boundaries
+typically imposed by siloed applications from different vendors.
 
 <div class="section">Projects</div>
 
