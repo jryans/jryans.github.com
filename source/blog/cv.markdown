@@ -56,8 +56,12 @@ balance of power.
 
 <div class="row">
   <div class="lr pri">
+    <span>Technical Lead</span>
+    <span>January 2020 – Present</span>
+  </div>
+  <div class="lr pri">
     <span>Senior Software Engineer</span>
-    <span>December 2018 – Present</span>
+    <span>December 2018 – January 2020</span>
   </div>
   <div class="lr sec">
     <span>Element / JavaScript, Rust, Go</span>
