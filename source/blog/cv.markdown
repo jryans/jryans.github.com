@@ -60,7 +60,7 @@ balance of power.
     <span>December 2018 – Present</span>
   </div>
   <div class="lr sec">
-    <span>New Vector / JavaScript, Rust, Go</span>
+    <span>Element / JavaScript, Rust, Go</span>
     <span>Austin, USA & London, UK</span>
   </div>
 </div>
