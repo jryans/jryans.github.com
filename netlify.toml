@@ -1,0 +1,15 @@
+[build]
+publish = "public"
+command = "hugo"
+
+[build.environment]
+HUGO_VERSION = "0.83.1"
+
+[context.production.environment]
+HUGO_ENV = "production"
+
+# Redirect from Octopress to Hugo feed path
+[[redirects]]
+from = "/atom.xml"
+to = "/index.xml"
+status = 301
