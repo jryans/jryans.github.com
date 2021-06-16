@@ -1,8 +1,6 @@
 ---
-layout: post
 title: "Splines, Loft, and Lathe"
 date: 2012-09-29 08:17
-comments: true
 categories: Education
 ---
 

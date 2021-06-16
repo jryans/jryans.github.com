@@ -1,8 +1,6 @@
 ---
-layout: post
 title: "3D Modeling: Robot in the Ruins"
 date: 2012-09-15 05:43
-comments: true
 categories: Education
 ---
 

@@ -1,8 +1,6 @@
 ---
-layout: post
 title: "Building Firefox for Linux 32-bit"
 date: 2017-08-25 19:33
-comments: true
 categories: [Open Source, Mozilla, Firefox, Linux]
 ---
 

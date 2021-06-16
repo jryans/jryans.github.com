@@ -1,8 +1,6 @@
 ---
-layout: post
 title: "3D Modeling and Rendering 1"
 date: 2012-09-07 23:20
-comments: true
 categories: Education
 ---
 I've started taking classes at ACC to learn some visual design skills and

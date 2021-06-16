@@ -1,8 +1,6 @@
 ---
-layout: post
 title: "Mozilla"
 date: 2013-08-25 01:27
-comments: true
 categories: [Open Source, Mozilla, Developer Tools]
 ---
 

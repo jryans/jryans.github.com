@@ -1,20 +1,14 @@
 ---
-layout: post
-title: "WiFi Debugging for Firefox for Android"
-date: 2015-08-05 15:33
-comments: true
-categories: [Open Source, Mozilla, Developer Tools, Firefox for Android]
+title: "WiFi Debugging for Firefox OS"
+date: 2015-03-25 08:51
+categories: [Open Source, Mozilla, Developer Tools, Firefox OS]
 ---
 
-I am excited to announce that we're now [shipping][impl] WiFi debugging for
-Firefox for Android!  It's available in [Firefox for Android 42][fennec-nightly]
-with [Firefox Nightly][desktop-nightly] on desktop.
+I am excited to announce that we're now shipping WiFi debugging for Firefox OS!
+It's available in [Firefox OS 3.0 / master][fxos-build] with [Firefox Nightly][desktop-nightly] on desktop.
 
-The rest of this post will sound quite similar to the [previous announcement for
-Firefox OS][fxos-post] support.
-
-WiFi debugging allows [WebIDE][webide] to connect to Firefox for Android via
-your local WiFi network instead of a USB cable.
+WiFi debugging allows [WebIDE][webide] to connect to your Firefox OS device via your local
+WiFi network instead of a USB cable.
 
 The connection experience is generally more straightforward (especially after
 connecting to a device the first time) than with USB and also more convenient to
@@ -36,24 +30,24 @@ desired.
 
 You'll need to assemble the following bits and bobs:
 
-* [Firefox 42][desktop-nightly]
-* [Firefox for Android 42][fennec-nightly]
-* [Barcode Scanner Android app by ZXing Team][qr-reader] (for QR code scanning)
+* [Firefox 39][desktop-nightly] (2015-03-27 or later)
+* Firefox OS 3.0 (2015-03-27 or later)
+  * Option A: [Update your Flame][flame-updates] to 3.0 / master
+  * Option B: [Build for your device][fxos-build] from source
 
-On your Android device:
+On Firefox OS, enable WiFi debugging:
 
-1. Install the [Barcode Scanner Android app by ZXing Team][qr-reader]
-2. Open Firefox for Android
-3. Go to Developer Tools Settings on device (Settings -> Developer Tools)
-4. Enable Remote Debugging via Wi-Fi
+1. Go to Developer Settings on device (Settings -> Developer)
+2. Enable DevTools via Wi-Fi
+3. Edit the device name if desired
 
-![Firefox for Android WiFi Debugging Options][fennec-wifi-opts]
+![Firefox OS WiFi Debugging Options][fxos-wifi-opts]
 
 To connect from Firefox Desktop:
 
 1. Open WebIDE in Firefox Nightly (Tools -> Web Developer -> WebIDE)
 2. Click "Select Runtime" to open the runtimes panel
-3. Your Firefox for Android device should show up in the "WiFi Devices" section
+3. Your Firefox OS device should show up in the "WiFi Devices" section
 4. A connection prompt will appear on device, choose "Scan" or "Scan and Remember"
 5. Scan the QR code displayed in WebIDE
 
@@ -63,8 +57,8 @@ To connect from Firefox Desktop:
 After scanning the QR code, the QR display should disappear and the "device"
 icon in WebIDE will turn blue for "connected".
 
-You can then access all of your remote browser tabs just as you can today over
-USB.
+You can then access all of your remote apps and browser tabs just as you can
+today over USB.
 
 ## Technical Aside
 
@@ -77,20 +71,24 @@ Windows and Linux.
 
 ## Supported Devices
 
-This feature should be supported on any Firefox for Android device.  So far,
-I've tested it on the LG G2.
+This feature should be supported on any Firefox OS device.  So far, I've tested
+it on the Flame and Nexus 4.
+
+## Known Issues
+
+The QR code scanner can be a bit frustrating at the moment, as real devices
+appear to capture a very low resolution picture.  [Bug 1145772][low-res] aims
+to improve this soon.  You should be able to scan with the Flame by trying a few
+different orientations.  I would suggest using "Scan and Remember", so that
+scanning is only needed for the first connection.
+
+If you find other issues while testing, please [file bugs][bugs] or contact me
+on IRC.
 
 ## Acknowledgments
 
-
-
-Thanks to all who helped via advice and reviews while working on Android support,
-including (in semi-random order):
-
-* Margaret Leibovic
-* Karim Benhmida
-
-And from the larger WiFi debugging effort:
+This was quite a complex project, and many people provided advice and reviews
+while working on this feature, including (in semi-random order):
 
 * Brian Warner
 * Trevor Perrin
@@ -108,20 +106,22 @@ I am probably forgetting others as well, so I apologize if you were omitted.
 
 ## What's Next
 
+I'd like to add this ability for Firefox for Android next.  Thankfully, most of
+the work done here can be reused there.
+
 If there are features you'd like to see added, [file bugs][bugs] or contact the
 team via [various channels][involved].
 
-[impl]: https://bugzil.la/1180996
-[fxos-post]: /blog/2015/03/25/wifi-debug-fxos/
+[low-res]: https://bugzil.la/1145772
 
 [bugs]: https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&component=Developer%20Tools%3A%20WebIDE
 [involved]: https://wiki.mozilla.org/DevTools/GetInvolved#Communication
 
-[fennec-wifi-opts]: /images/posts/fennec-wifi-opts.png
+[fxos-wifi-opts]: /images/posts/fxos-wifi-opts.png
 [webide-wifi-runtime]: /images/posts/webide-wifi-runtime.png
 [webide-qr-code]: /images/posts/webide-qr-code.png
 
-[fennec-nightly]: https://nightly.mozilla.org/
 [desktop-nightly]: https://nightly.mozilla.org/
-[qr-reader]: https://play.google.com/store/apps/details?id=com.google.zxing.client.android
 [webide]: https://developer.mozilla.org/docs/Tools/WebIDE
+[flame-updates]: https://developer.mozilla.org/en-US/Firefox_OS/Phone_guide/Flame/Updating_your_Flame#Updating_your_Flame_to_a_nightly_build
+[fxos-build]: https://developer.mozilla.org/en-US/Firefox_OS/Building

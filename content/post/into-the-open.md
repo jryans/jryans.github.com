@@ -1,8 +1,6 @@
 ---
-layout: post
 title: "Into the Open"
 date: 2013-02-17 22:52
-comments: true
 categories: [Open Source]
 ---
 
