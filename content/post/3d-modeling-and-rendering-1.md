@@ -1,6 +1,6 @@
 ---
 title: "3D Modeling and Rendering 1"
-date: 2012-09-07 23:20
+date: 2012-09-07T23:20:00-05:00
 categories: Education
 ---
 I've started taking classes at ACC to learn some visual design skills and

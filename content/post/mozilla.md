@@ -1,6 +1,6 @@
 ---
 title: "Mozilla"
-date: 2013-08-25 01:27
+date: 2013-08-25T01:27:00-05:00
 categories: [Open Source, Mozilla, Developer Tools]
 ---
 

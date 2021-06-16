@@ -1,6 +1,6 @@
 ---
 title: "WiFi Debugging for Firefox OS"
-date: 2015-03-25 08:51
+date: 2015-03-25T08:51:00-05:00
 categories: [Open Source, Mozilla, Developer Tools, Firefox OS]
 ---
 

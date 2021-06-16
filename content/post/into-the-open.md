@@ -1,6 +1,6 @@
 ---
 title: "Into the Open"
-date: 2013-02-17 22:52
+date: 2013-02-17T22:52:00-06:00
 categories: [Open Source]
 ---
 

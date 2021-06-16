@@ -1,6 +1,6 @@
 ---
 title: "Materials, Maps, and Surfacing"
-date: 2012-10-06 15:13
+date: 2012-10-06T15:13:00-05:00
 categories: Education
 ---
 

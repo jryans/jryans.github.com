@@ -1,6 +1,6 @@
 ---
 title: "Basic Game with Unity"
-date: 2012-09-22 04:42
+date: 2012-09-22T04:42:00-05:00
 categories: Education
 ---
 

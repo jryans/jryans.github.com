@@ -1,6 +1,6 @@
 ---
 title: "Debugging Tabs with Firefox for Android"
-date: 2014-10-28 16:08
+date: 2014-10-28T16:08:00-05:00
 categories: [Open Source, Mozilla, Developer Tools, Firefox for Android]
 ---
 

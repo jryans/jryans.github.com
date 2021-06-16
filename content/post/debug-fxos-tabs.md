@@ -1,6 +1,6 @@
 ---
 title: "DevTools for Firefox OS browser tabs"
-date: 2014-10-14 13:29
+date: 2014-10-14T13:29:00-05:00
 categories: [Open Source, Mozilla, Developer Tools, Firefox OS]
 ---
 
