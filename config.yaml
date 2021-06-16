@@ -1,4 +1,8 @@
-baseURL: http://example.org/
-languageCode: en-us
-title: My New Hugo Site
+baseURL: https://convolv.es/
+languageCode: en-gb
+title: J. Ryan Stinnett
 theme: papermod
+enableRobotsTXT: true
+
+permalinks:
+  post: /blog/:year/:month/:day/:title/
