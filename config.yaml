@@ -3,6 +3,10 @@ languageCode: en-gb
 title: J. Ryan Stinnett
 theme: papermod
 enableRobotsTXT: true
+paginate: 5
+
+params:
+  dateFormat: "2006-01-02"
 
 permalinks:
   post: /blog/:year/:month/:day/:title/
