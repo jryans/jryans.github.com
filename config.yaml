@@ -12,8 +12,8 @@ params:
   author: J. Ryan Stinnett
   dateFormat: "2006-01-02"
   homeInfoParams:
-    Title: "Hello! 👋 😄"
-    Content: |
+    title: "Hello! 👋 😄"
+    content: |
       I enjoy building tools as part of a community that empowers domain experts
       to control and modify their digital workflows by tearing down the
       boundaries typically imposed by siloed applications from different
@@ -41,7 +41,7 @@ params:
       url: "https://twitter.com/jryans"
     - name: github
       url: "https://github.com/jryans"
-  ShowFullTextinRSS: true
+  showFullTextInRSS: true
 
 permalinks:
   post: /blog/:year/:month/:day/:filename/
