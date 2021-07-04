@@ -9,7 +9,7 @@ params:
   dateFormat: "2006-01-02"
 
 permalinks:
-  post: /blog/:year/:month/:day/:title/
+  post: /blog/:year/:month/:day/:filename/
 
 markup:
   goldmark:
