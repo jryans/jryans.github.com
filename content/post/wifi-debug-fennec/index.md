@@ -1,7 +1,7 @@
 ---
 title: "WiFi Debugging for Firefox for Android"
 date: 2015-08-05T15:33:00-05:00
-categories: [Open Source, Mozilla, Developer Tools, Firefox for Android]
+tags: [Open Source, Mozilla, Developer Tools, Firefox for Android]
 ---
 
 I am excited to announce that we're now [shipping][impl] WiFi debugging for

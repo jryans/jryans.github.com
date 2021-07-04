@@ -1,7 +1,7 @@
 ---
 title: "3D Modeling and Rendering 1"
 date: 2012-09-07T23:20:00-05:00
-categories: Education
+tags: [Education]
 ---
 I've started taking classes at ACC to learn some visual design skills and
 generally extend my knowledge of how games and other media are built.

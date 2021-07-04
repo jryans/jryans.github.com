@@ -1,7 +1,7 @@
 ---
 title: "Exciting new blog thing"
 date: 2012-05-07T23:28:00-05:00
-categories:
+tags:
 ---
 ...to replace what exactly? My LiveJournal from college...? I've never been great at maintaining any kind of journal / blog / whatever, but [Octopress](http://octopress.org) just looks like so much fun, so I had to give it a shot. Tonight I finally ripped the default theme up a bit to create a more minimalist look, which I think turned out quite well.
 

@@ -1,7 +1,7 @@
 ---
 title: "3D Modeling: Robot in the Ruins"
 date: 2012-09-15T05:43:00-05:00
-categories: Education
+tags: [Education]
 ---
 
 ### Overview

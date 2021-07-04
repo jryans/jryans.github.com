@@ -1,7 +1,7 @@
 ---
 title: "Mozilla"
 date: 2013-08-25T01:27:00-05:00
-categories: [Open Source, Mozilla, Developer Tools]
+tags: [Open Source, Mozilla, Developer Tools]
 ---
 
 In my [last post][1] (back in February...), I mentioned I was spending a lot of

@@ -46,6 +46,7 @@ params:
 permalinks:
   /:    /blog/:title/
   post: /blog/:year/:month/:day/:filename/
+  tags: /blog/tags/:title/
 
 outputs:
   home:

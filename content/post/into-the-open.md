@@ -1,7 +1,7 @@
 ---
 title: "Into the Open"
 date: 2013-02-17T22:52:00-06:00
-categories: [Open Source]
+tags: [Open Source]
 ---
 
 I'm excited to start to focusing what time I do have on the side towards open

@@ -1,7 +1,7 @@
 ---
 title: "Debugging Tabs with Firefox for Android"
 date: 2014-10-28T16:08:00-05:00
-categories: [Open Source, Mozilla, Developer Tools, Firefox for Android]
+tags: [Open Source, Mozilla, Developer Tools, Firefox for Android]
 ---
 
 For quite a while, it has been possible to debug tabs on Firefox for Android
