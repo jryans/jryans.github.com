@@ -46,6 +46,12 @@ params:
 permalinks:
   post: /blog/:year/:month/:day/:filename/
 
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
 markup:
   goldmark:
     renderer:
