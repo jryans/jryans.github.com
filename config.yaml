@@ -10,3 +10,8 @@ params:
 
 permalinks:
   post: /blog/:year/:month/:day/:title/
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
