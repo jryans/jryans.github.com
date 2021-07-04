@@ -35,7 +35,7 @@ We should be able to install<sup id="a1">[1](#f1)</sup> the
 [core Gecko development dependencies][cgd] with an extra `:i386` suffix to get
 the 32-bit version on our 64-bit host:
 
-```
+```text
 (host) $ sudo apt install libasound2-dev:i386 libcurl4-openssl-dev:i386 libdbus-1-dev:i386 libdbus-glib-1-dev:i386 libgconf2-dev:i386 libgtk-3-dev:i386 libgtk2.0-dev:i386 libiw-dev:i386 libnotify-dev:i386 libpulse-dev:i386 libx11-xcb-dev:i386 libxt-dev:i386 mesa-common-dev:i386
 Reading package lists... Done
 Building dependency tree
@@ -77,7 +77,7 @@ this sub-installation is the root filesystem.
 
 Let's grab `schroot` so we'll be able to enter the chroot once it's set up:
 
-```
+```text
 (host) $ sudo apt install schroot
 ```
 
@@ -90,13 +90,13 @@ You can place the directory wherever, but some existing filesystems are mapped
 into the chroot for convenience, so avoiding `/home` is probably a good idea.  I
 went with `/var/chroot/linux32`:
 
-```
+```text
 (host) $ sudo mkdir -p /var/chroot/linux32
 ```
 
 We need to update `schroot.conf` to configure the new chroot:
 
-```
+```text
 (host) $ sudo cat << EOF >> /etc/schroot/schroot.conf
 [linux32]
 description=Linux32 build environment
@@ -116,7 +116,7 @@ In particular, `personality` is important to set for this multi-arch use case.
 Firefox will want access to shared memory as well, so we'll need to add that to
 the set of mapped filesystems in the chroot:
 
-```
+```text
 (host) $ sudo cat << EOF >> /etc/schroot/desktop/fstab
 /dev/shm       /dev/shm        none    rw,bind         0       0
 EOF
@@ -125,7 +125,7 @@ EOF
 Now we need to [install the 32-bit system][db] inside the chroot.  We can do
 that with a utility called `debootstrap`:
 
-```
+```text
 (host) $ sudo apt install debootstrap
 (host) $ sudo debootstrap --variant=buildd --arch=i386 --foreign xenial /var/chroot/linux32 http://archive.ubuntu.com/ubuntu
 ```
@@ -142,13 +142,13 @@ with `schroot` and it remains active until you `exit`.  Any snippets that say
 So, inside the chroot, run the second stage of `debootstrap` to actually unpack
 everything:
 
-```
+```text
 (chroot) $ /debootstrap/debootstrap --second-stage
 ```
 
 Let's double-check that things are working like we expect:
 
-```
+```text
 (chroot) $ arch
 i686
 ```
@@ -161,7 +161,7 @@ Now that we have a basic 32-bit installation, let's install the packages we need
 for development.  The `apt` source list inside the chroot is pretty bare bones,
 so we'll want to expand it a bit to reach everything we need:
 
-```
+```text
 (chroot) $ sudo cat << EOF > /etc/apt/sources.list
 deb http://archive.ubuntu.com/ubuntu xenial main universe
 deb http://archive.ubuntu.com/ubuntu xenial-updates main universe
@@ -172,14 +172,14 @@ EOF
 Let's grab the same packages from before (without `:i386` since that's the
 default inside the chroot):
 
-```
+```text
 (chroot) $ sudo apt install libasound2-dev libcurl4-openssl-dev libdbus-1-dev libdbus-glib-1-dev libgconf2-dev libgtk-3-dev libgtk2.0-dev libiw-dev libnotify-dev libpulse-dev libx11-xcb-dev libxt-dev mesa-common-dev python-dbus xvfb yasm
 ```
 
 You may need to install the 32-bit version of your graphics card's GL library to
 get reasonable graphics output when running in the 32-bit environment.
 
-```
+```text
 (chroot) $ sudo apt install nvidia-384
 ```
 
@@ -187,14 +187,14 @@ We'll also want to have access to the X display inside the chroot.  The simple
 way to achieve this is to disable X security in the host and expose the same
 display in the chroot:
 
-```
+```text
 (host) $ xhost +
 (chroot) $ export DISPLAY=:0
 ```
 
 We can verify that we have accelerated graphics:
 
-```
+```text
 (chroot) $ sudo apt install mesa-utils
 (chroot) $ glxinfo | grep renderer
 OpenGL renderer string: GeForce GTX 1080/PCIe/SSE2
@@ -207,7 +207,7 @@ various 32-bit libraries and include files.  We already have these installed in
 the chroot, so let's cheat and expose them to the host via symlinks into the
 chroot's file structure:
 
-```
+```text
 (host) $ sudo ln -s /var/chroot/linux32/lib/i386-linux-gnu /lib/
 (host) $ sudo ln -s /var/chroot/linux32/usr/lib/i386-linux-gnu /usr/lib/
 (host) $ sudo ln -s /var/chroot/linux32/usr/include/i386-linux-gnu /usr/include/
@@ -216,14 +216,14 @@ chroot's file structure:
 We also need Rust to be able to target 32-bit from the host, so let's install
 support for that:
 
-```
+```text
 (host) $ rustup target add i686-unknown-linux-gnu
 ```
 
 We'll need a specialized `.mozconfig` for Firefox to target 32-bit.  Something
 like the following:
 
-```
+```text
 (host) $ cat << EOF > ~/projects/gecko/.mozconfig
 export PKG_CONFIG_PATH="/var/chroot/linux32/usr/lib/i386-linux-gnu/pkgconfig:/var/chroot/linux32/usr/share/pkgconfig"
 export MOZ_LINUX_32_SSE2_STARTUP_ERROR=1
@@ -245,13 +245,13 @@ installed inside the chroot, similar to the library and include changes above.
 
 Now, we should be able to build successfully:
 
-```
+```text
 (host) $ ./mach build
 ```
 
 Then, from the chroot, you can run Firefox and other tests:
 
-```
+```text
 (chroot) $ ./mach run
 ```
 
