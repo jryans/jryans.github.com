@@ -255,7 +255,7 @@ Then, from the chroot, you can run Firefox and other tests:
 (chroot) $ ./mach run
 ```
 
-![Firefox running on Linux 32-bit][firefox-linux32]
+![Firefox running on Linux 32-bit](firefox-linux32.png)
 
 ## Footnotes
 
@@ -271,4 +271,3 @@ support this use case. [↩](#a1)
 [ct]: http://manpages.ubuntu.com/manpages/xenial/man5/schroot.conf.5.html
 [db]: https://help.ubuntu.com/community/DebootstrapChroot
 [ml32]: http://searchfox.org/mozilla-central/rev/89e125b817c5d493babbc58ea526be970bd3748e/build/unix/mozconfig.linux32
-[firefox-linux32]: /images/posts/firefox-linux32.png

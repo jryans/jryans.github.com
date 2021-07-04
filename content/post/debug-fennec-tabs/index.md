@@ -22,16 +22,16 @@ You'll need to assemble the following bits and bobs:
 Opening WebIDE for the first time should install ADB Helper if you don't already
 have it, but double-check it is the right version in the add-on manager.
 
-![Firefox for Android runtime appears][fennec-usb-runtime]
+![Firefox for Android runtime appears](fennec-usb-runtime.png)
 
 Inside WebIDE, you'll see an entry for Firefox for Android in the Runtime menu.
 
-![Firefox for Android tab list][fennec-tab-list]
+![Firefox for Android tab list](fennec-tab-list.png)
 
 Once you select the runtime, tabs from Firefox for Android will be available in
 the (now poorly labelled) apps menu on the left.
 
-![Inspecting a tab in WebIDE][fennec-tab-toolbox]
+![Inspecting a tab in WebIDE](fennec-tab-toolbox.png)
 
 Choosing a tab will open up the DevTools toolbox for that tab.  You can also
 toggle the toolbox via the "Pause" icon in the top toolbar.
@@ -52,6 +52,3 @@ team via [various channels][involved].
 [3]: https://bugzilla.mozilla.org/show_bug.cgi?id=975084
 [bugs]: https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&component=Developer%20Tools%3A%20WebIDE
 [involved]: https://wiki.mozilla.org/DevTools/GetInvolved#Communication
-[fennec-usb-runtime]: /images/posts/fennec-usb-runtime.png
-[fennec-tab-list]: /images/posts/fennec-tab-list.png
-[fennec-tab-toolbox]: /images/posts/fennec-tab-toolbox.png

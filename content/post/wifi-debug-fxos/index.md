@@ -41,7 +41,7 @@ On Firefox OS, enable WiFi debugging:
 2. Enable DevTools via Wi-Fi
 3. Edit the device name if desired
 
-![Firefox OS WiFi Debugging Options][fxos-wifi-opts]
+![Firefox OS WiFi Debugging Options](fxos-wifi-opts.png)
 
 To connect from Firefox Desktop:
 
@@ -51,8 +51,8 @@ To connect from Firefox Desktop:
 4. A connection prompt will appear on device, choose "Scan" or "Scan and Remember"
 5. Scan the QR code displayed in WebIDE
 
-![WebIDE WiFi Runtimes][webide-wifi-runtime]
-![WebIDE Displays the QR Code][webide-qr-code]
+![WebIDE WiFi Runtimes](webide-wifi-runtime.png)
+![WebIDE Displays the QR Code](webide-qr-code.png)
 
 After scanning the QR code, the QR display should disappear and the "device"
 icon in WebIDE will turn blue for "connected".
@@ -116,10 +116,6 @@ team via [various channels][involved].
 
 [bugs]: https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&component=Developer%20Tools%3A%20WebIDE
 [involved]: https://wiki.mozilla.org/DevTools/GetInvolved#Communication
-
-[fxos-wifi-opts]: /images/posts/fxos-wifi-opts.png
-[webide-wifi-runtime]: /images/posts/webide-wifi-runtime.png
-[webide-qr-code]: /images/posts/webide-qr-code.png
 
 [desktop-nightly]: https://nightly.mozilla.org/
 [webide]: https://developer.mozilla.org/docs/Tools/WebIDE

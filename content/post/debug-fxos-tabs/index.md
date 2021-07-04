@@ -9,7 +9,7 @@ but for a long time we've not had the same support for remote browser tabs.
 
 To remedy this, [WebIDE][1] now supports inspecting browser tabs running on Firefox OS devices.
 
-![Inspecting a tab in WebIDE][webide-tab]
+![Inspecting a tab in WebIDE](webide-tab.png)
 
 A few weeks back, WebIDE gained support for [inspecting tabs][2] on the remote
 device, but many of the likely suspects to connect to weren't quite ready for
@@ -24,7 +24,7 @@ after 2014-10-14.
 After connecting to your device in WebIDE, any open browser tabs will appear at
 the bottom of WebIDE's project list.
 
-![Browser tab list in WebIDE][webide-tab-list]
+![Browser tab list in WebIDE](webide-tab-list.png)
 
 The toolbox should open automatically after choosing a tab.  You can also toggle
 the toolbox via the "Pause" icon in the top toolbar.
@@ -42,5 +42,3 @@ team via [various channels][involved].
 [3]: https://bugzilla.mozilla.org/show_bug.cgi?id=975084
 [bugs]: https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&component=Developer%20Tools%3A%20WebIDE
 [involved]: https://wiki.mozilla.org/DevTools/GetInvolved#Communication
-[webide-tab]: /images/posts/webide-tab.png
-[webide-tab-list]: /images/posts/webide-tab-list.png
