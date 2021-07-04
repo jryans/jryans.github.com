@@ -1,5 +1,7 @@
 ---
 title: "Search"
 layout: "search"
-menu: "main"
+menu:
+  main:
+    weight: 100
 ---

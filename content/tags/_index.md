@@ -1,5 +1,7 @@
 ---
 title: "Tags"
 url: "/blog/tags/"
-menu: "main"
+menu:
+  main:
+    weight: 2
 ---

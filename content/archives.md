@@ -1,5 +1,7 @@
 ---
 title: "Archives"
 layout: "archives"
-menu: "main"
+menu:
+  main:
+    weight: 1
 ---
