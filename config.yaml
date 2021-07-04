@@ -41,6 +41,7 @@ params:
       url: "https://twitter.com/jryans"
     - name: github
       url: "https://github.com/jryans"
+  ShowFullTextinRSS: true
 
 permalinks:
   post: /blog/:year/:month/:day/:filename/
