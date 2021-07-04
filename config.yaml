@@ -7,6 +7,9 @@ paginate: 5
 
 params:
   env: production
+  description:
+    Exploring how to make programs more malleable and computing more humane
+  author: J. Ryan Stinnett
   dateFormat: "2006-01-02"
 
 permalinks:
