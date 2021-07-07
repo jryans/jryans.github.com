@@ -43,7 +43,7 @@ params:
   showFullTextInRSS: true
 
 permalinks:
-  /:    /blog/:title/
+  /:    /blog/:filename/
   blog: /blog/:year/:month/:day/:filename/
   tags: /blog/tags/:title/
 
