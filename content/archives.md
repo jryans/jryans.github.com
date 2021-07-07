@@ -3,5 +3,5 @@ title: "Archives"
 layout: "archives"
 menu:
   main:
-    weight: 1
+    weight: 10
 ---

@@ -1,7 +1,8 @@
 ---
-layout: page
 title: Contact
-footer: false
+menu:
+  main:
+    weight: 3
 ---
 
 ### Matrix

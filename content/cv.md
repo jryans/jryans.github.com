@@ -1,7 +1,9 @@
 ---
-layout: page
 title: Curriculum Vitae
-footer: false
+menu:
+  main:
+    weight: 2
+    name: CV
 ---
 
 <div class="section">Profile</div>

@@ -1,0 +1,31 @@
+.section {
+  margin: 1.25em 0 1em;
+  font-weight: bold;
+  font-size: 1.4em;
+  padding: 5px 0;
+}
+
+.lr {
+  display: flex;
+}
+
+.lr > *:first-child {
+  flex: 1;
+}
+
+.lr a {
+  box-shadow: initial;
+  text-decoration: underline;
+}
+
+.row {
+  margin: 0.5em 0;
+}
+
+.pri {
+  font-weight: bold;
+}
+
+.sec {
+  font-size: 80%;
+}

@@ -1,9 +1,9 @@
 ---
-layout: page
 title: Now
-footer: false
 date: 2020-02-29
-description: Modern computing is far too rigid. I am currently exploring how to make computing more malleable so that anyone can reshape, extend, compose, and share new functionality.
+menu:
+  main:
+    weight: 1
 ---
 
 This is a snapshot of what's on my mind right now.
@@ -32,6 +32,6 @@ would also appreciate any and all feedback on this, so please feel free to conta
 [t]: https://twitter.com/jryans
 [m]: https://matrix.to/#/@jryans:matrix.org
 
-## 
+---
 
 This page was inspired by [Derek Sivers](https://sivers.org/now).
