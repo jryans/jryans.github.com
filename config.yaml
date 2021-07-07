@@ -54,6 +54,10 @@ outputs:
     - RSS
     - JSON
 
+outputFormats:
+  RSS:
+    baseName: "atom"
+
 markup:
   goldmark:
     renderer:
