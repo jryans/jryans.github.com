@@ -35,7 +35,7 @@ params:
       [Servo](https://servo.org).
   socialIcons:
     - name: rss
-      url: "/index.xml"
+      url: "/atom.xml"
     - name: twitter
       url: "https://twitter.com/jryans"
     - name: github
