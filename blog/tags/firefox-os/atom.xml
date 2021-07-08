@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Firefox OS on J. Ryan Stinnett</title>
+    <link>https://convolv.es/blog/tags/firefox-os/</link>
+    <description>Recent content in Firefox OS on J. Ryan Stinnett</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Wed, 25 Mar 2015 08:51:00 -0500</lastBuildDate><atom:link href="https://convolv.es/blog/tags/firefox-os/atom.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>WiFi Debugging for Firefox OS</title>
+      <link>https://convolv.es/blog/2015/03/25/wifi-debug-fxos/</link>
+      <pubDate>Wed, 25 Mar 2015 08:51:00 -0500</pubDate>
+      
+      <guid>https://convolv.es/blog/2015/03/25/wifi-debug-fxos/</guid>
+      <description>I am excited to announce that we&amp;rsquo;re now shipping WiFi debugging for Firefox OS! It&amp;rsquo;s available in Firefox OS 3.0 / master with Firefox Nightly on desktop.
+WiFi debugging allows WebIDE to connect to your Firefox OS device via your local WiFi network instead of a USB cable.
+The connection experience is generally more straightforward (especially after connecting to a device the first time) than with USB and also more convenient to use since you&amp;rsquo;re no longer tied down by a cable.</description>
+      <content:encoded><![CDATA[<p>I am excited to announce that we&rsquo;re now shipping WiFi debugging for Firefox OS!
+It&rsquo;s available in <a href="https://developer.mozilla.org/en-US/Firefox_OS/Building">Firefox OS 3.0 / master</a> with <a href="https://nightly.mozilla.org/">Firefox Nightly</a> on desktop.</p>
+<p>WiFi debugging allows <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> to connect to your Firefox OS device via your local
+WiFi network instead of a USB cable.</p>
+<p>The connection experience is generally more straightforward (especially after
+connecting to a device the first time) than with USB and also more convenient to
+use since you&rsquo;re no longer tied down by a cable.</p>
+<h2 id="security">Security</h2>
+<p>A large portion of this project has gone towards making the debugging
+connection secure, so that you can use it safely on shared network, such as an
+office or coffee shop.</p>
+<p>We use TLS for encryption and authentication.  The computer and device both
+create self-signed certificates.  When you connect, a QR code is scanned to
+verify that the certificates can be trusted.  During the connection process, you
+can choose to remember this information and connect immediately in the future if
+desired.</p>
+<h2 id="how-to-use">How to Use</h2>
+<p>You&rsquo;ll need to assemble the following bits and bobs:</p>
+<ul>
+<li><a href="https://nightly.mozilla.org/">Firefox 39</a> (2015-03-27 or later)</li>
+<li>Firefox OS 3.0 (2015-03-27 or later)
+<ul>
+<li>Option A: <a href="https://developer.mozilla.org/en-US/Firefox_OS/Phone_guide/Flame/Updating_your_Flame#Updating_your_Flame_to_a_nightly_build">Update your Flame</a> to 3.0 / master</li>
+<li>Option B: <a href="https://developer.mozilla.org/en-US/Firefox_OS/Building">Build for your device</a> from source</li>
+</ul>
+</li>
+</ul>
+<p>On Firefox OS, enable WiFi debugging:</p>
+<ol>
+<li>Go to Developer Settings on device (Settings -&gt; Developer)</li>
+<li>Enable DevTools via Wi-Fi</li>
+<li>Edit the device name if desired</li>
+</ol>
+<p><img loading="lazy" src="fxos-wifi-opts.png" alt="Firefox OS WiFi Debugging Options"  />
+</p>
+<p>To connect from Firefox Desktop:</p>
+<ol>
+<li>Open WebIDE in Firefox Nightly (Tools -&gt; Web Developer -&gt; WebIDE)</li>
+<li>Click &ldquo;Select Runtime&rdquo; to open the runtimes panel</li>
+<li>Your Firefox OS device should show up in the &ldquo;WiFi Devices&rdquo; section</li>
+<li>A connection prompt will appear on device, choose &ldquo;Scan&rdquo; or &ldquo;Scan and Remember&rdquo;</li>
+<li>Scan the QR code displayed in WebIDE</li>
+</ol>
+<p><img loading="lazy" src="webide-wifi-runtime.png" alt="WebIDE WiFi Runtimes"  />
+
+<img loading="lazy" src="webide-qr-code.png" alt="WebIDE Displays the QR Code"  />
+</p>
+<p>After scanning the QR code, the QR display should disappear and the &ldquo;device&rdquo;
+icon in WebIDE will turn blue for &ldquo;connected&rdquo;.</p>
+<p>You can then access all of your remote apps and browser tabs just as you can
+today over USB.</p>
+<h2 id="technical-aside">Technical Aside</h2>
+<p>This process does not use ADB at all on the device, so if you find ADB
+inconvenient while debugging or would rather not install ADB at all, then
+WiFi debugging is the way to go.</p>
+<p>By skipping ADB, we don&rsquo;t have to worry about driver confusion, especially on
+Windows and Linux.</p>
+<h2 id="supported-devices">Supported Devices</h2>
+<p>This feature should be supported on any Firefox OS device.  So far, I&rsquo;ve tested
+it on the Flame and Nexus 4.</p>
+<h2 id="known-issues">Known Issues</h2>
+<p>The QR code scanner can be a bit frustrating at the moment, as real devices
+appear to capture a very low resolution picture.  <a href="https://bugzil.la/1145772">Bug 1145772</a> aims
+to improve this soon.  You should be able to scan with the Flame by trying a few
+different orientations.  I would suggest using &ldquo;Scan and Remember&rdquo;, so that
+scanning is only needed for the first connection.</p>
+<p>If you find other issues while testing, please <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact me
+on IRC.</p>
+<h2 id="acknowledgments">Acknowledgments</h2>
+<p>This was quite a complex project, and many people provided advice and reviews
+while working on this feature, including (in semi-random order):</p>
+<ul>
+<li>Brian Warner</li>
+<li>Trevor Perrin</li>
+<li>David Keeler</li>
+<li>Honza Bambas</li>
+<li>Patrick McManus</li>
+<li>Jason Duell</li>
+<li>Panos Astithas</li>
+<li>Jan Keromnes</li>
+<li>Alexandre Poirot</li>
+<li>Paul Rouget</li>
+<li>Paul Theriault</li>
+</ul>
+<p>I am probably forgetting others as well, so I apologize if you were omitted.</p>
+<h2 id="whats-next">What&rsquo;s Next</h2>
+<p>I&rsquo;d like to add this ability for Firefox for Android next.  Thankfully, most of
+the work done here can be reused there.</p>
+<p>If there are features you&rsquo;d like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
+team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">various channels</a>.</p>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>DevTools for Firefox OS browser tabs</title>
+      <link>https://convolv.es/blog/2014/10/14/debug-fxos-tabs/</link>
+      <pubDate>Tue, 14 Oct 2014 13:29:00 -0500</pubDate>
+      
+      <guid>https://convolv.es/blog/2014/10/14/debug-fxos-tabs/</guid>
+      <description>We&amp;rsquo;ve had various tools for inspecting apps on remote devices for some time now, but for a long time we&amp;rsquo;ve not had the same support for remote browser tabs.
+To remedy this, WebIDE now supports inspecting browser tabs running on Firefox OS devices.
+A few weeks back, WebIDE gained support for inspecting tabs on the remote device, but many of the likely suspects to connect to weren&amp;rsquo;t quite ready for various reasons.</description>
+      <content:encoded><![CDATA[<p>We&rsquo;ve had various tools for inspecting apps on remote devices for some time now,
+but for a long time we&rsquo;ve not had the same support for remote browser tabs.</p>
+<p>To remedy this, <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> now supports inspecting browser tabs running on Firefox OS devices.</p>
+<p><img loading="lazy" src="webide-tab.png" alt="Inspecting a tab in WebIDE"  />
+</p>
+<p>A few weeks back, WebIDE gained support for <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1009604">inspecting tabs</a> on the remote
+device, but many of the likely suspects to connect to weren&rsquo;t quite ready for
+various reasons.</p>
+<p>We&rsquo;ve just <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=975084">landed</a> the necessary server-side bits for Firefox OS, so you
+should be able try this out by updating your device to the next nightly build
+after 2014-10-14.</p>
+<h2 id="how-to-use">How to Use</h2>
+<p>After connecting to your device in WebIDE, any open browser tabs will appear at
+the bottom of WebIDE&rsquo;s project list.</p>
+<p><img loading="lazy" src="webide-tab-list.png" alt="Browser tab list in WebIDE"  />
+</p>
+<p>The toolbox should open automatically after choosing a tab.  You can also toggle
+the toolbox via the &ldquo;Pause&rdquo; icon in the top toolbar.</p>
+<h2 id="whats-next">What&rsquo;s Next</h2>
+<p>We&rsquo;re planning to make this work for Firefox for Android as well.  Much of
+that work is already done, so I am hopeful that it will be available soon.</p>
+<p>If there are features you&rsquo;d like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
+team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">various channels</a>.</p>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>WebIDE enabled in Nightly</title>
+      <link>https://convolv.es/blog/2014/08/18/webide-enabled/</link>
+      <pubDate>Mon, 18 Aug 2014 10:44:00 -0500</pubDate>
+      
+      <guid>https://convolv.es/blog/2014/08/18/webide-enabled/</guid>
+      <description>I am excited to announce that WebIDE is now enabled by default in Nightly (Firefox 34)! Everyone on the App Tools team has been working hard to polish this new tool that we originally announced back in June.
+
+Features While the previous App Manager tool was great, that tool&amp;rsquo;s UX held us back when trying support more complex workflows. With the redesign into WebIDE, we&amp;rsquo;ve already been able to add:</description>
+      <content:encoded><![CDATA[<p>I am excited to announce that <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> is now enabled by default in Nightly
+(Firefox 34)!  Everyone on the App Tools team has been working hard to polish
+this new tool that we originally <a href="https://hacks.mozilla.org/2014/06/webide-lands-in-nightly/">announced</a> back in June.</p>
+<p><a href="https://www.youtube.com/watch?v=n8c34wk4OnY"><img src="webide-enabled-video.png"></a></p>
+<h2 id="features">Features</h2>
+<p>While the previous App Manager tool was great, that tool&rsquo;s UX held us
+back when trying support more complex workflows.  With the redesign into WebIDE,
+we&rsquo;ve already been able to add:</p>
+<ul>
+<li>Project Editing
+<ul>
+<li>Great for getting started without worrying about an external editor</li>
+</ul>
+</li>
+<li>Project Templates
+<ul>
+<li>Easy to focus on content from the start by using a template</li>
+</ul>
+</li>
+<li>Improved DevTools Toolbox integration
+<ul>
+<li>Many UX issues arose from the non-standard way that App Manager used the
+DevTools</li>
+</ul>
+</li>
+<li><a href="https://developer.mozilla.org/docs/Tools/WebIDE/Monitor">Monitor</a>
+<ul>
+<li>Live memory graphs help diagnose performance issues</li>
+</ul>
+</li>
+</ul>
+<p><img loading="lazy" src="monitor.png" alt="Monitor"  />
+</p>
+<h2 id="transition">Transition</h2>
+<p>All projects you may have created previously in the App Manager are also
+available in WebIDE.</p>
+<p>While the App Manager is now hidden, it&rsquo;s accessible for now at
+<code>about:app-manager</code>.  We do intend to remove it entirely in the future, so
+it&rsquo;s best to start using WebIDE today.  If you find any issues, please <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a>!</p>
+<h2 id="whats-next">What&rsquo;s Next</h2>
+<p>Looking ahead, we have many more exciting things planned for WebIDE, such as:</p>
+<ul>
+<li>Command line integration</li>
+<li>Improved support for app frameworks like Cordova</li>
+<li>Validation that matches the Firefox Marketplace</li>
+</ul>
+<p>If there are features you&rsquo;d like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
+team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">various channels</a>.</p>
+]]></content:encoded>
+    </item>
+    
+  </channel>
+</rss>

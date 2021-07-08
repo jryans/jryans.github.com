@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Building Firefox for Linux 32-bit | J. Ryan Stinnett</title>
+<meta name="keywords" content="Open Source, Mozilla, Firefox, Linux" />
+<meta name="description" content="Background As part of my work on the Stylo / Quantum CSS team at Mozilla, I needed to be able to test changes to Firefox that only affect Linux 32-bit builds. These days, I believe you essentially have to use a 64-bit host to build Firefox to avoid OOM issues during linking and potentially other steps, so this means some form of cross-compiling from a Linux 64-bit host to a Linux 32-bit target.">
+<meta name="author" content="">
+<link rel="canonical" href="https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.7565db822f964cf9d1ae88d48f8db33a887ee1d4daf04f95b5100afd0ed4a008.css" integrity="sha256-dWXbgi&#43;WTPnRrojUj42zOoh&#43;4dTa8E&#43;VtRAK/Q7UoAg=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://convolv.es/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://convolv.es/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://convolv.es/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://convolv.es/apple-touch-icon.png">
+<link rel="mask-icon" href="https://convolv.es/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<meta name="generator" content="Hugo 0.83.1" />
+<meta property="og:title" content="Building Firefox for Linux 32-bit" />
+<meta property="og:description" content="Background As part of my work on the Stylo / Quantum CSS team at Mozilla, I needed to be able to test changes to Firefox that only affect Linux 32-bit builds. These days, I believe you essentially have to use a 64-bit host to build Firefox to avoid OOM issues during linking and potentially other steps, so this means some form of cross-compiling from a Linux 64-bit host to a Linux 32-bit target." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2017-08-25T19:33:00-05:00" />
+<meta property="article:modified_time" content="2017-08-25T19:33:00-05:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Building Firefox for Linux 32-bit"/>
+<meta name="twitter:description" content="Background As part of my work on the Stylo / Quantum CSS team at Mozilla, I needed to be able to test changes to Firefox that only affect Linux 32-bit builds. These days, I believe you essentially have to use a 64-bit host to build Firefox to avoid OOM issues during linking and potentially other steps, so this means some form of cross-compiling from a Linux 64-bit host to a Linux 32-bit target."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Blogs",
+      "item": "https://convolv.es/blog/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Building Firefox for Linux 32-bit",
+      "item": "https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Building Firefox for Linux 32-bit",
+  "name": "Building Firefox for Linux 32-bit",
+  "description": "Background As part of my work on the Stylo / Quantum CSS team at Mozilla, I needed to be able to test changes to Firefox that only affect Linux 32-bit builds. These days, I believe you essentially have to use a 64-bit host to build Firefox to avoid OOM issues during linking and potentially other steps, so this means some form of cross-compiling from a Linux 64-bit host to a Linux 32-bit target.",
+  "keywords": [
+    "Open Source", "Mozilla", "Firefox", "Linux"
+  ],
+  "articleBody": "Background As part of my work on the Stylo / Quantum CSS team at Mozilla, I needed to be able to test changes to Firefox that only affect Linux 32-bit builds. These days, I believe you essentially have to use a 64-bit host to build Firefox to avoid OOM issues during linking and potentially other steps, so this means some form of cross-compiling from a Linux 64-bit host to a Linux 32-bit target.\nI already had a Linux 64-bit machine running Ubuntu 16.04 LTS, so I set about attempting to make it build Firefox targeting Linux 32-bit.\nI should note that I only use Linux occasionally at the moment, so there could certainly be a better solution than the one I describe. Also, I recreated these steps after the fact, so I might have missed something. Please let me know in the comments.\nThis article assumes you are already set up to build Firefox when targeting 64-bit.\nMultiarch Packages (Or: How It’s Supposed to Work) Recent versions of Debian and Ubuntu support the concept of “multiarch packages” which are intended to allow installing multiple architectures together to support use cases including… cross-compiling! Great, sounds like just the thing we need.\nWe should be able to install1 the core Gecko development dependencies with an extra :i386 suffix to get the 32-bit version on our 64-bit host:\n(host) $ sudo apt install libasound2-dev:i386 libcurl4-openssl-dev:i386 libdbus-1-dev:i386 libdbus-glib-1-dev:i386 libgconf2-dev:i386 libgtk-3-dev:i386 libgtk2.0-dev:i386 libiw-dev:i386 libnotify-dev:i386 libpulse-dev:i386 libx11-xcb-dev:i386 libxt-dev:i386 mesa-common-dev:i386 Reading package lists... Done Building dependency tree Reading state information... Done Some packages could not be installed. This may mean that you have requested an impossible situation or if you are using the unstable distribution that some required packages have not yet been created or been moved out of Incoming. The following information may help to resolve the situation: The following packages have unmet dependencies: libgtk-3-dev:i386 : Depends: gir1.2-gtk-3.0:i386 (= 3.18.9-1ubuntu3.3) but it is not going to be installed Depends: libatk1.0-dev:i386 (= 2.15.1) but it is not going to be installed Depends: libatk-bridge2.0-dev:i386 but it is not going to be installed Depends: libegl1-mesa-dev:i386 but it is not going to be installed Depends: libxkbcommon-dev:i386 but it is not going to be installed Depends: libmirclient-dev:i386 (= 0.13.3) but it is not going to be installed libgtk2.0-dev:i386 : Depends: gir1.2-gtk-2.0:i386 (= 2.24.30-1ubuntu1.16.04.2) but it is not going to be installed Depends: libatk1.0-dev:i386 (= 1.29.2) but it is not going to be installed Recommends: python:i386 (= 2.4) but it is not going to be installed libnotify-dev:i386 : Depends: gir1.2-notify-0.7:i386 (= 0.7.6-2svn1) but it is not going to be installed E: Unable to correct problems, you have held broken packages. Well, that doesn’t look good. It appears some of the Gecko libraries we need aren’t happy about being installed for multiple architectures.\nSwitch Approaches to chroot Since multiarch packages don’t appear to be working here, I looked around for other approaches. Ideally, I would have something fairly self-contained so that it would be easy to remove when I no longer need 32-bit support.\nOne approach to multiple architectures that has been around for a while is to create a chroot environment: effectively, a separate installation of Linux for a different architecture. A utility like schroot can then be used to issue the chroot(2) system call which makes the current session believe this sub-installation is the root filesystem.\nLet’s grab schroot so we’ll be able to enter the chroot once it’s set up:\n(host) $ sudo apt install schroot There are several different types of chroots you can use with schroot. We’ll use the directory type, as it’s the simplest to understand (just another directory on the existing filesystem), and it will make it simpler to expose a few things to the host later on.\nYou can place the directory wherever, but some existing filesystems are mapped into the chroot for convenience, so avoiding /home is probably a good idea. I went with /var/chroot/linux32:\n(host) $ sudo mkdir -p /var/chroot/linux32 We need to update schroot.conf to configure the new chroot:\n(host) $ sudo cat  /etc/schroot/schroot.conf [linux32] description=Linux32 build environment aliases=default type=directory directory=/var/chroot/linux32 personality=linux32 profile=desktop users=jryans root-users=jryans EOF In particular, personality is important to set for this multi-arch use case. (Make sure to replace the user names with your own!)\nFirefox will want access to shared memory as well, so we’ll need to add that to the set of mapped filesystems in the chroot:\n(host) $ sudo cat  /etc/schroot/desktop/fstab /dev/shm /dev/shm none rw,bind 0 0 EOF Now we need to install the 32-bit system inside the chroot. We can do that with a utility called debootstrap:\n(host) $ sudo apt install debootstrap (host) $ sudo debootstrap --variant=buildd --arch=i386 --foreign xenial /var/chroot/linux32 http://archive.ubuntu.com/ubuntu This will fetch all the packages for a 32-bit installation and place them in the chroot. For a cross-arch bootstrap, we need to add --foreign to skip the unpacking step, which we will do momentarily from inside the chroot. --variant=buildd will help us out a bit by including common build tools.\nTo finish installation, we have to enter the chroot. You can enter the chroot with schroot and it remains active until you exit. Any snippets that say (chroot) instead of (host) are meant to be run inside the chroot.\nSo, inside the chroot, run the second stage of debootstrap to actually unpack everything:\n(chroot) $ /debootstrap/debootstrap --second-stage Let’s double-check that things are working like we expect:\n(chroot) $ arch i686 Great, we’re getting closer!\nInstall packages Now that we have a basic 32-bit installation, let’s install the packages we need for development. The apt source list inside the chroot is pretty bare bones, so we’ll want to expand it a bit to reach everything we need:\n(chroot) $ sudo cat /etc/apt/sources.list deb http://archive.ubuntu.com/ubuntu xenial main universe deb http://archive.ubuntu.com/ubuntu xenial-updates main universe EOF (chroot) $ sudo apt update Let’s grab the same packages from before (without :i386 since that’s the default inside the chroot):\n(chroot) $ sudo apt install libasound2-dev libcurl4-openssl-dev libdbus-1-dev libdbus-glib-1-dev libgconf2-dev libgtk-3-dev libgtk2.0-dev libiw-dev libnotify-dev libpulse-dev libx11-xcb-dev libxt-dev mesa-common-dev python-dbus xvfb yasm You may need to install the 32-bit version of your graphics card’s GL library to get reasonable graphics output when running in the 32-bit environment.\n(chroot) $ sudo apt install nvidia-384 We’ll also want to have access to the X display inside the chroot. The simple way to achieve this is to disable X security in the host and expose the same display in the chroot:\n(host) $ xhost + (chroot) $ export DISPLAY=:0 We can verify that we have accelerated graphics:\n(chroot) $ sudo apt install mesa-utils (chroot) $ glxinfo | grep renderer OpenGL renderer string: GeForce GTX 1080/PCIe/SSE2 Building Firefox In order for the host to build Firefox for the 32-bit target, it needs to access various 32-bit libraries and include files. We already have these installed in the chroot, so let’s cheat and expose them to the host via symlinks into the chroot’s file structure:\n(host) $ sudo ln -s /var/chroot/linux32/lib/i386-linux-gnu /lib/ (host) $ sudo ln -s /var/chroot/linux32/usr/lib/i386-linux-gnu /usr/lib/ (host) $ sudo ln -s /var/chroot/linux32/usr/include/i386-linux-gnu /usr/include/ We also need Rust to be able to target 32-bit from the host, so let’s install support for that:\n(host) $ rustup target add i686-unknown-linux-gnu We’ll need a specialized .mozconfig for Firefox to target 32-bit. Something like the following:\n(host) $ cat ~/projects/gecko/.mozconfig export PKG_CONFIG_PATH=\"/var/chroot/linux32/usr/lib/i386-linux-gnu/pkgconfig:/var/chroot/linux32/usr/share/pkgconfig\" export MOZ_LINUX_32_SSE2_STARTUP_ERROR=1 CFLAGS=\"$CFLAGS -msse -msse2 -mfpmath=sse\" CXXFLAGS=\"$CXXFLAGS -msse -msse2 -mfpmath=sse\" if test `uname -m` = \"x86_64\"; then CFLAGS=\"$CFLAGS -m32 -march=pentium-m\" CXXFLAGS=\"$CXXFLAGS -m32 -march=pentium-m\" ac_add_options --target=i686-pc-linux ac_add_options --host=i686-pc-linux ac_add_options --x-libraries=/usr/lib fi EOF This was adapted from the mozconfig.linux32 used for official 32-bit builds. I modified the PKG_CONFIG_PATH to point at more 32-bit files installed inside the chroot, similar to the library and include changes above.\nNow, we should be able to build successfully:\n(host) $ ./mach build Then, from the chroot, you can run Firefox and other tests:\n(chroot) $ ./mach run Footnotes 1. It’s commonly suggested that people should use ./mach bootstrap to install the Firefox build dependencies, so feel free to try that if you wish. I dislike scripts that install system packages, so I’ve done it manually here. The bootstrap script would likely need various adjustments to support this use case. ↩\n",
+  "wordCount" : "1373",
+  "inLanguage": "en",
+  "datePublished": "2017-08-25T19:33:00-05:00",
+  "dateModified": "2017-08-25T19:33:00-05:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "J. Ryan Stinnett",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://convolv.es/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+<noscript>
+    <style type="text/css">
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: #1d1e20;
+                --entry: #2e2e33;
+                --primary: rgba(255, 255, 255, 0.84);
+                --secondary: rgba(255, 255, 255, 0.56);
+                --tertiary: rgba(255, 255, 255, 0.16);
+                --content: rgba(255, 255, 255, 0.74);
+                --hljs-bg: #2e2e33;
+                --code-bg: #37383e;
+                --border: #333;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://convolv.es/" accesskey="h" title="J. Ryan Stinnett (Alt + H)">J. Ryan Stinnett</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://convolv.es/blog/now/" title="Now">
+                    <span>Now</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/blog/cv/" title="Curriculum Vitae">
+                    <span>CV</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/blog/contact/" title="Contact">
+                    <span>Contact</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/blog/archives/" title="Archives">
+                    <span>Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/blog/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/blog/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      Building Firefox for Linux 32-bit
+    </h1>
+    <div class="post-meta">2017-08-25
+</div>
+  </header> 
+  <div class="post-content"><h2 id="background">Background<a hidden class="anchor" aria-hidden="true" href="#background">#</a></h2>
+<p>As part of my work on the Stylo / Quantum CSS team at Mozilla, I needed to be
+able to test changes to Firefox that only affect Linux 32-bit builds. These
+days, I believe you essentially have to use a 64-bit host to build Firefox to
+avoid OOM issues during linking and potentially other steps, so this means
+some form of cross-compiling from a Linux 64-bit host to a Linux 32-bit
+target.</p>
+<p>I already had a Linux 64-bit machine running Ubuntu 16.04 LTS, so I set about
+attempting to make it build Firefox targeting Linux 32-bit.</p>
+<p>I should note that I only use Linux occasionally at the moment, so there could
+certainly be a better solution than the one I describe.  Also, I recreated these
+steps after the fact, so I might have missed something.  Please let me know in
+the comments.</p>
+<p>This article assumes you are already set up to build Firefox when targeting
+64-bit.</p>
+<h2 id="multiarch-packages-or-how-its-supposed-to-work">Multiarch Packages (Or: How It&rsquo;s Supposed to Work)<a hidden class="anchor" aria-hidden="true" href="#multiarch-packages-or-how-its-supposed-to-work">#</a></h2>
+<p>Recent versions of Debian and Ubuntu support the concept of
+<a href="https://wiki.debian.org/Multiarch">&ldquo;multiarch packages&rdquo;</a> which are intended to allow installing multiple
+architectures together to support use cases including&hellip; cross-compiling!
+Great, sounds like just the thing we need.</p>
+<p>We should be able to install<sup id="a1"><a href="#f1">1</a></sup> the
+<a href="http://searchfox.org/mozilla-central/rev/48ea452803907f2575d81021e8678634e8067fc2/python/mozboot/mozboot/debian.py#50-61">core Gecko development dependencies</a> with an extra <code>:i386</code> suffix to get
+the 32-bit version on our 64-bit host:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ sudo apt install libasound2-dev:i386 libcurl4-openssl-dev:i386 libdbus-1-dev:i386 libdbus-glib-1-dev:i386 libgconf2-dev:i386 libgtk-3-dev:i386 libgtk2.0-dev:i386 libiw-dev:i386 libnotify-dev:i386 libpulse-dev:i386 libx11-xcb-dev:i386 libxt-dev:i386 mesa-common-dev:i386
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+Some packages could not be installed. This may mean that you have
+requested an impossible situation or if you are using the unstable
+distribution that some required packages have not yet been created
+or been moved out of Incoming.
+The following information may help to resolve the situation:
+
+The following packages have unmet dependencies:
+ libgtk-3-dev:i386 : Depends: gir1.2-gtk-3.0:i386 (= 3.18.9-1ubuntu3.3) but it is not going to be installed
+                     Depends: libatk1.0-dev:i386 (&gt;= 2.15.1) but it is not going to be installed
+                     Depends: libatk-bridge2.0-dev:i386 but it is not going to be installed
+                     Depends: libegl1-mesa-dev:i386 but it is not going to be installed
+                     Depends: libxkbcommon-dev:i386 but it is not going to be installed
+                     Depends: libmirclient-dev:i386 (&gt;= 0.13.3) but it is not going to be installed
+ libgtk2.0-dev:i386 : Depends: gir1.2-gtk-2.0:i386 (= 2.24.30-1ubuntu1.16.04.2) but it is not going to be installed
+                      Depends: libatk1.0-dev:i386 (&gt;= 1.29.2) but it is not going to be installed
+                      Recommends: python:i386 (&gt;= 2.4) but it is not going to be installed
+ libnotify-dev:i386 : Depends: gir1.2-notify-0.7:i386 (= 0.7.6-2svn1) but it is not going to be installed
+E: Unable to correct problems, you have held broken packages.
+</code></pre></div><p>Well, that doesn&rsquo;t look good.  It appears some of the Gecko libraries we need
+aren&rsquo;t happy about being installed for multiple architectures.</p>
+<h2 id="switch-approaches-to-chroot">Switch Approaches to <code>chroot</code><a hidden class="anchor" aria-hidden="true" href="#switch-approaches-to-chroot">#</a></h2>
+<p>Since multiarch packages don&rsquo;t appear to be working here, I looked around for
+other approaches.  Ideally, I would have something fairly self-contained so that
+it would be easy to remove when I no longer need 32-bit support.</p>
+<p>One approach to multiple architectures that has been around for a while is to
+create a <a href="https://en.wikipedia.org/wiki/Chroot">chroot</a> environment: effectively, a separate installation of
+Linux for a different architecture.  A utility like <code>schroot</code> can then be used
+to issue the <code>chroot(2)</code> system call which makes the current session believe
+this sub-installation is the root filesystem.</p>
+<p>Let&rsquo;s grab <code>schroot</code> so we&rsquo;ll be able to enter the chroot once it&rsquo;s set up:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ sudo apt install schroot
+</code></pre></div><p>There are several different <a href="http://manpages.ubuntu.com/manpages/xenial/man5/schroot.conf.5.html">types of chroots</a> you can use with <code>schroot</code>.
+We&rsquo;ll use the <code>directory</code> type, as it&rsquo;s the simplest to understand (just another
+directory on the existing filesystem), and it will make it simpler to expose a
+few things to the host later on.</p>
+<p>You can place the directory wherever, but some existing filesystems are mapped
+into the chroot for convenience, so avoiding <code>/home</code> is probably a good idea.  I
+went with <code>/var/chroot/linux32</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ sudo mkdir -p /var/chroot/linux32
+</code></pre></div><p>We need to update <code>schroot.conf</code> to configure the new chroot:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ sudo cat &lt;&lt; EOF &gt;&gt; /etc/schroot/schroot.conf
+[linux32]
+description=Linux32 build environment
+aliases=default
+type=directory
+directory=/var/chroot/linux32
+personality=linux32
+profile=desktop
+users=jryans
+root-users=jryans
+EOF
+</code></pre></div><p>In particular, <code>personality</code> is important to set for this multi-arch use case.
+(Make sure to replace the user names with your own!)</p>
+<p>Firefox will want access to shared memory as well, so we&rsquo;ll need to add that to
+the set of mapped filesystems in the chroot:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ sudo cat &lt;&lt; EOF &gt;&gt; /etc/schroot/desktop/fstab
+/dev/shm       /dev/shm        none    rw,bind         0       0
+EOF
+</code></pre></div><p>Now we need to <a href="https://help.ubuntu.com/community/DebootstrapChroot">install the 32-bit system</a> inside the chroot.  We can do
+that with a utility called <code>debootstrap</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ sudo apt install debootstrap
+(host) $ sudo debootstrap --variant=buildd --arch=i386 --foreign xenial /var/chroot/linux32 http://archive.ubuntu.com/ubuntu
+</code></pre></div><p>This will fetch all the packages for a 32-bit installation and place them in the
+chroot.  For a cross-arch bootstrap, we need to add <code>--foreign</code> to skip the
+unpacking step, which we will do momentarily from inside the chroot.
+<code>--variant=buildd</code> will help us out a bit by including common build tools.</p>
+<p>To finish installation, we have to enter the chroot.  You can enter the chroot
+with <code>schroot</code> and it remains active until you <code>exit</code>.  Any snippets that say
+<code>(chroot)</code> instead of <code>(host)</code> are meant to be run inside the chroot.</p>
+<p>So, inside the chroot, run the second stage of <code>debootstrap</code> to actually unpack
+everything:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(chroot) $ /debootstrap/debootstrap --second-stage
+</code></pre></div><p>Let&rsquo;s double-check that things are working like we expect:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(chroot) $ arch
+i686
+</code></pre></div><p>Great, we&rsquo;re getting closer!</p>
+<h2 id="install-packages">Install packages<a hidden class="anchor" aria-hidden="true" href="#install-packages">#</a></h2>
+<p>Now that we have a basic 32-bit installation, let&rsquo;s install the packages we need
+for development.  The <code>apt</code> source list inside the chroot is pretty bare bones,
+so we&rsquo;ll want to expand it a bit to reach everything we need:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(chroot) $ sudo cat &lt;&lt; EOF &gt; /etc/apt/sources.list
+deb http://archive.ubuntu.com/ubuntu xenial main universe
+deb http://archive.ubuntu.com/ubuntu xenial-updates main universe
+EOF
+(chroot) $ sudo apt update
+</code></pre></div><p>Let&rsquo;s grab the same packages from before (without <code>:i386</code> since that&rsquo;s the
+default inside the chroot):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(chroot) $ sudo apt install libasound2-dev libcurl4-openssl-dev libdbus-1-dev libdbus-glib-1-dev libgconf2-dev libgtk-3-dev libgtk2.0-dev libiw-dev libnotify-dev libpulse-dev libx11-xcb-dev libxt-dev mesa-common-dev python-dbus xvfb yasm
+</code></pre></div><p>You may need to install the 32-bit version of your graphics card&rsquo;s GL library to
+get reasonable graphics output when running in the 32-bit environment.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(chroot) $ sudo apt install nvidia-384
+</code></pre></div><p>We&rsquo;ll also want to have access to the X display inside the chroot.  The simple
+way to achieve this is to disable X security in the host and expose the same
+display in the chroot:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ xhost +
+(chroot) $ export DISPLAY=:0
+</code></pre></div><p>We can verify that we have accelerated graphics:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(chroot) $ sudo apt install mesa-utils
+(chroot) $ glxinfo | grep renderer
+OpenGL renderer string: GeForce GTX 1080/PCIe/SSE2
+</code></pre></div><h2 id="building-firefox">Building Firefox<a hidden class="anchor" aria-hidden="true" href="#building-firefox">#</a></h2>
+<p>In order for the host to build Firefox for the 32-bit target, it needs to access
+various 32-bit libraries and include files.  We already have these installed in
+the chroot, so let&rsquo;s cheat and expose them to the host via symlinks into the
+chroot&rsquo;s file structure:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ sudo ln -s /var/chroot/linux32/lib/i386-linux-gnu /lib/
+(host) $ sudo ln -s /var/chroot/linux32/usr/lib/i386-linux-gnu /usr/lib/
+(host) $ sudo ln -s /var/chroot/linux32/usr/include/i386-linux-gnu /usr/include/
+</code></pre></div><p>We also need Rust to be able to target 32-bit from the host, so let&rsquo;s install
+support for that:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ rustup target add i686-unknown-linux-gnu
+</code></pre></div><p>We&rsquo;ll need a specialized <code>.mozconfig</code> for Firefox to target 32-bit.  Something
+like the following:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ cat &lt;&lt; EOF &gt; ~/projects/gecko/.mozconfig
+export PKG_CONFIG_PATH=&#34;/var/chroot/linux32/usr/lib/i386-linux-gnu/pkgconfig:/var/chroot/linux32/usr/share/pkgconfig&#34;
+export MOZ_LINUX_32_SSE2_STARTUP_ERROR=1
+CFLAGS=&#34;$CFLAGS -msse -msse2 -mfpmath=sse&#34;
+CXXFLAGS=&#34;$CXXFLAGS -msse -msse2 -mfpmath=sse&#34;
+if test `uname -m` = &#34;x86_64&#34;; then
+  CFLAGS=&#34;$CFLAGS -m32 -march=pentium-m&#34;
+  CXXFLAGS=&#34;$CXXFLAGS -m32 -march=pentium-m&#34;
+  ac_add_options --target=i686-pc-linux
+  ac_add_options --host=i686-pc-linux
+  ac_add_options --x-libraries=/usr/lib
+fi
+EOF
+</code></pre></div><p>This was <a href="http://searchfox.org/mozilla-central/rev/89e125b817c5d493babbc58ea526be970bd3748e/build/unix/mozconfig.linux32">adapted</a> from the <code>mozconfig.linux32</code> used for official 32-bit
+builds.  I modified the <code>PKG_CONFIG_PATH</code> to point at more 32-bit files
+installed inside the chroot, similar to the library and include changes above.</p>
+<p>Now, we should be able to build successfully:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ ./mach build
+</code></pre></div><p>Then, from the chroot, you can run Firefox and other tests:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(chroot) $ ./mach run
+</code></pre></div><p><img loading="lazy" src="firefox-linux32.png" alt="Firefox running on Linux 32-bit"  />
+</p>
+<h2 id="footnotes">Footnotes<a hidden class="anchor" aria-hidden="true" href="#footnotes">#</a></h2>
+<p><b id="f1">1.</b> It&rsquo;s commonly suggested that people should use <code>./mach bootstrap</code> to install the Firefox build dependencies, so feel free to try that
+if you wish.  I dislike scripts that install system packages, so I&rsquo;ve done it
+manually here.  The bootstrap script would likely need various adjustments to
+support this use case. <a href="#a1">↩</a></p>
+
+
+  </div>
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://convolv.es/blog/tags/open-source/">Open Source</a></li>
+      <li><a href="https://convolv.es/blog/tags/mozilla/">Mozilla</a></li>
+      <li><a href="https://convolv.es/blog/tags/firefox/">Firefox</a></li>
+      <li><a href="https://convolv.es/blog/tags/linux/">Linux</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    <footer class="footer">
+    <span>&copy; 2021 <a href="https://convolv.es/">J. Ryan Stinnett</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)">
+    <button class="top-link" id="top-link" type="button" accesskey="g">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+    </button>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+    menu.onscroll = function () {
+        localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

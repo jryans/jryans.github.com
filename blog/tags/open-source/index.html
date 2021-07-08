@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Open Source | J. Ryan Stinnett</title>
+<meta name="keywords" content="" />
+<meta name="description" content="Exploring how to make programs more malleable and computing more humane">
+<meta name="author" content="">
+<link rel="canonical" href="https://convolv.es/blog/tags/open-source/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.7565db822f964cf9d1ae88d48f8db33a887ee1d4daf04f95b5100afd0ed4a008.css" integrity="sha256-dWXbgi&#43;WTPnRrojUj42zOoh&#43;4dTa8E&#43;VtRAK/Q7UoAg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://convolv.es/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://convolv.es/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://convolv.es/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://convolv.es/apple-touch-icon.png">
+<link rel="mask-icon" href="https://convolv.es/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<meta name="generator" content="Hugo 0.83.1" />
+<link rel="alternate" type="application/rss+xml" href="https://convolv.es/blog/tags/open-source/atom.xml">
+<meta property="og:title" content="Open Source" />
+<meta property="og:description" content="Exploring how to make programs more malleable and computing more humane" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://convolv.es/blog/tags/open-source/" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Open Source"/>
+<meta name="twitter:description" content="Exploring how to make programs more malleable and computing more humane"/>
+
+</head>
+
+<body class="list" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+<noscript>
+    <style type="text/css">
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: #1d1e20;
+                --entry: #2e2e33;
+                --primary: rgba(255, 255, 255, 0.84);
+                --secondary: rgba(255, 255, 255, 0.56);
+                --tertiary: rgba(255, 255, 255, 0.16);
+                --content: rgba(255, 255, 255, 0.74);
+                --hljs-bg: #2e2e33;
+                --code-bg: #37383e;
+                --border: #333;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://convolv.es/" accesskey="h" title="J. Ryan Stinnett (Alt + H)">J. Ryan Stinnett</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://convolv.es/blog/now/" title="Now">
+                    <span>Now</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/blog/cv/" title="Curriculum Vitae">
+                    <span>CV</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/blog/contact/" title="Contact">
+                    <span>Contact</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/blog/archives/" title="Archives">
+                    <span>Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/blog/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/blog/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+<header class="page-header">
+  <h1>Open Source</h1>
+</header>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>Building Firefox for Linux 32-bit</h2>
+  </header>
+  <section class="entry-content">
+    <p>Background As part of my work on the Stylo / Quantum CSS team at Mozilla, I needed to be able to test changes to Firefox that only affect Linux 32-bit builds. These days, I believe you essentially have to use a 64-bit host to build Firefox to avoid OOM issues during linking and potentially other steps, so this means some form of cross-compiling from a Linux 64-bit host to a Linux 32-bit target....</p>
+  </section>
+  <footer class="entry-footer">2017-08-25</footer>
+  <a class="entry-link" aria-label="post link to Building Firefox for Linux 32-bit" href="https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>WiFi Debugging for Firefox for Android</h2>
+  </header>
+  <section class="entry-content">
+    <p>I am excited to announce that we’re now shipping WiFi debugging for Firefox for Android! It’s available in Firefox for Android 42 with Firefox Nightly on desktop.
+The rest of this post will sound quite similar to the previous announcement for Firefox OS support.
+WiFi debugging allows WebIDE to connect to Firefox for Android via your local WiFi network instead of a USB cable.
+The connection experience is generally more straightforward (especially after connecting to a device the first time) than with USB and also more convenient to use since you’re no longer tied down by a cable....</p>
+  </section>
+  <footer class="entry-footer">2015-08-05</footer>
+  <a class="entry-link" aria-label="post link to WiFi Debugging for Firefox for Android" href="https://convolv.es/blog/2015/08/05/wifi-debug-fennec/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>WiFi Debugging for Firefox OS</h2>
+  </header>
+  <section class="entry-content">
+    <p>I am excited to announce that we’re now shipping WiFi debugging for Firefox OS! It’s available in Firefox OS 3.0 / master with Firefox Nightly on desktop.
+WiFi debugging allows WebIDE to connect to your Firefox OS device via your local WiFi network instead of a USB cable.
+The connection experience is generally more straightforward (especially after connecting to a device the first time) than with USB and also more convenient to use since you’re no longer tied down by a cable....</p>
+  </section>
+  <footer class="entry-footer">2015-03-25</footer>
+  <a class="entry-link" aria-label="post link to WiFi Debugging for Firefox OS" href="https://convolv.es/blog/2015/03/25/wifi-debug-fxos/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>Debugging Tabs with Firefox for Android</h2>
+  </header>
+  <section class="entry-content">
+    <p>For quite a while, it has been possible to debug tabs on Firefox for Android devices, but there were many steps involved, including manual port forwarding from the terminal.
+As I hinted a few weeks ago, WebIDE would soon support connecting to Firefox for Android via ADB Helper support, and that time is now!
+How to Use You’ll need to assemble the following bits and bobs:
+ Firefox 36 (2014-10-25 or later) ADB Helper 0....</p>
+  </section>
+  <footer class="entry-footer">2014-10-28</footer>
+  <a class="entry-link" aria-label="post link to Debugging Tabs with Firefox for Android" href="https://convolv.es/blog/2014/10/28/debug-fennec-tabs/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>DevTools for Firefox OS browser tabs</h2>
+  </header>
+  <section class="entry-content">
+    <p>We’ve had various tools for inspecting apps on remote devices for some time now, but for a long time we’ve not had the same support for remote browser tabs.
+To remedy this, WebIDE now supports inspecting browser tabs running on Firefox OS devices.
+A few weeks back, WebIDE gained support for inspecting tabs on the remote device, but many of the likely suspects to connect to weren’t quite ready for various reasons....</p>
+  </section>
+  <footer class="entry-footer">2014-10-14</footer>
+  <a class="entry-link" aria-label="post link to DevTools for Firefox OS browser tabs" href="https://convolv.es/blog/2014/10/14/debug-fxos-tabs/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="next" href="https://convolv.es/blog/tags/open-source/page/2/">Next Page »</a>
+  </nav>
+</footer>
+    </main>
+    <footer class="footer">
+    <span>&copy; 2021 <a href="https://convolv.es/">J. Ryan Stinnett</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)">
+    <button class="top-link" id="top-link" type="button" accesskey="g">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+    </button>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+    menu.onscroll = function () {
+        localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

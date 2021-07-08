@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Mozilla on J. Ryan Stinnett</title>
+    <link>https://convolv.es/blog/tags/mozilla/</link>
+    <description>Recent content in Mozilla on J. Ryan Stinnett</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Fri, 25 Aug 2017 19:33:00 -0500</lastBuildDate><atom:link href="https://convolv.es/blog/tags/mozilla/atom.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Building Firefox for Linux 32-bit</title>
+      <link>https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit/</link>
+      <pubDate>Fri, 25 Aug 2017 19:33:00 -0500</pubDate>
+      
+      <guid>https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit/</guid>
+      <description>Background As part of my work on the Stylo / Quantum CSS team at Mozilla, I needed to be able to test changes to Firefox that only affect Linux 32-bit builds. These days, I believe you essentially have to use a 64-bit host to build Firefox to avoid OOM issues during linking and potentially other steps, so this means some form of cross-compiling from a Linux 64-bit host to a Linux 32-bit target.</description>
+      <content:encoded><![CDATA[<h2 id="background">Background</h2>
+<p>As part of my work on the Stylo / Quantum CSS team at Mozilla, I needed to be
+able to test changes to Firefox that only affect Linux 32-bit builds. These
+days, I believe you essentially have to use a 64-bit host to build Firefox to
+avoid OOM issues during linking and potentially other steps, so this means
+some form of cross-compiling from a Linux 64-bit host to a Linux 32-bit
+target.</p>
+<p>I already had a Linux 64-bit machine running Ubuntu 16.04 LTS, so I set about
+attempting to make it build Firefox targeting Linux 32-bit.</p>
+<p>I should note that I only use Linux occasionally at the moment, so there could
+certainly be a better solution than the one I describe.  Also, I recreated these
+steps after the fact, so I might have missed something.  Please let me know in
+the comments.</p>
+<p>This article assumes you are already set up to build Firefox when targeting
+64-bit.</p>
+<h2 id="multiarch-packages-or-how-its-supposed-to-work">Multiarch Packages (Or: How It&rsquo;s Supposed to Work)</h2>
+<p>Recent versions of Debian and Ubuntu support the concept of
+<a href="https://wiki.debian.org/Multiarch">&ldquo;multiarch packages&rdquo;</a> which are intended to allow installing multiple
+architectures together to support use cases including&hellip; cross-compiling!
+Great, sounds like just the thing we need.</p>
+<p>We should be able to install<sup id="a1"><a href="#f1">1</a></sup> the
+<a href="http://searchfox.org/mozilla-central/rev/48ea452803907f2575d81021e8678634e8067fc2/python/mozboot/mozboot/debian.py#50-61">core Gecko development dependencies</a> with an extra <code>:i386</code> suffix to get
+the 32-bit version on our 64-bit host:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ sudo apt install libasound2-dev:i386 libcurl4-openssl-dev:i386 libdbus-1-dev:i386 libdbus-glib-1-dev:i386 libgconf2-dev:i386 libgtk-3-dev:i386 libgtk2.0-dev:i386 libiw-dev:i386 libnotify-dev:i386 libpulse-dev:i386 libx11-xcb-dev:i386 libxt-dev:i386 mesa-common-dev:i386
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+Some packages could not be installed. This may mean that you have
+requested an impossible situation or if you are using the unstable
+distribution that some required packages have not yet been created
+or been moved out of Incoming.
+The following information may help to resolve the situation:
+
+The following packages have unmet dependencies:
+ libgtk-3-dev:i386 : Depends: gir1.2-gtk-3.0:i386 (= 3.18.9-1ubuntu3.3) but it is not going to be installed
+                     Depends: libatk1.0-dev:i386 (&gt;= 2.15.1) but it is not going to be installed
+                     Depends: libatk-bridge2.0-dev:i386 but it is not going to be installed
+                     Depends: libegl1-mesa-dev:i386 but it is not going to be installed
+                     Depends: libxkbcommon-dev:i386 but it is not going to be installed
+                     Depends: libmirclient-dev:i386 (&gt;= 0.13.3) but it is not going to be installed
+ libgtk2.0-dev:i386 : Depends: gir1.2-gtk-2.0:i386 (= 2.24.30-1ubuntu1.16.04.2) but it is not going to be installed
+                      Depends: libatk1.0-dev:i386 (&gt;= 1.29.2) but it is not going to be installed
+                      Recommends: python:i386 (&gt;= 2.4) but it is not going to be installed
+ libnotify-dev:i386 : Depends: gir1.2-notify-0.7:i386 (= 0.7.6-2svn1) but it is not going to be installed
+E: Unable to correct problems, you have held broken packages.
+</code></pre></div><p>Well, that doesn&rsquo;t look good.  It appears some of the Gecko libraries we need
+aren&rsquo;t happy about being installed for multiple architectures.</p>
+<h2 id="switch-approaches-to-chroot">Switch Approaches to <code>chroot</code></h2>
+<p>Since multiarch packages don&rsquo;t appear to be working here, I looked around for
+other approaches.  Ideally, I would have something fairly self-contained so that
+it would be easy to remove when I no longer need 32-bit support.</p>
+<p>One approach to multiple architectures that has been around for a while is to
+create a <a href="https://en.wikipedia.org/wiki/Chroot">chroot</a> environment: effectively, a separate installation of
+Linux for a different architecture.  A utility like <code>schroot</code> can then be used
+to issue the <code>chroot(2)</code> system call which makes the current session believe
+this sub-installation is the root filesystem.</p>
+<p>Let&rsquo;s grab <code>schroot</code> so we&rsquo;ll be able to enter the chroot once it&rsquo;s set up:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ sudo apt install schroot
+</code></pre></div><p>There are several different <a href="http://manpages.ubuntu.com/manpages/xenial/man5/schroot.conf.5.html">types of chroots</a> you can use with <code>schroot</code>.
+We&rsquo;ll use the <code>directory</code> type, as it&rsquo;s the simplest to understand (just another
+directory on the existing filesystem), and it will make it simpler to expose a
+few things to the host later on.</p>
+<p>You can place the directory wherever, but some existing filesystems are mapped
+into the chroot for convenience, so avoiding <code>/home</code> is probably a good idea.  I
+went with <code>/var/chroot/linux32</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ sudo mkdir -p /var/chroot/linux32
+</code></pre></div><p>We need to update <code>schroot.conf</code> to configure the new chroot:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ sudo cat &lt;&lt; EOF &gt;&gt; /etc/schroot/schroot.conf
+[linux32]
+description=Linux32 build environment
+aliases=default
+type=directory
+directory=/var/chroot/linux32
+personality=linux32
+profile=desktop
+users=jryans
+root-users=jryans
+EOF
+</code></pre></div><p>In particular, <code>personality</code> is important to set for this multi-arch use case.
+(Make sure to replace the user names with your own!)</p>
+<p>Firefox will want access to shared memory as well, so we&rsquo;ll need to add that to
+the set of mapped filesystems in the chroot:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ sudo cat &lt;&lt; EOF &gt;&gt; /etc/schroot/desktop/fstab
+/dev/shm       /dev/shm        none    rw,bind         0       0
+EOF
+</code></pre></div><p>Now we need to <a href="https://help.ubuntu.com/community/DebootstrapChroot">install the 32-bit system</a> inside the chroot.  We can do
+that with a utility called <code>debootstrap</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ sudo apt install debootstrap
+(host) $ sudo debootstrap --variant=buildd --arch=i386 --foreign xenial /var/chroot/linux32 http://archive.ubuntu.com/ubuntu
+</code></pre></div><p>This will fetch all the packages for a 32-bit installation and place them in the
+chroot.  For a cross-arch bootstrap, we need to add <code>--foreign</code> to skip the
+unpacking step, which we will do momentarily from inside the chroot.
+<code>--variant=buildd</code> will help us out a bit by including common build tools.</p>
+<p>To finish installation, we have to enter the chroot.  You can enter the chroot
+with <code>schroot</code> and it remains active until you <code>exit</code>.  Any snippets that say
+<code>(chroot)</code> instead of <code>(host)</code> are meant to be run inside the chroot.</p>
+<p>So, inside the chroot, run the second stage of <code>debootstrap</code> to actually unpack
+everything:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(chroot) $ /debootstrap/debootstrap --second-stage
+</code></pre></div><p>Let&rsquo;s double-check that things are working like we expect:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(chroot) $ arch
+i686
+</code></pre></div><p>Great, we&rsquo;re getting closer!</p>
+<h2 id="install-packages">Install packages</h2>
+<p>Now that we have a basic 32-bit installation, let&rsquo;s install the packages we need
+for development.  The <code>apt</code> source list inside the chroot is pretty bare bones,
+so we&rsquo;ll want to expand it a bit to reach everything we need:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(chroot) $ sudo cat &lt;&lt; EOF &gt; /etc/apt/sources.list
+deb http://archive.ubuntu.com/ubuntu xenial main universe
+deb http://archive.ubuntu.com/ubuntu xenial-updates main universe
+EOF
+(chroot) $ sudo apt update
+</code></pre></div><p>Let&rsquo;s grab the same packages from before (without <code>:i386</code> since that&rsquo;s the
+default inside the chroot):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(chroot) $ sudo apt install libasound2-dev libcurl4-openssl-dev libdbus-1-dev libdbus-glib-1-dev libgconf2-dev libgtk-3-dev libgtk2.0-dev libiw-dev libnotify-dev libpulse-dev libx11-xcb-dev libxt-dev mesa-common-dev python-dbus xvfb yasm
+</code></pre></div><p>You may need to install the 32-bit version of your graphics card&rsquo;s GL library to
+get reasonable graphics output when running in the 32-bit environment.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(chroot) $ sudo apt install nvidia-384
+</code></pre></div><p>We&rsquo;ll also want to have access to the X display inside the chroot.  The simple
+way to achieve this is to disable X security in the host and expose the same
+display in the chroot:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ xhost +
+(chroot) $ export DISPLAY=:0
+</code></pre></div><p>We can verify that we have accelerated graphics:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(chroot) $ sudo apt install mesa-utils
+(chroot) $ glxinfo | grep renderer
+OpenGL renderer string: GeForce GTX 1080/PCIe/SSE2
+</code></pre></div><h2 id="building-firefox">Building Firefox</h2>
+<p>In order for the host to build Firefox for the 32-bit target, it needs to access
+various 32-bit libraries and include files.  We already have these installed in
+the chroot, so let&rsquo;s cheat and expose them to the host via symlinks into the
+chroot&rsquo;s file structure:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ sudo ln -s /var/chroot/linux32/lib/i386-linux-gnu /lib/
+(host) $ sudo ln -s /var/chroot/linux32/usr/lib/i386-linux-gnu /usr/lib/
+(host) $ sudo ln -s /var/chroot/linux32/usr/include/i386-linux-gnu /usr/include/
+</code></pre></div><p>We also need Rust to be able to target 32-bit from the host, so let&rsquo;s install
+support for that:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ rustup target add i686-unknown-linux-gnu
+</code></pre></div><p>We&rsquo;ll need a specialized <code>.mozconfig</code> for Firefox to target 32-bit.  Something
+like the following:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ cat &lt;&lt; EOF &gt; ~/projects/gecko/.mozconfig
+export PKG_CONFIG_PATH=&#34;/var/chroot/linux32/usr/lib/i386-linux-gnu/pkgconfig:/var/chroot/linux32/usr/share/pkgconfig&#34;
+export MOZ_LINUX_32_SSE2_STARTUP_ERROR=1
+CFLAGS=&#34;$CFLAGS -msse -msse2 -mfpmath=sse&#34;
+CXXFLAGS=&#34;$CXXFLAGS -msse -msse2 -mfpmath=sse&#34;
+if test `uname -m` = &#34;x86_64&#34;; then
+  CFLAGS=&#34;$CFLAGS -m32 -march=pentium-m&#34;
+  CXXFLAGS=&#34;$CXXFLAGS -m32 -march=pentium-m&#34;
+  ac_add_options --target=i686-pc-linux
+  ac_add_options --host=i686-pc-linux
+  ac_add_options --x-libraries=/usr/lib
+fi
+EOF
+</code></pre></div><p>This was <a href="http://searchfox.org/mozilla-central/rev/89e125b817c5d493babbc58ea526be970bd3748e/build/unix/mozconfig.linux32">adapted</a> from the <code>mozconfig.linux32</code> used for official 32-bit
+builds.  I modified the <code>PKG_CONFIG_PATH</code> to point at more 32-bit files
+installed inside the chroot, similar to the library and include changes above.</p>
+<p>Now, we should be able to build successfully:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ ./mach build
+</code></pre></div><p>Then, from the chroot, you can run Firefox and other tests:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(chroot) $ ./mach run
+</code></pre></div><p><img loading="lazy" src="firefox-linux32.png" alt="Firefox running on Linux 32-bit"  />
+</p>
+<h2 id="footnotes">Footnotes</h2>
+<p><b id="f1">1.</b> It&rsquo;s commonly suggested that people should use <code>./mach bootstrap</code> to install the Firefox build dependencies, so feel free to try that
+if you wish.  I dislike scripts that install system packages, so I&rsquo;ve done it
+manually here.  The bootstrap script would likely need various adjustments to
+support this use case. <a href="#a1">↩</a></p>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>WiFi Debugging for Firefox for Android</title>
+      <link>https://convolv.es/blog/2015/08/05/wifi-debug-fennec/</link>
+      <pubDate>Wed, 05 Aug 2015 15:33:00 -0500</pubDate>
+      
+      <guid>https://convolv.es/blog/2015/08/05/wifi-debug-fennec/</guid>
+      <description>I am excited to announce that we&amp;rsquo;re now shipping WiFi debugging for Firefox for Android! It&amp;rsquo;s available in Firefox for Android 42 with Firefox Nightly on desktop.
+The rest of this post will sound quite similar to the previous announcement for Firefox OS support.
+WiFi debugging allows WebIDE to connect to Firefox for Android via your local WiFi network instead of a USB cable.
+The connection experience is generally more straightforward (especially after connecting to a device the first time) than with USB and also more convenient to use since you&amp;rsquo;re no longer tied down by a cable.</description>
+      <content:encoded><![CDATA[<p>I am excited to announce that we&rsquo;re now <a href="https://bugzil.la/1180996">shipping</a> WiFi debugging for
+Firefox for Android!  It&rsquo;s available in <a href="https://nightly.mozilla.org/">Firefox for Android 42</a>
+with <a href="https://nightly.mozilla.org/">Firefox Nightly</a> on desktop.</p>
+<p>The rest of this post will sound quite similar to the <a href="/blog/2015/03/25/wifi-debug-fxos/">previous announcement for
+Firefox OS</a> support.</p>
+<p>WiFi debugging allows <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> to connect to Firefox for Android via
+your local WiFi network instead of a USB cable.</p>
+<p>The connection experience is generally more straightforward (especially after
+connecting to a device the first time) than with USB and also more convenient to
+use since you&rsquo;re no longer tied down by a cable.</p>
+<h2 id="security">Security</h2>
+<p>A large portion of this project has gone towards making the debugging
+connection secure, so that you can use it safely on shared network, such as an
+office or coffee shop.</p>
+<p>We use TLS for encryption and authentication.  The computer and device both
+create self-signed certificates.  When you connect, a QR code is scanned to
+verify that the certificates can be trusted.  During the connection process, you
+can choose to remember this information and connect immediately in the future if
+desired.</p>
+<h2 id="how-to-use">How to Use</h2>
+<p>You&rsquo;ll need to assemble the following bits and bobs:</p>
+<ul>
+<li><a href="https://nightly.mozilla.org/">Firefox 42</a></li>
+<li><a href="https://nightly.mozilla.org/">Firefox for Android 42</a></li>
+<li><a href="https://play.google.com/store/apps/details?id=com.google.zxing.client.android">Barcode Scanner Android app by ZXing Team</a> (for QR code scanning)</li>
+</ul>
+<p>On your Android device:</p>
+<ol>
+<li>Install the <a href="https://play.google.com/store/apps/details?id=com.google.zxing.client.android">Barcode Scanner Android app by ZXing Team</a></li>
+<li>Open Firefox for Android</li>
+<li>Go to Developer Tools Settings on device (Settings -&gt; Developer Tools)</li>
+<li>Enable Remote Debugging via Wi-Fi</li>
+</ol>
+<p><img loading="lazy" src="fennec-wifi-opts.png" alt="Firefox for Android WiFi Debugging Options"  />
+</p>
+<p>To connect from Firefox Desktop:</p>
+<ol>
+<li>Open WebIDE in Firefox Nightly (Tools -&gt; Web Developer -&gt; WebIDE)</li>
+<li>Click &ldquo;Select Runtime&rdquo; to open the runtimes panel</li>
+<li>Your Firefox for Android device should show up in the &ldquo;WiFi Devices&rdquo; section</li>
+<li>A connection prompt will appear on device, choose &ldquo;Scan&rdquo; or &ldquo;Scan and Remember&rdquo;</li>
+<li>Scan the QR code displayed in WebIDE</li>
+</ol>
+<p><img loading="lazy" src="webide-wifi-runtime.png" alt="WebIDE WiFi Runtimes"  />
+
+<img loading="lazy" src="webide-qr-code.png" alt="WebIDE Displays the QR Code"  />
+</p>
+<p>After scanning the QR code, the QR display should disappear and the &ldquo;device&rdquo;
+icon in WebIDE will turn blue for &ldquo;connected&rdquo;.</p>
+<p>You can then access all of your remote browser tabs just as you can today over
+USB.</p>
+<h2 id="technical-aside">Technical Aside</h2>
+<p>This process does not use ADB at all on the device, so if you find ADB
+inconvenient while debugging or would rather not install ADB at all, then
+WiFi debugging is the way to go.</p>
+<p>By skipping ADB, we don&rsquo;t have to worry about driver confusion, especially on
+Windows and Linux.</p>
+<h2 id="supported-devices">Supported Devices</h2>
+<p>This feature should be supported on any Firefox for Android device.  So far,
+I&rsquo;ve tested it on the LG G2.</p>
+<h2 id="acknowledgments">Acknowledgments</h2>
+<p>Thanks to all who helped via advice and reviews while working on Android support,
+including (in semi-random order):</p>
+<ul>
+<li>Margaret Leibovic</li>
+<li>Karim Benhmida</li>
+</ul>
+<p>And from the larger WiFi debugging effort:</p>
+<ul>
+<li>Brian Warner</li>
+<li>Trevor Perrin</li>
+<li>David Keeler</li>
+<li>Honza Bambas</li>
+<li>Patrick McManus</li>
+<li>Jason Duell</li>
+<li>Panos Astithas</li>
+<li>Jan Keromnes</li>
+<li>Alexandre Poirot</li>
+<li>Paul Rouget</li>
+<li>Paul Theriault</li>
+</ul>
+<p>I am probably forgetting others as well, so I apologize if you were omitted.</p>
+<h2 id="whats-next">What&rsquo;s Next</h2>
+<p>If there are features you&rsquo;d like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
+team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">various channels</a>.</p>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>WiFi Debugging for Firefox OS</title>
+      <link>https://convolv.es/blog/2015/03/25/wifi-debug-fxos/</link>
+      <pubDate>Wed, 25 Mar 2015 08:51:00 -0500</pubDate>
+      
+      <guid>https://convolv.es/blog/2015/03/25/wifi-debug-fxos/</guid>
+      <description>I am excited to announce that we&amp;rsquo;re now shipping WiFi debugging for Firefox OS! It&amp;rsquo;s available in Firefox OS 3.0 / master with Firefox Nightly on desktop.
+WiFi debugging allows WebIDE to connect to your Firefox OS device via your local WiFi network instead of a USB cable.
+The connection experience is generally more straightforward (especially after connecting to a device the first time) than with USB and also more convenient to use since you&amp;rsquo;re no longer tied down by a cable.</description>
+      <content:encoded><![CDATA[<p>I am excited to announce that we&rsquo;re now shipping WiFi debugging for Firefox OS!
+It&rsquo;s available in <a href="https://developer.mozilla.org/en-US/Firefox_OS/Building">Firefox OS 3.0 / master</a> with <a href="https://nightly.mozilla.org/">Firefox Nightly</a> on desktop.</p>
+<p>WiFi debugging allows <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> to connect to your Firefox OS device via your local
+WiFi network instead of a USB cable.</p>
+<p>The connection experience is generally more straightforward (especially after
+connecting to a device the first time) than with USB and also more convenient to
+use since you&rsquo;re no longer tied down by a cable.</p>
+<h2 id="security">Security</h2>
+<p>A large portion of this project has gone towards making the debugging
+connection secure, so that you can use it safely on shared network, such as an
+office or coffee shop.</p>
+<p>We use TLS for encryption and authentication.  The computer and device both
+create self-signed certificates.  When you connect, a QR code is scanned to
+verify that the certificates can be trusted.  During the connection process, you
+can choose to remember this information and connect immediately in the future if
+desired.</p>
+<h2 id="how-to-use">How to Use</h2>
+<p>You&rsquo;ll need to assemble the following bits and bobs:</p>
+<ul>
+<li><a href="https://nightly.mozilla.org/">Firefox 39</a> (2015-03-27 or later)</li>
+<li>Firefox OS 3.0 (2015-03-27 or later)
+<ul>
+<li>Option A: <a href="https://developer.mozilla.org/en-US/Firefox_OS/Phone_guide/Flame/Updating_your_Flame#Updating_your_Flame_to_a_nightly_build">Update your Flame</a> to 3.0 / master</li>
+<li>Option B: <a href="https://developer.mozilla.org/en-US/Firefox_OS/Building">Build for your device</a> from source</li>
+</ul>
+</li>
+</ul>
+<p>On Firefox OS, enable WiFi debugging:</p>
+<ol>
+<li>Go to Developer Settings on device (Settings -&gt; Developer)</li>
+<li>Enable DevTools via Wi-Fi</li>
+<li>Edit the device name if desired</li>
+</ol>
+<p><img loading="lazy" src="fxos-wifi-opts.png" alt="Firefox OS WiFi Debugging Options"  />
+</p>
+<p>To connect from Firefox Desktop:</p>
+<ol>
+<li>Open WebIDE in Firefox Nightly (Tools -&gt; Web Developer -&gt; WebIDE)</li>
+<li>Click &ldquo;Select Runtime&rdquo; to open the runtimes panel</li>
+<li>Your Firefox OS device should show up in the &ldquo;WiFi Devices&rdquo; section</li>
+<li>A connection prompt will appear on device, choose &ldquo;Scan&rdquo; or &ldquo;Scan and Remember&rdquo;</li>
+<li>Scan the QR code displayed in WebIDE</li>
+</ol>
+<p><img loading="lazy" src="webide-wifi-runtime.png" alt="WebIDE WiFi Runtimes"  />
+
+<img loading="lazy" src="webide-qr-code.png" alt="WebIDE Displays the QR Code"  />
+</p>
+<p>After scanning the QR code, the QR display should disappear and the &ldquo;device&rdquo;
+icon in WebIDE will turn blue for &ldquo;connected&rdquo;.</p>
+<p>You can then access all of your remote apps and browser tabs just as you can
+today over USB.</p>
+<h2 id="technical-aside">Technical Aside</h2>
+<p>This process does not use ADB at all on the device, so if you find ADB
+inconvenient while debugging or would rather not install ADB at all, then
+WiFi debugging is the way to go.</p>
+<p>By skipping ADB, we don&rsquo;t have to worry about driver confusion, especially on
+Windows and Linux.</p>
+<h2 id="supported-devices">Supported Devices</h2>
+<p>This feature should be supported on any Firefox OS device.  So far, I&rsquo;ve tested
+it on the Flame and Nexus 4.</p>
+<h2 id="known-issues">Known Issues</h2>
+<p>The QR code scanner can be a bit frustrating at the moment, as real devices
+appear to capture a very low resolution picture.  <a href="https://bugzil.la/1145772">Bug 1145772</a> aims
+to improve this soon.  You should be able to scan with the Flame by trying a few
+different orientations.  I would suggest using &ldquo;Scan and Remember&rdquo;, so that
+scanning is only needed for the first connection.</p>
+<p>If you find other issues while testing, please <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact me
+on IRC.</p>
+<h2 id="acknowledgments">Acknowledgments</h2>
+<p>This was quite a complex project, and many people provided advice and reviews
+while working on this feature, including (in semi-random order):</p>
+<ul>
+<li>Brian Warner</li>
+<li>Trevor Perrin</li>
+<li>David Keeler</li>
+<li>Honza Bambas</li>
+<li>Patrick McManus</li>
+<li>Jason Duell</li>
+<li>Panos Astithas</li>
+<li>Jan Keromnes</li>
+<li>Alexandre Poirot</li>
+<li>Paul Rouget</li>
+<li>Paul Theriault</li>
+</ul>
+<p>I am probably forgetting others as well, so I apologize if you were omitted.</p>
+<h2 id="whats-next">What&rsquo;s Next</h2>
+<p>I&rsquo;d like to add this ability for Firefox for Android next.  Thankfully, most of
+the work done here can be reused there.</p>
+<p>If there are features you&rsquo;d like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
+team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">various channels</a>.</p>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>Debugging Tabs with Firefox for Android</title>
+      <link>https://convolv.es/blog/2014/10/28/debug-fennec-tabs/</link>
+      <pubDate>Tue, 28 Oct 2014 16:08:00 -0500</pubDate>
+      
+      <guid>https://convolv.es/blog/2014/10/28/debug-fennec-tabs/</guid>
+      <description>For quite a while, it has been possible to debug tabs on Firefox for Android devices, but there were many steps involved, including manual port forwarding from the terminal.
+As I hinted a few weeks ago, WebIDE would soon support connecting to Firefox for Android via ADB Helper support, and that time is now!
+How to Use You&amp;rsquo;ll need to assemble the following bits and bobs:
+ Firefox 36 (2014-10-25 or later) ADB Helper 0.</description>
+      <content:encoded><![CDATA[<p>For quite a while, it has been possible to debug tabs on Firefox for Android
+devices, but there were many steps involved, including manual port forwarding
+from the terminal.</p>
+<p>As I <a href="/blog/2014/10/14/debug-fxos-tabs/">hinted</a> a few weeks ago, <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> would soon support connecting
+to Firefox for Android via ADB Helper support, and that time is now!</p>
+<h2 id="how-to-use">How to Use</h2>
+<p>You&rsquo;ll need to assemble the following bits and bobs:</p>
+<ul>
+<li>Firefox 36 (2014-10-25 or later)</li>
+<li>ADB Helper 0.7.0 or later</li>
+<li>Firefox for Android 35 or later</li>
+</ul>
+<p>Opening WebIDE for the first time should install ADB Helper if you don&rsquo;t already
+have it, but double-check it is the right version in the add-on manager.</p>
+<p><img loading="lazy" src="fennec-usb-runtime.png" alt="Firefox for Android runtime appears"  />
+</p>
+<p>Inside WebIDE, you&rsquo;ll see an entry for Firefox for Android in the Runtime menu.</p>
+<p><img loading="lazy" src="fennec-tab-list.png" alt="Firefox for Android tab list"  />
+</p>
+<p>Once you select the runtime, tabs from Firefox for Android will be available in
+the (now poorly labelled) apps menu on the left.</p>
+<p><img loading="lazy" src="fennec-tab-toolbox.png" alt="Inspecting a tab in WebIDE"  />
+</p>
+<p>Choosing a tab will open up the DevTools toolbox for that tab.  You can also
+toggle the toolbox via the &ldquo;Pause&rdquo; icon in the top toolbar.</p>
+<p>If you would like to debug Firefox for Android&rsquo;s system-level / chrome code,
+instead of a specific tab, you can do that with the &ldquo;Main Process&rdquo; option.</p>
+<h2 id="whats-next">What&rsquo;s Next</h2>
+<p>We have even more connection UX improvements on the way, so I hope to have more
+to share soon!</p>
+<p>If there are features you&rsquo;d like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
+team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">various channels</a>.</p>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>DevTools for Firefox OS browser tabs</title>
+      <link>https://convolv.es/blog/2014/10/14/debug-fxos-tabs/</link>
+      <pubDate>Tue, 14 Oct 2014 13:29:00 -0500</pubDate>
+      
+      <guid>https://convolv.es/blog/2014/10/14/debug-fxos-tabs/</guid>
+      <description>We&amp;rsquo;ve had various tools for inspecting apps on remote devices for some time now, but for a long time we&amp;rsquo;ve not had the same support for remote browser tabs.
+To remedy this, WebIDE now supports inspecting browser tabs running on Firefox OS devices.
+A few weeks back, WebIDE gained support for inspecting tabs on the remote device, but many of the likely suspects to connect to weren&amp;rsquo;t quite ready for various reasons.</description>
+      <content:encoded><![CDATA[<p>We&rsquo;ve had various tools for inspecting apps on remote devices for some time now,
+but for a long time we&rsquo;ve not had the same support for remote browser tabs.</p>
+<p>To remedy this, <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> now supports inspecting browser tabs running on Firefox OS devices.</p>
+<p><img loading="lazy" src="webide-tab.png" alt="Inspecting a tab in WebIDE"  />
+</p>
+<p>A few weeks back, WebIDE gained support for <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1009604">inspecting tabs</a> on the remote
+device, but many of the likely suspects to connect to weren&rsquo;t quite ready for
+various reasons.</p>
+<p>We&rsquo;ve just <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=975084">landed</a> the necessary server-side bits for Firefox OS, so you
+should be able try this out by updating your device to the next nightly build
+after 2014-10-14.</p>
+<h2 id="how-to-use">How to Use</h2>
+<p>After connecting to your device in WebIDE, any open browser tabs will appear at
+the bottom of WebIDE&rsquo;s project list.</p>
+<p><img loading="lazy" src="webide-tab-list.png" alt="Browser tab list in WebIDE"  />
+</p>
+<p>The toolbox should open automatically after choosing a tab.  You can also toggle
+the toolbox via the &ldquo;Pause&rdquo; icon in the top toolbar.</p>
+<h2 id="whats-next">What&rsquo;s Next</h2>
+<p>We&rsquo;re planning to make this work for Firefox for Android as well.  Much of
+that work is already done, so I am hopeful that it will be available soon.</p>
+<p>If there are features you&rsquo;d like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
+team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">various channels</a>.</p>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>WebIDE enabled in Nightly</title>
+      <link>https://convolv.es/blog/2014/08/18/webide-enabled/</link>
+      <pubDate>Mon, 18 Aug 2014 10:44:00 -0500</pubDate>
+      
+      <guid>https://convolv.es/blog/2014/08/18/webide-enabled/</guid>
+      <description>I am excited to announce that WebIDE is now enabled by default in Nightly (Firefox 34)! Everyone on the App Tools team has been working hard to polish this new tool that we originally announced back in June.
+
+Features While the previous App Manager tool was great, that tool&amp;rsquo;s UX held us back when trying support more complex workflows. With the redesign into WebIDE, we&amp;rsquo;ve already been able to add:</description>
+      <content:encoded><![CDATA[<p>I am excited to announce that <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> is now enabled by default in Nightly
+(Firefox 34)!  Everyone on the App Tools team has been working hard to polish
+this new tool that we originally <a href="https://hacks.mozilla.org/2014/06/webide-lands-in-nightly/">announced</a> back in June.</p>
+<p><a href="https://www.youtube.com/watch?v=n8c34wk4OnY"><img src="webide-enabled-video.png"></a></p>
+<h2 id="features">Features</h2>
+<p>While the previous App Manager tool was great, that tool&rsquo;s UX held us
+back when trying support more complex workflows.  With the redesign into WebIDE,
+we&rsquo;ve already been able to add:</p>
+<ul>
+<li>Project Editing
+<ul>
+<li>Great for getting started without worrying about an external editor</li>
+</ul>
+</li>
+<li>Project Templates
+<ul>
+<li>Easy to focus on content from the start by using a template</li>
+</ul>
+</li>
+<li>Improved DevTools Toolbox integration
+<ul>
+<li>Many UX issues arose from the non-standard way that App Manager used the
+DevTools</li>
+</ul>
+</li>
+<li><a href="https://developer.mozilla.org/docs/Tools/WebIDE/Monitor">Monitor</a>
+<ul>
+<li>Live memory graphs help diagnose performance issues</li>
+</ul>
+</li>
+</ul>
+<p><img loading="lazy" src="monitor.png" alt="Monitor"  />
+</p>
+<h2 id="transition">Transition</h2>
+<p>All projects you may have created previously in the App Manager are also
+available in WebIDE.</p>
+<p>While the App Manager is now hidden, it&rsquo;s accessible for now at
+<code>about:app-manager</code>.  We do intend to remove it entirely in the future, so
+it&rsquo;s best to start using WebIDE today.  If you find any issues, please <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a>!</p>
+<h2 id="whats-next">What&rsquo;s Next</h2>
+<p>Looking ahead, we have many more exciting things planned for WebIDE, such as:</p>
+<ul>
+<li>Command line integration</li>
+<li>Improved support for app frameworks like Cordova</li>
+<li>Validation that matches the Firefox Marketplace</li>
+</ul>
+<p>If there are features you&rsquo;d like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
+team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">various channels</a>.</p>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>Mozilla</title>
+      <link>https://convolv.es/blog/2013/08/25/mozilla/</link>
+      <pubDate>Sun, 25 Aug 2013 01:27:00 -0500</pubDate>
+      
+      <guid>https://convolv.es/blog/2013/08/25/mozilla/</guid>
+      <description>In my last post (back in February&amp;hellip;), I mentioned I was spending a lot of time on the side working on the developer tools in web browsers, particularly Firefox. I find that Mozilla&amp;rsquo;s values, which truly put the user first, are something I agree with wholeheartedly. Mozilla is in a unique position in this way, since all the other browsers are made by companies that, at the end of day, are looking to make money to appease their shareholders.</description>
+      <content:encoded><![CDATA[<p>In my <a href="/blog/2013/02/17/into-the-open/">last post</a> (back in February&hellip;), I mentioned I was spending a lot of
+time on the side working on the developer tools in web browsers, particularly
+Firefox.  I find that Mozilla&rsquo;s values, which truly put the user first, are
+something I agree with wholeheartedly.  Mozilla is in a unique position in this
+way, since all the other browsers are made by companies that, at the end of day,
+are looking to make money to appease their shareholders.  Mozilla&rsquo;s values are
+even more important to emphasize these days with the various forms of
+governmental spying that has been revealed in the last few months.</p>
+<p>With that context, hopefully you can get an idea of how excited I am to say that
+this past Monday was my first day as a Mozilla employee, working on the Firefox
+Developer Tools team!</p>
+<p>I am currently in Paris ramping up with the team for two weeks.  After the first
+week, I am humbled to be able to say I am a part of this organization.  There
+are so many people smarter than me here, and I am thrilled to have the
+opportunity to work with them.  I know we will accomplish great things together.</p>
+<p>There is so much potential in the web developer tools space.  Every developer
+has their own workflow, favorite set of frameworks and tools, and new platform
+technologies and techniques are coming out at a rapid pace.  While part of my
+job is certainly to help make all of this more efficient, there is a lot of room
+to shake things up by looking towards the future of web development and the
+tools that people don&rsquo;t even know they need.</p>
+<p>It&rsquo;s going to be a blast! Hopefully I&rsquo;ll have to some fun things to share.</p>
+]]></content:encoded>
+    </item>
+    
+  </channel>
+</rss>

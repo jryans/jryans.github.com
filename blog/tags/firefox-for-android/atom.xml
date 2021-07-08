@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Firefox for Android on J. Ryan Stinnett</title>
+    <link>https://convolv.es/blog/tags/firefox-for-android/</link>
+    <description>Recent content in Firefox for Android on J. Ryan Stinnett</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Wed, 05 Aug 2015 15:33:00 -0500</lastBuildDate><atom:link href="https://convolv.es/blog/tags/firefox-for-android/atom.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>WiFi Debugging for Firefox for Android</title>
+      <link>https://convolv.es/blog/2015/08/05/wifi-debug-fennec/</link>
+      <pubDate>Wed, 05 Aug 2015 15:33:00 -0500</pubDate>
+      
+      <guid>https://convolv.es/blog/2015/08/05/wifi-debug-fennec/</guid>
+      <description>I am excited to announce that we&amp;rsquo;re now shipping WiFi debugging for Firefox for Android! It&amp;rsquo;s available in Firefox for Android 42 with Firefox Nightly on desktop.
+The rest of this post will sound quite similar to the previous announcement for Firefox OS support.
+WiFi debugging allows WebIDE to connect to Firefox for Android via your local WiFi network instead of a USB cable.
+The connection experience is generally more straightforward (especially after connecting to a device the first time) than with USB and also more convenient to use since you&amp;rsquo;re no longer tied down by a cable.</description>
+      <content:encoded><![CDATA[<p>I am excited to announce that we&rsquo;re now <a href="https://bugzil.la/1180996">shipping</a> WiFi debugging for
+Firefox for Android!  It&rsquo;s available in <a href="https://nightly.mozilla.org/">Firefox for Android 42</a>
+with <a href="https://nightly.mozilla.org/">Firefox Nightly</a> on desktop.</p>
+<p>The rest of this post will sound quite similar to the <a href="/blog/2015/03/25/wifi-debug-fxos/">previous announcement for
+Firefox OS</a> support.</p>
+<p>WiFi debugging allows <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> to connect to Firefox for Android via
+your local WiFi network instead of a USB cable.</p>
+<p>The connection experience is generally more straightforward (especially after
+connecting to a device the first time) than with USB and also more convenient to
+use since you&rsquo;re no longer tied down by a cable.</p>
+<h2 id="security">Security</h2>
+<p>A large portion of this project has gone towards making the debugging
+connection secure, so that you can use it safely on shared network, such as an
+office or coffee shop.</p>
+<p>We use TLS for encryption and authentication.  The computer and device both
+create self-signed certificates.  When you connect, a QR code is scanned to
+verify that the certificates can be trusted.  During the connection process, you
+can choose to remember this information and connect immediately in the future if
+desired.</p>
+<h2 id="how-to-use">How to Use</h2>
+<p>You&rsquo;ll need to assemble the following bits and bobs:</p>
+<ul>
+<li><a href="https://nightly.mozilla.org/">Firefox 42</a></li>
+<li><a href="https://nightly.mozilla.org/">Firefox for Android 42</a></li>
+<li><a href="https://play.google.com/store/apps/details?id=com.google.zxing.client.android">Barcode Scanner Android app by ZXing Team</a> (for QR code scanning)</li>
+</ul>
+<p>On your Android device:</p>
+<ol>
+<li>Install the <a href="https://play.google.com/store/apps/details?id=com.google.zxing.client.android">Barcode Scanner Android app by ZXing Team</a></li>
+<li>Open Firefox for Android</li>
+<li>Go to Developer Tools Settings on device (Settings -&gt; Developer Tools)</li>
+<li>Enable Remote Debugging via Wi-Fi</li>
+</ol>
+<p><img loading="lazy" src="fennec-wifi-opts.png" alt="Firefox for Android WiFi Debugging Options"  />
+</p>
+<p>To connect from Firefox Desktop:</p>
+<ol>
+<li>Open WebIDE in Firefox Nightly (Tools -&gt; Web Developer -&gt; WebIDE)</li>
+<li>Click &ldquo;Select Runtime&rdquo; to open the runtimes panel</li>
+<li>Your Firefox for Android device should show up in the &ldquo;WiFi Devices&rdquo; section</li>
+<li>A connection prompt will appear on device, choose &ldquo;Scan&rdquo; or &ldquo;Scan and Remember&rdquo;</li>
+<li>Scan the QR code displayed in WebIDE</li>
+</ol>
+<p><img loading="lazy" src="webide-wifi-runtime.png" alt="WebIDE WiFi Runtimes"  />
+
+<img loading="lazy" src="webide-qr-code.png" alt="WebIDE Displays the QR Code"  />
+</p>
+<p>After scanning the QR code, the QR display should disappear and the &ldquo;device&rdquo;
+icon in WebIDE will turn blue for &ldquo;connected&rdquo;.</p>
+<p>You can then access all of your remote browser tabs just as you can today over
+USB.</p>
+<h2 id="technical-aside">Technical Aside</h2>
+<p>This process does not use ADB at all on the device, so if you find ADB
+inconvenient while debugging or would rather not install ADB at all, then
+WiFi debugging is the way to go.</p>
+<p>By skipping ADB, we don&rsquo;t have to worry about driver confusion, especially on
+Windows and Linux.</p>
+<h2 id="supported-devices">Supported Devices</h2>
+<p>This feature should be supported on any Firefox for Android device.  So far,
+I&rsquo;ve tested it on the LG G2.</p>
+<h2 id="acknowledgments">Acknowledgments</h2>
+<p>Thanks to all who helped via advice and reviews while working on Android support,
+including (in semi-random order):</p>
+<ul>
+<li>Margaret Leibovic</li>
+<li>Karim Benhmida</li>
+</ul>
+<p>And from the larger WiFi debugging effort:</p>
+<ul>
+<li>Brian Warner</li>
+<li>Trevor Perrin</li>
+<li>David Keeler</li>
+<li>Honza Bambas</li>
+<li>Patrick McManus</li>
+<li>Jason Duell</li>
+<li>Panos Astithas</li>
+<li>Jan Keromnes</li>
+<li>Alexandre Poirot</li>
+<li>Paul Rouget</li>
+<li>Paul Theriault</li>
+</ul>
+<p>I am probably forgetting others as well, so I apologize if you were omitted.</p>
+<h2 id="whats-next">What&rsquo;s Next</h2>
+<p>If there are features you&rsquo;d like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
+team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">various channels</a>.</p>
+]]></content:encoded>
+    </item>
+    
+    <item>
+      <title>Debugging Tabs with Firefox for Android</title>
+      <link>https://convolv.es/blog/2014/10/28/debug-fennec-tabs/</link>
+      <pubDate>Tue, 28 Oct 2014 16:08:00 -0500</pubDate>
+      
+      <guid>https://convolv.es/blog/2014/10/28/debug-fennec-tabs/</guid>
+      <description>For quite a while, it has been possible to debug tabs on Firefox for Android devices, but there were many steps involved, including manual port forwarding from the terminal.
+As I hinted a few weeks ago, WebIDE would soon support connecting to Firefox for Android via ADB Helper support, and that time is now!
+How to Use You&amp;rsquo;ll need to assemble the following bits and bobs:
+ Firefox 36 (2014-10-25 or later) ADB Helper 0.</description>
+      <content:encoded><![CDATA[<p>For quite a while, it has been possible to debug tabs on Firefox for Android
+devices, but there were many steps involved, including manual port forwarding
+from the terminal.</p>
+<p>As I <a href="/blog/2014/10/14/debug-fxos-tabs/">hinted</a> a few weeks ago, <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> would soon support connecting
+to Firefox for Android via ADB Helper support, and that time is now!</p>
+<h2 id="how-to-use">How to Use</h2>
+<p>You&rsquo;ll need to assemble the following bits and bobs:</p>
+<ul>
+<li>Firefox 36 (2014-10-25 or later)</li>
+<li>ADB Helper 0.7.0 or later</li>
+<li>Firefox for Android 35 or later</li>
+</ul>
+<p>Opening WebIDE for the first time should install ADB Helper if you don&rsquo;t already
+have it, but double-check it is the right version in the add-on manager.</p>
+<p><img loading="lazy" src="fennec-usb-runtime.png" alt="Firefox for Android runtime appears"  />
+</p>
+<p>Inside WebIDE, you&rsquo;ll see an entry for Firefox for Android in the Runtime menu.</p>
+<p><img loading="lazy" src="fennec-tab-list.png" alt="Firefox for Android tab list"  />
+</p>
+<p>Once you select the runtime, tabs from Firefox for Android will be available in
+the (now poorly labelled) apps menu on the left.</p>
+<p><img loading="lazy" src="fennec-tab-toolbox.png" alt="Inspecting a tab in WebIDE"  />
+</p>
+<p>Choosing a tab will open up the DevTools toolbox for that tab.  You can also
+toggle the toolbox via the &ldquo;Pause&rdquo; icon in the top toolbar.</p>
+<p>If you would like to debug Firefox for Android&rsquo;s system-level / chrome code,
+instead of a specific tab, you can do that with the &ldquo;Main Process&rdquo; option.</p>
+<h2 id="whats-next">What&rsquo;s Next</h2>
+<p>We have even more connection UX improvements on the way, so I hope to have more
+to share soon!</p>
+<p>If there are features you&rsquo;d like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
+team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">various channels</a>.</p>
+]]></content:encoded>
+    </item>
+    
+  </channel>
+</rss>

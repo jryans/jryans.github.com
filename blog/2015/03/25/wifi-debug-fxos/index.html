@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>WiFi Debugging for Firefox OS | J. Ryan Stinnett</title>
+<meta name="keywords" content="Open Source, Mozilla, Developer Tools, Firefox OS" />
+<meta name="description" content="I am excited to announce that we&rsquo;re now shipping WiFi debugging for Firefox OS! It&rsquo;s available in Firefox OS 3.0 / master with Firefox Nightly on desktop.
+WiFi debugging allows WebIDE to connect to your Firefox OS device via your local WiFi network instead of a USB cable.
+The connection experience is generally more straightforward (especially after connecting to a device the first time) than with USB and also more convenient to use since you&rsquo;re no longer tied down by a cable.">
+<meta name="author" content="">
+<link rel="canonical" href="https://convolv.es/blog/2015/03/25/wifi-debug-fxos/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.7565db822f964cf9d1ae88d48f8db33a887ee1d4daf04f95b5100afd0ed4a008.css" integrity="sha256-dWXbgi&#43;WTPnRrojUj42zOoh&#43;4dTa8E&#43;VtRAK/Q7UoAg=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://convolv.es/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://convolv.es/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://convolv.es/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://convolv.es/apple-touch-icon.png">
+<link rel="mask-icon" href="https://convolv.es/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<meta name="generator" content="Hugo 0.83.1" />
+<meta property="og:title" content="WiFi Debugging for Firefox OS" />
+<meta property="og:description" content="I am excited to announce that we&rsquo;re now shipping WiFi debugging for Firefox OS! It&rsquo;s available in Firefox OS 3.0 / master with Firefox Nightly on desktop.
+WiFi debugging allows WebIDE to connect to your Firefox OS device via your local WiFi network instead of a USB cable.
+The connection experience is generally more straightforward (especially after connecting to a device the first time) than with USB and also more convenient to use since you&rsquo;re no longer tied down by a cable." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://convolv.es/blog/2015/03/25/wifi-debug-fxos/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2015-03-25T08:51:00-05:00" />
+<meta property="article:modified_time" content="2015-03-25T08:51:00-05:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="WiFi Debugging for Firefox OS"/>
+<meta name="twitter:description" content="I am excited to announce that we&rsquo;re now shipping WiFi debugging for Firefox OS! It&rsquo;s available in Firefox OS 3.0 / master with Firefox Nightly on desktop.
+WiFi debugging allows WebIDE to connect to your Firefox OS device via your local WiFi network instead of a USB cable.
+The connection experience is generally more straightforward (especially after connecting to a device the first time) than with USB and also more convenient to use since you&rsquo;re no longer tied down by a cable."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Blogs",
+      "item": "https://convolv.es/blog/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "WiFi Debugging for Firefox OS",
+      "item": "https://convolv.es/blog/2015/03/25/wifi-debug-fxos/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "WiFi Debugging for Firefox OS",
+  "name": "WiFi Debugging for Firefox OS",
+  "description": "I am excited to announce that we\u0026rsquo;re now shipping WiFi debugging for Firefox OS! It\u0026rsquo;s available in Firefox OS 3.0 / master with Firefox Nightly on desktop.\nWiFi debugging allows WebIDE to connect to your Firefox OS device via your local WiFi network instead of a USB cable.\nThe connection experience is generally more straightforward (especially after connecting to a device the first time) than with USB and also more convenient to use since you\u0026rsquo;re no longer tied down by a cable.",
+  "keywords": [
+    "Open Source", "Mozilla", "Developer Tools", "Firefox OS"
+  ],
+  "articleBody": "I am excited to announce that we’re now shipping WiFi debugging for Firefox OS! It’s available in Firefox OS 3.0 / master with Firefox Nightly on desktop.\nWiFi debugging allows WebIDE to connect to your Firefox OS device via your local WiFi network instead of a USB cable.\nThe connection experience is generally more straightforward (especially after connecting to a device the first time) than with USB and also more convenient to use since you’re no longer tied down by a cable.\nSecurity A large portion of this project has gone towards making the debugging connection secure, so that you can use it safely on shared network, such as an office or coffee shop.\nWe use TLS for encryption and authentication. The computer and device both create self-signed certificates. When you connect, a QR code is scanned to verify that the certificates can be trusted. During the connection process, you can choose to remember this information and connect immediately in the future if desired.\nHow to Use You’ll need to assemble the following bits and bobs:\n Firefox 39 (2015-03-27 or later) Firefox OS 3.0 (2015-03-27 or later)  Option A: Update your Flame to 3.0 / master Option B: Build for your device from source    On Firefox OS, enable WiFi debugging:\n Go to Developer Settings on device (Settings - Developer) Enable DevTools via Wi-Fi Edit the device name if desired  To connect from Firefox Desktop:\n Open WebIDE in Firefox Nightly (Tools - Web Developer - WebIDE) Click “Select Runtime” to open the runtimes panel Your Firefox OS device should show up in the “WiFi Devices” section A connection prompt will appear on device, choose “Scan” or “Scan and Remember” Scan the QR code displayed in WebIDE  After scanning the QR code, the QR display should disappear and the “device” icon in WebIDE will turn blue for “connected”.\nYou can then access all of your remote apps and browser tabs just as you can today over USB.\nTechnical Aside This process does not use ADB at all on the device, so if you find ADB inconvenient while debugging or would rather not install ADB at all, then WiFi debugging is the way to go.\nBy skipping ADB, we don’t have to worry about driver confusion, especially on Windows and Linux.\nSupported Devices This feature should be supported on any Firefox OS device. So far, I’ve tested it on the Flame and Nexus 4.\nKnown Issues The QR code scanner can be a bit frustrating at the moment, as real devices appear to capture a very low resolution picture. Bug 1145772 aims to improve this soon. You should be able to scan with the Flame by trying a few different orientations. I would suggest using “Scan and Remember”, so that scanning is only needed for the first connection.\nIf you find other issues while testing, please file bugs or contact me on IRC.\nAcknowledgments This was quite a complex project, and many people provided advice and reviews while working on this feature, including (in semi-random order):\n Brian Warner Trevor Perrin David Keeler Honza Bambas Patrick McManus Jason Duell Panos Astithas Jan Keromnes Alexandre Poirot Paul Rouget Paul Theriault  I am probably forgetting others as well, so I apologize if you were omitted.\nWhat’s Next I’d like to add this ability for Firefox for Android next. Thankfully, most of the work done here can be reused there.\nIf there are features you’d like to see added, file bugs or contact the team via various channels.\n",
+  "wordCount" : "581",
+  "inLanguage": "en",
+  "datePublished": "2015-03-25T08:51:00-05:00",
+  "dateModified": "2015-03-25T08:51:00-05:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://convolv.es/blog/2015/03/25/wifi-debug-fxos/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "J. Ryan Stinnett",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://convolv.es/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+<noscript>
+    <style type="text/css">
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: #1d1e20;
+                --entry: #2e2e33;
+                --primary: rgba(255, 255, 255, 0.84);
+                --secondary: rgba(255, 255, 255, 0.56);
+                --tertiary: rgba(255, 255, 255, 0.16);
+                --content: rgba(255, 255, 255, 0.74);
+                --hljs-bg: #2e2e33;
+                --code-bg: #37383e;
+                --border: #333;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://convolv.es/" accesskey="h" title="J. Ryan Stinnett (Alt + H)">J. Ryan Stinnett</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://convolv.es/blog/now/" title="Now">
+                    <span>Now</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/blog/cv/" title="Curriculum Vitae">
+                    <span>CV</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/blog/contact/" title="Contact">
+                    <span>Contact</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/blog/archives/" title="Archives">
+                    <span>Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/blog/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/blog/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      WiFi Debugging for Firefox OS
+    </h1>
+    <div class="post-meta">2015-03-25
+</div>
+  </header> 
+  <div class="post-content"><p>I am excited to announce that we&rsquo;re now shipping WiFi debugging for Firefox OS!
+It&rsquo;s available in <a href="https://developer.mozilla.org/en-US/Firefox_OS/Building">Firefox OS 3.0 / master</a> with <a href="https://nightly.mozilla.org/">Firefox Nightly</a> on desktop.</p>
+<p>WiFi debugging allows <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> to connect to your Firefox OS device via your local
+WiFi network instead of a USB cable.</p>
+<p>The connection experience is generally more straightforward (especially after
+connecting to a device the first time) than with USB and also more convenient to
+use since you&rsquo;re no longer tied down by a cable.</p>
+<h2 id="security">Security<a hidden class="anchor" aria-hidden="true" href="#security">#</a></h2>
+<p>A large portion of this project has gone towards making the debugging
+connection secure, so that you can use it safely on shared network, such as an
+office or coffee shop.</p>
+<p>We use TLS for encryption and authentication.  The computer and device both
+create self-signed certificates.  When you connect, a QR code is scanned to
+verify that the certificates can be trusted.  During the connection process, you
+can choose to remember this information and connect immediately in the future if
+desired.</p>
+<h2 id="how-to-use">How to Use<a hidden class="anchor" aria-hidden="true" href="#how-to-use">#</a></h2>
+<p>You&rsquo;ll need to assemble the following bits and bobs:</p>
+<ul>
+<li><a href="https://nightly.mozilla.org/">Firefox 39</a> (2015-03-27 or later)</li>
+<li>Firefox OS 3.0 (2015-03-27 or later)
+<ul>
+<li>Option A: <a href="https://developer.mozilla.org/en-US/Firefox_OS/Phone_guide/Flame/Updating_your_Flame#Updating_your_Flame_to_a_nightly_build">Update your Flame</a> to 3.0 / master</li>
+<li>Option B: <a href="https://developer.mozilla.org/en-US/Firefox_OS/Building">Build for your device</a> from source</li>
+</ul>
+</li>
+</ul>
+<p>On Firefox OS, enable WiFi debugging:</p>
+<ol>
+<li>Go to Developer Settings on device (Settings -&gt; Developer)</li>
+<li>Enable DevTools via Wi-Fi</li>
+<li>Edit the device name if desired</li>
+</ol>
+<p><img loading="lazy" src="fxos-wifi-opts.png" alt="Firefox OS WiFi Debugging Options"  />
+</p>
+<p>To connect from Firefox Desktop:</p>
+<ol>
+<li>Open WebIDE in Firefox Nightly (Tools -&gt; Web Developer -&gt; WebIDE)</li>
+<li>Click &ldquo;Select Runtime&rdquo; to open the runtimes panel</li>
+<li>Your Firefox OS device should show up in the &ldquo;WiFi Devices&rdquo; section</li>
+<li>A connection prompt will appear on device, choose &ldquo;Scan&rdquo; or &ldquo;Scan and Remember&rdquo;</li>
+<li>Scan the QR code displayed in WebIDE</li>
+</ol>
+<p><img loading="lazy" src="webide-wifi-runtime.png" alt="WebIDE WiFi Runtimes"  />
+
+<img loading="lazy" src="webide-qr-code.png" alt="WebIDE Displays the QR Code"  />
+</p>
+<p>After scanning the QR code, the QR display should disappear and the &ldquo;device&rdquo;
+icon in WebIDE will turn blue for &ldquo;connected&rdquo;.</p>
+<p>You can then access all of your remote apps and browser tabs just as you can
+today over USB.</p>
+<h2 id="technical-aside">Technical Aside<a hidden class="anchor" aria-hidden="true" href="#technical-aside">#</a></h2>
+<p>This process does not use ADB at all on the device, so if you find ADB
+inconvenient while debugging or would rather not install ADB at all, then
+WiFi debugging is the way to go.</p>
+<p>By skipping ADB, we don&rsquo;t have to worry about driver confusion, especially on
+Windows and Linux.</p>
+<h2 id="supported-devices">Supported Devices<a hidden class="anchor" aria-hidden="true" href="#supported-devices">#</a></h2>
+<p>This feature should be supported on any Firefox OS device.  So far, I&rsquo;ve tested
+it on the Flame and Nexus 4.</p>
+<h2 id="known-issues">Known Issues<a hidden class="anchor" aria-hidden="true" href="#known-issues">#</a></h2>
+<p>The QR code scanner can be a bit frustrating at the moment, as real devices
+appear to capture a very low resolution picture.  <a href="https://bugzil.la/1145772">Bug 1145772</a> aims
+to improve this soon.  You should be able to scan with the Flame by trying a few
+different orientations.  I would suggest using &ldquo;Scan and Remember&rdquo;, so that
+scanning is only needed for the first connection.</p>
+<p>If you find other issues while testing, please <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact me
+on IRC.</p>
+<h2 id="acknowledgments">Acknowledgments<a hidden class="anchor" aria-hidden="true" href="#acknowledgments">#</a></h2>
+<p>This was quite a complex project, and many people provided advice and reviews
+while working on this feature, including (in semi-random order):</p>
+<ul>
+<li>Brian Warner</li>
+<li>Trevor Perrin</li>
+<li>David Keeler</li>
+<li>Honza Bambas</li>
+<li>Patrick McManus</li>
+<li>Jason Duell</li>
+<li>Panos Astithas</li>
+<li>Jan Keromnes</li>
+<li>Alexandre Poirot</li>
+<li>Paul Rouget</li>
+<li>Paul Theriault</li>
+</ul>
+<p>I am probably forgetting others as well, so I apologize if you were omitted.</p>
+<h2 id="whats-next">What&rsquo;s Next<a hidden class="anchor" aria-hidden="true" href="#whats-next">#</a></h2>
+<p>I&rsquo;d like to add this ability for Firefox for Android next.  Thankfully, most of
+the work done here can be reused there.</p>
+<p>If there are features you&rsquo;d like to see added, <a href="https://bugzilla.mozilla.org/enter_bug.cgi?product=Firefox&amp;component=Developer%20Tools%3A%20WebIDE">file bugs</a> or contact the
+team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">various channels</a>.</p>
+
+
+  </div>
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://convolv.es/blog/tags/open-source/">Open Source</a></li>
+      <li><a href="https://convolv.es/blog/tags/mozilla/">Mozilla</a></li>
+      <li><a href="https://convolv.es/blog/tags/developer-tools/">Developer Tools</a></li>
+      <li><a href="https://convolv.es/blog/tags/firefox-os/">Firefox OS</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    <footer class="footer">
+    <span>&copy; 2021 <a href="https://convolv.es/">J. Ryan Stinnett</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)">
+    <button class="top-link" id="top-link" type="button" accesskey="g">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+    </button>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+    menu.onscroll = function () {
+        localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
