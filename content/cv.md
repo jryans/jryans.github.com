@@ -77,7 +77,7 @@ balance of power.
 <div class="row">
   <div class="lr pri">
     <span>Visiting Researcher</span>
-    <span>October 2019 – Present</span>
+    <span>October 2019 – June 2021</span>
   </div>
   <div class="lr sec">
     <span>University of Kent</span>
