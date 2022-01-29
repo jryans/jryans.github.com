@@ -17,7 +17,7 @@ typically imposed by siloed applications from different vendors.
 <div class="row">
   <div class="lr pri">
     <span>Malleable Systems Collective</span>
-    <span>July 2019 – Present</span>
+    <span>July 2019 – present</span>
   </div>
   <div class="lr sec">
     <span>Community</span>
@@ -36,7 +36,7 @@ balance of power.
 <div class="row">
   <div class="lr pri">
     <span>Firefox</span>
-    <span>February 2013 – Present</span>
+    <span>February 2013 – present</span>
   </div>
   <div class="lr sec">
     <span>Rust, JavaScript, C++</span>
@@ -58,7 +58,7 @@ balance of power.
 <div class="row">
   <div class="lr pri">
     <span>Technical Lead</span>
-    <span>January 2020 – Present</span>
+    <span>January 2020 – present</span>
   </div>
   <div class="lr pri">
     <span>Senior Software Engineer</span>
