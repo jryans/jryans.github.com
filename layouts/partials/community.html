@@ -1,0 +1,13 @@
+<div class="community">
+  {{ with .image }}
+  <img src="{{ . }}" />
+  {{ end }}
+  <h3>{{ .title }}</h3>
+  {{ with .years }}
+  <div class="years">{{ index . 0 }} – {{ index . 1 }}</div>
+  {{ end }}
+  <p>{{ .description }}</p>
+  {{ if .location }}
+  <a class="entry-link" href="{{ .location }}" target="_blank" rel="noopener"></a>
+  {{ end }}
+</div>

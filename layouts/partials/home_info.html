@@ -10,4 +10,17 @@
         {{ partial "social_icons.html" $.Site.Params.socialIcons }}
     </footer>
 </article>
+
+{{/* JRS: A place to add extra content with low risk of theme conflicts */}}
+{{ with $.Site.Data.communities }}
+<h2>Communities</h2>
+<div class="blocks">
+    {{ range . }}
+        {{ partial "community.html" . }}
+    {{ end }}
+</div>
+{{ end }}
+
+<h2>Notes</h2>
+<div class="spacer"></div>
 {{- end -}}

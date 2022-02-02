@@ -1,0 +1,9 @@
+title: Beyond Chat
+image: /logos/beyond-chat.svg
+location: https://matrix.to/#/#beyond-chat:matrix.org
+years:
+  - 2021
+  - present
+description:
+  "Matrix-native projects beyond chat: collaborative documents, blogs,
+  generic KV databases, tools for thought, etc."

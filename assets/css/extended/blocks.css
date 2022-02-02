@@ -1,0 +1,37 @@
+.blocks {
+  display: flex;
+  margin: var(--gap) 0;
+  gap: var(--gap);
+}
+
+@media screen and (max-width: 768px) {
+  .blocks {
+    flex-direction: column;
+  }
+}
+
+.community {
+  flex: 1;
+  position: relative;
+  padding: var(--gap);
+  background: var(--entry);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.community .years {
+  font-size: 15px;
+}
+
+.community img {
+  max-height: 48px;
+  float: right;
+}
+
+.community p {
+  color: var(--secondary);
+}
+
+.spacer {
+  margin-bottom: var(--gap);
+}
