@@ -38,6 +38,8 @@ params:
       url: "/atom.xml"
     - name: twitter
       url: "https://twitter.com/jryans"
+    - name: mastodon
+      url: "https://merveilles.town/@jryans"
     - name: github
       url: "https://github.com/jryans"
   showFullTextInRSS: true
