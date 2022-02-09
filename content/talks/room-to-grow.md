@@ -2,8 +2,11 @@
 title: "Room to grow: Building collaborative, open software"
 date: 2022-04-29
 publishDate: 2022-02-03
-description: "Conference talk at HYTRADBOI 2022"
 ---
+
+Conference talk to be given at [HYTRADBOI 2022](https://www.hytradboi.com/)
+
+## Abstract
 
 [Local-first software](https://www.inkandswitch.com/local-first/) for creative
 work resets the balance of ownership away from the cloud, allowing creators to
