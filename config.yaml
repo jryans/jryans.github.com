@@ -43,6 +43,8 @@ params:
     - name: github
       url: "https://github.com/jryans"
   showFullTextInRSS: true
+  mainSections:
+    - blog
 
 permalinks:
   /:    /blog/:filename/
