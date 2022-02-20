@@ -298,11 +298,10 @@ balance of power.
 <div class="row">
   <div class="lr pri">
     <span>Program Committee Member</span>
+    <a href="https://2020.programming-conference.org/home/salon-2020">2020</a>
   </div>
   <div class="lr sec">
-    <span>
-      <a href="https://2020.programming-conference.org/home/salon-2020">Convivial Computing Salon 2020</a>
-    </span>
+    <span>Convivial Computing Salon</span>
     <span>Porto, Portugal</span>
   </div>
   </div>
