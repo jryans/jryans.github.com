@@ -62,7 +62,7 @@ balance of power.
   </div>
   <div class="lr pri">
     <span>Technical Lead</span>
-    <span>January 2020 – July 2021</span>
+    <span>January 2020 – June 2021</span>
   </div>
   <div class="lr pri">
     <span>Senior Software Engineer</span>
