@@ -57,8 +57,12 @@ balance of power.
 
 <div class="row">
   <div class="lr pri">
+    <span>Technical Architect</span>
+    <span>July 2021 – present</span>
+  </div>
+  <div class="lr pri">
     <span>Technical Lead</span>
-    <span>January 2020 – present</span>
+    <span>January 2020 – July 2021</span>
   </div>
   <div class="lr pri">
     <span>Senior Software Engineer</span>
@@ -72,7 +76,7 @@ balance of power.
 
   - Building open, decentralized, secure communications for all via Matrix
   - Planning delivery with product team to ship high quality features on time
-  - Working with the community to gather feedback on features and issues
+  - Exploring Matrix-native projects beyond chat
 
 <div class="row">
   <div class="lr pri">
