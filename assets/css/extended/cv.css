@@ -11,6 +11,7 @@
 
 .lr > *:first-child {
   flex: 1;
+  margin-right: 1.5em;
 }
 
 .lr a {

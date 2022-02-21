@@ -350,8 +350,8 @@ balance of power.
     <span>January 2007</span>
   </div>
   <div class="lr sec">
-    <span>Raymond Wagner, J. Ryan Stinnett, Marco Duarte, Richard Baraniuk,
-    David B. Johnson, T. S. Eugene Ng</span>
+    <span>Raymond Wagner, J. Ryan Stinnett, Marco Duarte, Richard Baraniuk,
+    David B. Johnson, T. S. Eugene Ng</span>
     <span>Houston, USA</span>
   </div>
   <div class="lr sec">
@@ -368,8 +368,8 @@ balance of power.
     <span>November 2006</span>
   </div>
   <div class="lr sec">
-    <span>Raymond Wagner, Marco Duarte, J. Ryan Stinnett, T. S. Eugene Ng,
-    David B. Johnson, Richard Baraniuk</span>
+    <span>Raymond Wagner, Marco Duarte, J. Ryan Stinnett, T. S. Eugene Ng,
+    David B. Johnson, Richard Baraniuk</span>
     <span>Houston, USA</span>
   </div>
   <div class="lr sec">
