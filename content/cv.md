@@ -57,7 +57,7 @@ balance of power.
 
 <div class="row">
   <div class="lr pri">
-    <span>Technical Architect</span>
+    <span>Staff Software Engineer</span>
     <span>July 2021 – present</span>
   </div>
   <div class="lr pri">
