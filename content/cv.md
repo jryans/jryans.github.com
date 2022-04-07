@@ -374,7 +374,7 @@ balance of power.
   </div>
   <div class="lr sec">
     <span>
-      <a href="http://www-ece.rice.edu/~rwagner/IPSN-API-survey.pdf">report</a>
+      <a href="https://www.ece.rice.edu/~rwagner/IPSN-API-survey.pdf">report</a>
     </span>
   </div>
 </div>
