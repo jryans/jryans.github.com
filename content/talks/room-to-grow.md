@@ -2,6 +2,10 @@
 title: "Room to grow: Building collaborative, open software"
 date: 2022-04-29
 publishDate: 2022-02-03
+summary:
+  "We examine one approach to collaborative, open software by building on
+  Matrix, a secure, decentralised, real-time communication protocol with
+  generic database capabilities hiding beneath its current focus on chat."
 ---
 
 Conference talk to be given at [HYTRADBOI 2022](https://www.hytradboi.com/)
