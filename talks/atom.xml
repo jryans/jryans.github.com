@@ -7,5 +7,37 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
     <lastBuildDate>Fri, 29 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://convolv.es/talks/atom.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Room to grow: Building collaborative, open software</title>
+      <link>https://convolv.es/talks/room-to-grow/</link>
+      <pubDate>Fri, 29 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://convolv.es/talks/room-to-grow/</guid>
+      <description>We examine one approach to collaborative, open software by building on Matrix, a secure, decentralised, real-time communication protocol with generic database capabilities hiding beneath its current focus on chat.</description>
+      <content:encoded><![CDATA[<p>Conference talk to be given at <a href="https://www.hytradboi.com/">HYTRADBOI 2022</a></p>
+<h2 id="abstract">Abstract</h2>
+<p><a href="https://www.inkandswitch.com/local-first/">Local-first software</a> for creative
+work resets the balance of ownership away from the cloud, allowing creators to
+retain control of their work while still collaborating in real time with others.
+This sounds like a magical ideal, but it also raises many new questions, such
+as:</p>
+<ul>
+<li>How should data synchronisation work?</li>
+<li>What does user identity look like when collaborating?</li>
+<li>How is document access defined among several people?</li>
+<li>Is some kind of complex custom backend needed to handle all this?</li>
+</ul>
+<p>In this talk, we examine one approach to collaborative, open software by
+building on <a href="https://matrix.org/">Matrix</a>, a secure, decentralised, real-time
+communication protocol with generic database capabilities hiding beneath its
+current focus on chat. We show through several examples and demos that Matrix
+can assist with all of the questions above, allowing creative software to focus
+on delivering the best experience while still meeting local-first ideals.</p>
+<p>The software itself can also be collaborative and
+<a href="https://malleable.systems/">malleable</a>, allowing for user customisation without
+depending on upstream vendors to add a new options to achieve your goals.</p>
+]]></content:encoded>
+    </item>
+    
   </channel>
 </rss>
