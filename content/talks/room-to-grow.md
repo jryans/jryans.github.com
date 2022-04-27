@@ -33,3 +33,10 @@ on delivering the best experience while still meeting local-first ideals.
 The software itself can also be collaborative and
 [malleable](https://malleable.systems/), allowing for user customisation without
 depending on upstream vendors to add a new options to achieve your goals.
+
+## Notes
+
+The following notes describe the ideas from the talk in more detail:
+
+* [Matrix-native collaborative documents](https://github.com/matrix-org/collaborative-documents/blob/main/docs/collaborative-documents.md)
+* [Saguaro: prickly collaboration](https://github.com/matrix-org/collaborative-documents/blob/main/docs/saguaro.md)
