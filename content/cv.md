@@ -57,8 +57,21 @@ balance of power.
 
 <div class="row">
   <div class="lr pri">
+    <span>Research Associate</span>
+    <span>May 2022 – present</span>
+  </div>
+  <div class="lr sec">
+    <span>King's College London</span>
+    <span>London, UK</span>
+  </div>
+</div>
+
+  - Researching reliable debugging and malleable software with Dr. Stephen Kell
+
+<div class="row">
+  <div class="lr pri">
     <span>Staff Software Engineer</span>
-    <span>July 2021 – present</span>
+    <span>July 2021 – May 2022</span>
   </div>
   <div class="lr pri">
     <span>Technical Lead</span>

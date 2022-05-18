@@ -22,15 +22,15 @@ params:
       Collective](https://malleable.systems), a community that catalogs and
       experiments with malleable software and systems.
 
-      I am currently building open, decentralized, secure communications for all
-      via [Matrix](https://matrix.org) at [Element](https://element.io) in
-      London, UK.
+      I am researching reliable debugging and malleable software with [Dr.
+      Stephen Kell](https://www.humprog.org/~stephen/) at King's College London.
 
-      I previously worked at [Mozilla](https://www.mozilla.org) on [developer
-      tools](https://twitter.com/FirefoxDevTools) for Firefox and Firefox OS.
-
-      I also worked on overhauling the Firefox [CSS
-      system](https://wiki.mozilla.org/Quantum/Stylo) using
+      I previously worked at [Element](https://element.io) building open,
+      decentralized, secure communications for all via
+      [Matrix](https://matrix.org). I also worked at
+      [Mozilla](https://www.mozilla.org) on [developer
+      tools](https://twitter.com/FirefoxDevTools) for Firefox, and I overhauled
+      the Firefox [CSS system](https://wiki.mozilla.org/Quantum/Stylo) using
       [Rust](https://www.rust-lang.org) and tech from
       [Servo](https://servo.org).
   socialIcons:
