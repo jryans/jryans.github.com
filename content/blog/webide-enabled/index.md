@@ -8,7 +8,7 @@ I am excited to announce that [WebIDE][1] is now enabled by default in Nightly
 (Firefox 34)!  Everyone on the App Tools team has been working hard to polish
 this new tool that we originally [announced][2] back in June.
 
-<a href="https://www.youtube.com/watch?v=n8c34wk4OnY"><img src="webide-enabled-video.png"></a>
+[![](webide-enabled-video.png)](https://www.youtube.com/watch?v=n8c34wk4OnY)
 
 ## Features
 
