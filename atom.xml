@@ -14,7 +14,9 @@
       
       <guid>https://convolv.es/talks/room-to-grow/</guid>
       <description>We examine one approach to collaborative, open software by building on Matrix, a secure, decentralised, real-time communication protocol with generic database capabilities hiding beneath its current focus on chat.</description>
-      <content:encoded><![CDATA[<p>Conference talk to be given at <a href="https://www.hytradboi.com/">HYTRADBOI 2022</a></p>
+      <content:encoded><![CDATA[<p><a href="https://www.hytradboi.com/2022/room-to-grow-building-collaborative-open-software">Conference talk</a> presented at <a href="https://www.hytradboi.com/">HYTRADBOI 2022</a></p>
+<p><a href="https://www.hytradboi.com/2022/room-to-grow-building-collaborative-open-software"><img loading="lazy" src="video.png" alt=""  />
+</a></p>
 <h2 id="abstract">Abstract</h2>
 <p><a href="https://www.inkandswitch.com/local-first/">Local-first software</a> for creative
 work resets the balance of ownership away from the cloud, allowing creators to
@@ -514,7 +516,8 @@ Features While the previous App Manager tool was great, that tool&amp;rsquo;s UX
       <content:encoded><![CDATA[<p>I am excited to announce that <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> is now enabled by default in Nightly
 (Firefox 34)!  Everyone on the App Tools team has been working hard to polish
 this new tool that we originally <a href="https://hacks.mozilla.org/2014/06/webide-lands-in-nightly/">announced</a> back in June.</p>
-<p><a href="https://www.youtube.com/watch?v=n8c34wk4OnY"><img src="webide-enabled-video.png"></a></p>
+<p><a href="https://www.youtube.com/watch?v=n8c34wk4OnY"><img loading="lazy" src="webide-enabled-video.png" alt=""  />
+</a></p>
 <h2 id="features">Features</h2>
 <p>While the previous App Manager tool was great, that tool&rsquo;s UX held us
 back when trying support more complex workflows.  With the redesign into WebIDE,

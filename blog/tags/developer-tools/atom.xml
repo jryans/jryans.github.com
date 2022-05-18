@@ -299,7 +299,8 @@ Features While the previous App Manager tool was great, that tool&amp;rsquo;s UX
       <content:encoded><![CDATA[<p>I am excited to announce that <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> is now enabled by default in Nightly
 (Firefox 34)!  Everyone on the App Tools team has been working hard to polish
 this new tool that we originally <a href="https://hacks.mozilla.org/2014/06/webide-lands-in-nightly/">announced</a> back in June.</p>
-<p><a href="https://www.youtube.com/watch?v=n8c34wk4OnY"><img src="webide-enabled-video.png"></a></p>
+<p><a href="https://www.youtube.com/watch?v=n8c34wk4OnY"><img loading="lazy" src="webide-enabled-video.png" alt=""  />
+</a></p>
 <h2 id="features">Features</h2>
 <p>While the previous App Manager tool was great, that tool&rsquo;s UX held us
 back when trying support more complex workflows.  With the redesign into WebIDE,

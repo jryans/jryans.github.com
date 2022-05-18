@@ -14,7 +14,9 @@
       
       <guid>https://convolv.es/talks/room-to-grow/</guid>
       <description>We examine one approach to collaborative, open software by building on Matrix, a secure, decentralised, real-time communication protocol with generic database capabilities hiding beneath its current focus on chat.</description>
-      <content:encoded><![CDATA[<p>Conference talk to be given at <a href="https://www.hytradboi.com/">HYTRADBOI 2022</a></p>
+      <content:encoded><![CDATA[<p><a href="https://www.hytradboi.com/2022/room-to-grow-building-collaborative-open-software">Conference talk</a> presented at <a href="https://www.hytradboi.com/">HYTRADBOI 2022</a></p>
+<p><a href="https://www.hytradboi.com/2022/room-to-grow-building-collaborative-open-software"><img loading="lazy" src="video.png" alt=""  />
+</a></p>
 <h2 id="abstract">Abstract</h2>
 <p><a href="https://www.inkandswitch.com/local-first/">Local-first software</a> for creative
 work resets the balance of ownership away from the cloud, allowing creators to
