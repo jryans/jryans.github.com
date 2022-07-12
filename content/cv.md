@@ -265,6 +265,17 @@ balance of power.
 
 <div class="row">
   <div class="lr pri">
+    <span>PhD in Computer Science</span>
+    <span>June 2022 – May 2025</span>
+  </div>
+  <div class="lr sec">
+    <span>King's College London</span>
+    <span>London, UK</span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="lr pri">
     <span>Professional M. in Electrical Engineering</span>
     <span>January 2009</span>
   </div>
