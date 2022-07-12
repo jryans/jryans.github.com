@@ -326,13 +326,24 @@ balance of power.
 <div class="row">
   <div class="lr pri">
     <span>Program Committee Member</span>
+    <a href="https://llvm.org/devmtg/2022-11/">2022</a>
+  </div>
+  <div class="lr sec">
+    <span>LLVM Developers' Meeting</span>
+    <span>San Jose, USA</span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="lr pri">
+    <span>Program Committee Member</span>
     <a href="https://2020.programming-conference.org/home/salon-2020">2020</a>
   </div>
   <div class="lr sec">
     <span>Convivial Computing Salon</span>
     <span>Porto, Portugal</span>
   </div>
-  </div>
+</div>
 
 <div class="section">Technical Reports</div>
 
