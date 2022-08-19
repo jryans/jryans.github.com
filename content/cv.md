@@ -336,6 +336,17 @@ balance of power.
 
 <div class="row">
   <div class="lr pri">
+    <span>Artifact Evaluation Committee Member</span>
+    <a href="https://popl23.sigplan.org/track/POPL-2023-artifact-evaluation">2023</a>
+  </div>
+  <div class="lr sec">
+    <span>Principles of Programming Languages (POPL)</span>
+    <span>Boston, USA</span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="lr pri">
     <span>Program Committee Member</span>
     <a href="https://llvm.org/devmtg/2022-11/">2022</a>
   </div>
