@@ -322,6 +322,19 @@ balance of power.
 
 <div class="row">
   <div class="lr pri">
+    <span>Testing debug info of optimised programs</span>
+    <a href="https://srg.doc.ic.ac.uk/klee22/">KLEE 2022</a>
+  </div>
+  <div class="lr sec">
+    <span>
+      <a href="/talks/testing-debug-info/">abstract</a>
+    </span>
+    <span>London, UK</span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="lr pri">
     <span>Room to grow: Building collaborative, open software</span>
     <a href="https://www.hytradboi.com/">HYTRADBOI 2022</a>
   </div>
