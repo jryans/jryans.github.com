@@ -1,5 +1,6 @@
 ---
 title: Curriculum Vitae
+aliases: ["/blog/cv/"]
 menu:
   main:
     weight: 2

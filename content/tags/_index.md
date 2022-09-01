@@ -1,6 +1,6 @@
 ---
 title: "Tags"
-url: "/blog/tags/"
+aliases: ["/blog/tags/"]
 menu:
   main:
     weight: 20

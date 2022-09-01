@@ -1,5 +1,6 @@
 ---
 title: Now
+aliases: ["/blog/now/"]
 date: 2020-02-29
 menu:
   main:

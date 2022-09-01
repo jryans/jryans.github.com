@@ -48,7 +48,6 @@ params:
     - blog
 
 permalinks:
-  /:    /blog/:filename/
   blog: /blog/:year/:month/:day/:filename/
   tags: /blog/tags/:title/
 

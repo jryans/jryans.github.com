@@ -1,5 +1,6 @@
 ---
 title: Contact
+aliases: ["/blog/contact/"]
 menu:
   main:
     weight: 3
