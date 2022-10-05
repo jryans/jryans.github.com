@@ -14,7 +14,11 @@
       
       <guid>https://convolv.es/talks/testing-debug-info/</guid>
       <description>In this preliminary work, we symbolically execute unoptimised and optimised versions of a program which are then checked for debug info consistency. We expect this to allow testing correctness of debug info generation across a much larger portion of the compiler.</description>
-      <content:encoded><![CDATA[<p>Workshop talk to be presented at <a href="https://srg.doc.ic.ac.uk/klee22/">KLEE 2022</a></p>
+      <content:encoded><![CDATA[<p>Workshop talk (<a href="https://www.youtube.com/watch?v=SIYPYP06fY0">video</a>,
+<a href="/talks/2022/KLEE/Testing%20debug%20info%20of%20optimised%20programs.pdf">slides</a>)
+presented at <a href="https://srg.doc.ic.ac.uk/klee22/schedule.html">KLEE 2022</a></p>
+<p><a href="https://www.youtube.com/watch?v=SIYPYP06fY0"><img loading="lazy" src="video.png" alt=""  />
+</a></p>
 <h2 id="abstract">Abstract</h2>
 <p>Debuggers rely on compiler-produced metadata to present correct variable values
 and line numbers in the source language. While this tends to work for
