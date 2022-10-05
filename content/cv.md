@@ -343,6 +343,8 @@ balance of power.
   <div class="lr sec">
     <span>
       <a href="/talks/room-to-grow/">abstract</a>
+      <a href="https://www.hytradboi.com/2022/room-to-grow-building-collaborative-open-software">video</a>
+      <a href="/talks/2022/HYTRADBOI/Room to grow - Building collaborative, open software.pdf">slides</a>
     </span>
     <span>Online</span>
   </div>

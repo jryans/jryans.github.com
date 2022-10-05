@@ -8,7 +8,9 @@ summary:
   generic database capabilities hiding beneath its current focus on chat."
 ---
 
-[Conference talk](https://www.hytradboi.com/2022/room-to-grow-building-collaborative-open-software) presented at [HYTRADBOI 2022](https://www.hytradboi.com/)
+Conference talk
+([video](https://www.hytradboi.com/2022/room-to-grow-building-collaborative-open-software),
+[slides](</talks/2022/HYTRADBOI/Room to grow - Building collaborative, open software.pdf>)) presented at [HYTRADBOI 2022](https://www.hytradboi.com/)
 
 [![](video.png)](https://www.hytradboi.com/2022/room-to-grow-building-collaborative-open-software)
 
