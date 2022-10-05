@@ -9,7 +9,11 @@ summary:
   much larger portion of the compiler."
 ---
 
-Workshop talk to be presented at [KLEE 2022](https://srg.doc.ic.ac.uk/klee22/)
+Workshop talk ([video](https://www.youtube.com/watch?v=SIYPYP06fY0),
+[slides](</talks/2022/KLEE/Testing debug info of optimised programs.pdf>))
+presented at [KLEE 2022](https://srg.doc.ic.ac.uk/klee22/schedule.html)
+
+[![](video.png)](https://www.youtube.com/watch?v=SIYPYP06fY0)
 
 ## Abstract
 

@@ -323,11 +323,13 @@ balance of power.
 <div class="row">
   <div class="lr pri">
     <span>Testing debug info of optimised programs</span>
-    <a href="https://srg.doc.ic.ac.uk/klee22/">KLEE 2022</a>
+    <a href="https://srg.doc.ic.ac.uk/klee22/schedule.html">KLEE 2022</a>
   </div>
   <div class="lr sec">
     <span>
       <a href="/talks/testing-debug-info/">abstract</a>
+      <a href="https://www.youtube.com/watch?v=SIYPYP06fY0">video</a>
+      <a href="/talks/2022/KLEE/Testing debug info of optimised programs.pdf">slides</a>
     </span>
     <span>London, UK</span>
   </div>
