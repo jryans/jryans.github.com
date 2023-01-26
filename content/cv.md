@@ -355,6 +355,17 @@ balance of power.
 <div class="row">
   <div class="lr pri">
     <span>Artifact Evaluation Committee Member</span>
+    <a href="https://pldi23.sigplan.org/track/pldi-2023-pldi-research-artifacts">2023</a>
+  </div>
+  <div class="lr sec">
+    <span>Programming Language Design and Implementation (PLDI)</span>
+    <span>Orlando, USA</span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="lr pri">
+    <span>Artifact Evaluation Committee Member</span>
     <a href="https://popl23.sigplan.org/track/POPL-2023-artifact-evaluation">2023</a>
   </div>
   <div class="lr sec">
