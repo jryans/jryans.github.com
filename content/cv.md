@@ -45,15 +45,6 @@ balance of power.
   </div>
 </div>
 
-  - Added numerous features to the Firefox Developer Tools
-  - Rewrote portions of Firefox CSS engine in Rust enabling large
-    performance gains from concurrency while preserving memory safety
-  - Led Spectre attack mitigation efforts for Firefox Developer Tools
-  - Leveraged Rust CSS engine in Firefox Developer Tools via WebAssembly
-  - Built new tools to simplify responsive web design for designers and
-    developers
-  - Improved Firefox’s integration with OS features like text shortcuts
-
 <div class="section">Experience</div>
 
 <div class="row">
