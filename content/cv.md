@@ -36,6 +36,17 @@ balance of power.
 
 <div class="row">
   <div class="lr pri">
+    <span>LLVM</span>
+    <span>May 2019 – present</span>
+  </div>
+  <div class="lr sec">
+    <span>C++</span>
+    <a href="https://github.com/llvm/llvm-project/commits/main?author=jryans">patches</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="lr pri">
     <span>Firefox</span>
     <span>February 2013 – present</span>
   </div>
