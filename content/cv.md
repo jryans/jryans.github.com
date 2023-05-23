@@ -41,7 +41,7 @@ balance of power.
   </div>
   <div class="lr sec">
     <span>Rust, JavaScript, C++</span>
-    <a href="https://bit.ly/jryans-moz-patches">patches</a>
+    <a href="https://bugzilla.mozilla.org/buglist.cgi?f1=attachments.submitter&o1=equals&query_format=advanced&v1=jryans%40gmail.com">patches</a>
   </div>
 </div>
 
