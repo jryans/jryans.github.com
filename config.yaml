@@ -28,18 +28,20 @@ params:
       I previously worked at [Element](https://element.io) building open,
       decentralized, secure communications for all via
       [Matrix](https://matrix.org). I also worked at
-      [Mozilla](https://www.mozilla.org) on [developer
-      tools](https://twitter.com/FirefoxDevTools) for Firefox, and I overhauled
-      the Firefox [CSS system](https://wiki.mozilla.org/Quantum/Stylo) using
+      [Mozilla](https://www.mozilla.org) on developer tools for Firefox,
+      and I overhauled the Firefox
+      [CSS system](https://wiki.mozilla.org/Quantum/Stylo) using
       [Rust](https://www.rust-lang.org) and tech from
       [Servo](https://servo.org).
   socialIcons:
     - name: rss
       url: "/atom.xml"
-    - name: twitter
-      url: "https://twitter.com/jryans"
+    - name: email
+      url: "mailto:jryans@gmail.com"
     - name: mastodon
       url: "https://merveilles.town/@jryans"
+    - name: matrix
+      url: "https://matrix.to/#/@jryans:matrix.org"
     - name: github
       url: "https://github.com/jryans"
   showFullTextInRSS: true

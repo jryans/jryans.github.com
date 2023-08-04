@@ -26,12 +26,14 @@ organising the [Malleable Systems Collective][collective], which I hope can
 become such a place.
 
 If these ideas interest you, I encourage you to check out the collective. I
-would also appreciate any and all feedback on this, so please feel free to contact me via [email][e], [Matrix][m], [Twitter][t], or whatever way you prefer.
+would also appreciate any and all feedback on this, so please feel free to
+contact me via [email][em], [Mastodon][md], [Matrix][mx], or whatever way you
+prefer.
 
 [collective]: https://malleable.systems
-[e]: mailto:jryans@gmail.com
-[t]: https://twitter.com/jryans
-[m]: https://matrix.to/#/@jryans:matrix.org
+[em]: mailto:jryans@gmail.com
+[md]: https://merveilles.town/@jryans
+[mx]: https://matrix.to/#/@jryans:matrix.org
 
 ---
 

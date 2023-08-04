@@ -6,21 +6,17 @@ menu:
     weight: 3
 ---
 
-### Matrix
+### Email
 
-[@jryans:matrix.org](https://matrix.to/#/@jryans:matrix.org)
-
-### Twitter
-
-[@jryans](https://twitter.com/jryans)
+[jryans@gmail.com](mailto:jryans@gmail.com)
 
 ### Mastodon
 
 [@jryans@merveilles.town](https://merveilles.town/@jryans)
 
-### Email
+### Matrix
 
-[jryans@gmail.com](mailto:jryans@gmail.com)
+[@jryans:matrix.org](https://matrix.to/#/@jryans:matrix.org)
 
 ### PGP
 
