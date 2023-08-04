@@ -19,3 +19,7 @@
 .entry-content {
   -webkit-line-clamp: 3;
 }
+
+.post-content .highlight pre {
+  border-radius: var(--radius);
+}
