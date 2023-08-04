@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><meta charset="utf-8">
+<head>
+	<meta name="generator" content="Hugo 0.116.1"><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -9,8 +10,8 @@
 
 <meta name="description" content="Exploring how to make programs more malleable and computing more humane">
 <meta name="author" content="">
-<link rel="canonical" href="https://convolv.es/" />
-<link crossorigin="anonymous" href="/assets/css/stylesheet.min.5ce00f43c6c0796d79dbcea436a691610a2ea01b400735262c4150a23e722010.css" integrity="sha256-XOAPQ8bAeW15286kNqaRYQouoBtABzUmLEFQoj5yIBA=" rel="preload stylesheet" as="style">
+<link rel="canonical" href="https://convolv.es/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.6d01cc9f595124908ff56712c4d7df1bc87c9146532c942e9bc6665c93786da6.css" integrity="sha256-bQHMn1lRJJCP9WcSxNffG8h8kUZTLJQum8ZmXJN4baY=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://convolv.es/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://convolv.es/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://convolv.es/favicon-32x32.png">
@@ -18,10 +19,45 @@
 <link rel="mask-icon" href="https://convolv.es/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<meta name="generator" content="Hugo 0.83.1" />
 <link rel="alternate" type="application/rss+xml" href="https://convolv.es/atom.xml">
 <link rel="alternate" type="application/json" href="https://convolv.es/index.json">
-<meta property="og:title" content="J. Ryan Stinnett" />
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="J. Ryan Stinnett" />
 <meta property="og:description" content="Exploring how to make programs more malleable and computing more humane" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://convolv.es/" />
@@ -39,7 +75,7 @@
   "description": "Exploring how to make programs more malleable and computing more humane",
   "thumbnailUrl": "https://convolv.es/favicon.ico",
   "sameAs": [
-      "/atom.xml", "https://twitter.com/jryans", "https://merveilles.town/@jryans", "https://github.com/jryans"
+      "/atom.xml", "mailto:jryans@gmail.com", "https://merveilles.town/@jryans", "https://matrix.to/#/@jryans:matrix.org", "https://github.com/jryans"
   ]
 }
 </script>
@@ -56,56 +92,19 @@
     }
 
 </script>
-<noscript>
-    <style type="text/css">
-        #theme-toggle,
-        .top-link {
-            display: none;
-        }
-
-    </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: #1d1e20;
-                --entry: #2e2e33;
-                --primary: rgba(255, 255, 255, 0.84);
-                --secondary: rgba(255, 255, 255, 0.56);
-                --tertiary: rgba(255, 255, 255, 0.16);
-                --content: rgba(255, 255, 255, 0.74);
-                --hljs-bg: #2e2e33;
-                --code-bg: #37383e;
-                --border: #333;
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
-
-    </style>
-</noscript>
 
 <header class="header">
     <nav class="nav">
         <div class="logo">
             <a href="https://convolv.es/" accesskey="h" title="J. Ryan Stinnett (Alt + H)">J. Ryan Stinnett</a>
-            <span class="logo-switches">
+            <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
-                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                     </svg>
-                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <circle cx="12" cy="12" r="5"></circle>
@@ -119,7 +118,7 @@
                         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                     </svg>
                 </button>
-            </span>
+            </div>
         </div>
         <ul id="menu">
             <li>
@@ -161,8 +160,8 @@
     <header class="entry-header">
         <h1>Hello! 👋 😄</h1>
     </header>
-    <section class="entry-content">
-        <p><p>I enjoy building tools as part of a community that empowers domain experts
+    <div class="entry-content">
+        <p>I enjoy building tools as part of a community that empowers domain experts
 to control and modify their digital workflows by tearing down the
 boundaries typically imposed by siloed applications from different
 vendors.</p>
@@ -174,13 +173,13 @@ Stephen Kell</a> at King&rsquo;s College London.</p>
 <p>I previously worked at <a href="https://element.io">Element</a> building open,
 decentralized, secure communications for all via
 <a href="https://matrix.org">Matrix</a>. I also worked at
-<a href="https://www.mozilla.org">Mozilla</a> on <a href="https://twitter.com/FirefoxDevTools">developer
-tools</a> for Firefox, and I overhauled
-the Firefox <a href="https://wiki.mozilla.org/Quantum/Stylo">CSS system</a> using
+<a href="https://www.mozilla.org">Mozilla</a> on developer tools for Firefox,
+and I overhauled the Firefox
+<a href="https://wiki.mozilla.org/Quantum/Stylo">CSS system</a> using
 <a href="https://www.rust-lang.org">Rust</a> and tech from
 <a href="https://servo.org">Servo</a>.</p>
-</p>
-    </section>
+
+    </div>
     <footer class="entry-footer">
         <div class="social-icons">
     <a href="/atom.xml" target="_blank" rel="noopener noreferrer me" title="Rss">
@@ -191,12 +190,11 @@ the Firefox <a href="https://wiki.mozilla.org/Quantum/Stylo">CSS system</a> usin
     <circle cx="5" cy="19" r="1" />
 </svg>
     </a>
-    <a href="https://twitter.com/jryans" target="_blank" rel="noopener noreferrer me" title="Twitter">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+    <a href="mailto:jryans@gmail.com" target="_blank" rel="noopener noreferrer me" title="Email">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 21" fill="none" stroke="currentColor" stroke-width="2"
     stroke-linecap="round" stroke-linejoin="round">
-    <path
-        d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
-    </path>
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+    <polyline points="22,6 12,13 2,6"></polyline>
 </svg>
     </a>
     <a href="https://merveilles.town/@jryans" target="_blank" rel="noopener noreferrer me" title="Mastodon">
@@ -208,6 +206,12 @@ the Firefox <a href="https://wiki.mozilla.org/Quantum/Stylo">CSS system</a> usin
     <path
         d="M17.832 8.633v5h-1.978V8.78c0-1.023-.43-1.542-1.29-1.542-.95 0-1.427.616-1.427 1.834v2.655H11.17V9.072c0-1.218-.476-1.834-1.427-1.834-.86 0-1.29.52-1.29 1.542v4.852H6.475V8.633c0-1.022.26-1.834.782-2.434.538-.6 1.243-.909 2.118-.909 1.012 0 1.779.39 2.286 1.169l.492.827.493-.827c.507-.78 1.274-1.169 2.286-1.169.875 0 1.58.308 2.118.909.522.6.782 1.412.782 2.434"
         fill="currentColor" stroke="none" />
+</svg>
+    </a>
+    <a href="https://matrix.to/#/@jryans:matrix.org" target="_blank" rel="noopener noreferrer me" title="Matrix">
+        <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+    <path
+        d="M.632.55v22.9H2.28V24H0V0h2.28v.55zm7.043 7.26v1.157h.033c.309-.443.683-.784 1.117-1.024.433-.245.936-.365 1.5-.365.54 0 1.033.107 1.481.314.448.208.785.582 1.02 1.108.254-.374.6-.706 1.034-.992.434-.287.95-.43 1.546-.43.453 0 .872.056 1.26.167.388.11.716.286.993.53.276.245.489.559.646.951.152.392.23.863.23 1.417v5.728h-2.349V11.52c0-.286-.01-.559-.032-.812a1.755 1.755 0 0 0-.18-.66 1.106 1.106 0 0 0-.438-.448c-.194-.11-.457-.166-.785-.166-.332 0-.6.064-.803.189a1.38 1.38 0 0 0-.48.499 1.946 1.946 0 0 0-.231.696 5.56 5.56 0 0 0-.06.785v4.768h-2.35v-4.8c0-.254-.004-.503-.018-.752a2.074 2.074 0 0 0-.143-.688 1.052 1.052 0 0 0-.415-.503c-.194-.125-.476-.19-.854-.19-.111 0-.259.024-.439.074-.18.051-.36.143-.53.282-.171.138-.319.337-.439.595-.12.259-.18.6-.18 1.02v4.966H5.46V7.81zm15.693 15.64V.55H21.72V0H24v24h-2.28v-.55z" />
 </svg>
     </a>
     <a href="https://github.com/jryans" target="_blank" rel="noopener noreferrer me" title="Github">
@@ -267,90 +271,97 @@ the Firefox <a href="https://wiki.mozilla.org/Quantum/Stylo">CSS system</a> usin
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2>Testing debug info of optimised programs</h2>
+    <h2>Testing debug info of optimised programs
+    </h2>
   </header>
-  <section class="entry-content">
+  <div class="entry-content">
     <p>In this preliminary work, we symbolically execute unoptimised and optimised versions of a program which are then checked for debug info consistency. We expect this to allow testing correctness of debug info generation across a much larger portion of the compiler.</p>
-  </section>
-  <footer class="entry-footer">2022-09-15</footer>
+  </div>
+  <footer class="entry-footer"><span title='2022-09-15 00:00:00 +0000 UTC'>2022-09-15</span></footer>
   <a class="entry-link" aria-label="post link to Testing debug info of optimised programs" href="https://convolv.es/talks/testing-debug-info/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2>Room to grow: Building collaborative, open software</h2>
+    <h2>Room to grow: Building collaborative, open software
+    </h2>
   </header>
-  <section class="entry-content">
+  <div class="entry-content">
     <p>We examine one approach to collaborative, open software by building on Matrix, a secure, decentralised, real-time communication protocol with generic database capabilities hiding beneath its current focus on chat.</p>
-  </section>
-  <footer class="entry-footer">2022-04-29</footer>
+  </div>
+  <footer class="entry-footer"><span title='2022-04-29 00:00:00 +0000 UTC'>2022-04-29</span></footer>
   <a class="entry-link" aria-label="post link to Room to grow: Building collaborative, open software" href="https://convolv.es/talks/room-to-grow/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2>Building Firefox for Linux 32-bit</h2>
+    <h2>Building Firefox for Linux 32-bit
+    </h2>
   </header>
-  <section class="entry-content">
+  <div class="entry-content">
     <p>Background As part of my work on the Stylo / Quantum CSS team at Mozilla, I needed to be able to test changes to Firefox that only affect Linux 32-bit builds. These days, I believe you essentially have to use a 64-bit host to build Firefox to avoid OOM issues during linking and potentially other steps, so this means some form of cross-compiling from a Linux 64-bit host to a Linux 32-bit target....</p>
-  </section>
-  <footer class="entry-footer">2017-08-25</footer>
+  </div>
+  <footer class="entry-footer"><span title='2017-08-25 19:33:00 -0500 -0500'>2017-08-25</span></footer>
   <a class="entry-link" aria-label="post link to Building Firefox for Linux 32-bit" href="https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2>WiFi Debugging for Firefox for Android</h2>
+    <h2>WiFi Debugging for Firefox for Android
+    </h2>
   </header>
-  <section class="entry-content">
+  <div class="entry-content">
     <p>I am excited to announce that we’re now shipping WiFi debugging for Firefox for Android! It’s available in Firefox for Android 42 with Firefox Nightly on desktop.
 The rest of this post will sound quite similar to the previous announcement for Firefox OS support.
 WiFi debugging allows WebIDE to connect to Firefox for Android via your local WiFi network instead of a USB cable.
 The connection experience is generally more straightforward (especially after connecting to a device the first time) than with USB and also more convenient to use since you’re no longer tied down by a cable....</p>
-  </section>
-  <footer class="entry-footer">2015-08-05</footer>
+  </div>
+  <footer class="entry-footer"><span title='2015-08-05 15:33:00 -0500 -0500'>2015-08-05</span></footer>
   <a class="entry-link" aria-label="post link to WiFi Debugging for Firefox for Android" href="https://convolv.es/blog/2015/08/05/wifi-debug-fennec/"></a>
 </article>
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2>WiFi Debugging for Firefox OS</h2>
+    <h2>WiFi Debugging for Firefox OS
+    </h2>
   </header>
-  <section class="entry-content">
+  <div class="entry-content">
     <p>I am excited to announce that we’re now shipping WiFi debugging for Firefox OS! It’s available in Firefox OS 3.0 / master with Firefox Nightly on desktop.
 WiFi debugging allows WebIDE to connect to your Firefox OS device via your local WiFi network instead of a USB cable.
 The connection experience is generally more straightforward (especially after connecting to a device the first time) than with USB and also more convenient to use since you’re no longer tied down by a cable....</p>
-  </section>
-  <footer class="entry-footer">2015-03-25</footer>
+  </div>
+  <footer class="entry-footer"><span title='2015-03-25 08:51:00 -0500 -0500'>2015-03-25</span></footer>
   <a class="entry-link" aria-label="post link to WiFi Debugging for Firefox OS" href="https://convolv.es/blog/2015/03/25/wifi-debug-fxos/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
-    <a class="next" href="https://convolv.es/page/2/">Next Page »</a>
+    <a class="next" href="https://convolv.es/page/2/">Next&nbsp;&nbsp;»
+    </a>
   </nav>
 </footer>
     </main>
-    <footer class="footer">
+    
+<footer class="footer">
     <span>&copy; 2023 <a href="https://convolv.es/">J. Ryan Stinnett</a></span>
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
-        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
     </span>
 </footer>
-<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)">
-    <button class="top-link" id="top-link" type="button" accesskey="g">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
-            <path d="M12 6H0l6-6z" />
-        </svg>
-    </button>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
 </a>
 
 <script>
     let menu = document.getElementById('menu')
-    menu.scrollLeft = localStorage.getItem("menu-scroll-position");
-    menu.onscroll = function () {
-        localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
     }
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

@@ -104,29 +104,29 @@ Great, sounds like just the thing we need.</p>
 <p>We should be able to install<sup id="a1"><a href="#f1">1</a></sup> the
 <a href="http://searchfox.org/mozilla-central/rev/48ea452803907f2575d81021e8678634e8067fc2/python/mozboot/mozboot/debian.py#50-61">core Gecko development dependencies</a> with an extra <code>:i386</code> suffix to get
 the 32-bit version on our 64-bit host:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ sudo apt install libasound2-dev:i386 libcurl4-openssl-dev:i386 libdbus-1-dev:i386 libdbus-glib-1-dev:i386 libgconf2-dev:i386 libgtk-3-dev:i386 libgtk2.0-dev:i386 libiw-dev:i386 libnotify-dev:i386 libpulse-dev:i386 libx11-xcb-dev:i386 libxt-dev:i386 mesa-common-dev:i386
-Reading package lists... Done
-Building dependency tree
-Reading state information... Done
-Some packages could not be installed. This may mean that you have
-requested an impossible situation or if you are using the unstable
-distribution that some required packages have not yet been created
-or been moved out of Incoming.
-The following information may help to resolve the situation:
-
-The following packages have unmet dependencies:
- libgtk-3-dev:i386 : Depends: gir1.2-gtk-3.0:i386 (= 3.18.9-1ubuntu3.3) but it is not going to be installed
-                     Depends: libatk1.0-dev:i386 (&gt;= 2.15.1) but it is not going to be installed
-                     Depends: libatk-bridge2.0-dev:i386 but it is not going to be installed
-                     Depends: libegl1-mesa-dev:i386 but it is not going to be installed
-                     Depends: libxkbcommon-dev:i386 but it is not going to be installed
-                     Depends: libmirclient-dev:i386 (&gt;= 0.13.3) but it is not going to be installed
- libgtk2.0-dev:i386 : Depends: gir1.2-gtk-2.0:i386 (= 2.24.30-1ubuntu1.16.04.2) but it is not going to be installed
-                      Depends: libatk1.0-dev:i386 (&gt;= 1.29.2) but it is not going to be installed
-                      Recommends: python:i386 (&gt;= 2.4) but it is not going to be installed
- libnotify-dev:i386 : Depends: gir1.2-notify-0.7:i386 (= 0.7.6-2svn1) but it is not going to be installed
-E: Unable to correct problems, you have held broken packages.
-</code></pre></div><p>Well, that doesn&rsquo;t look good.  It appears some of the Gecko libraries we need
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>(host) $ sudo apt install libasound2-dev:i386 libcurl4-openssl-dev:i386 libdbus-1-dev:i386 libdbus-glib-1-dev:i386 libgconf2-dev:i386 libgtk-3-dev:i386 libgtk2.0-dev:i386 libiw-dev:i386 libnotify-dev:i386 libpulse-dev:i386 libx11-xcb-dev:i386 libxt-dev:i386 mesa-common-dev:i386
+</span></span><span style="display:flex;"><span>Reading package lists... Done
+</span></span><span style="display:flex;"><span>Building dependency tree
+</span></span><span style="display:flex;"><span>Reading state information... Done
+</span></span><span style="display:flex;"><span>Some packages could not be installed. This may mean that you have
+</span></span><span style="display:flex;"><span>requested an impossible situation or if you are using the unstable
+</span></span><span style="display:flex;"><span>distribution that some required packages have not yet been created
+</span></span><span style="display:flex;"><span>or been moved out of Incoming.
+</span></span><span style="display:flex;"><span>The following information may help to resolve the situation:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The following packages have unmet dependencies:
+</span></span><span style="display:flex;"><span> libgtk-3-dev:i386 : Depends: gir1.2-gtk-3.0:i386 (= 3.18.9-1ubuntu3.3) but it is not going to be installed
+</span></span><span style="display:flex;"><span>                     Depends: libatk1.0-dev:i386 (&gt;= 2.15.1) but it is not going to be installed
+</span></span><span style="display:flex;"><span>                     Depends: libatk-bridge2.0-dev:i386 but it is not going to be installed
+</span></span><span style="display:flex;"><span>                     Depends: libegl1-mesa-dev:i386 but it is not going to be installed
+</span></span><span style="display:flex;"><span>                     Depends: libxkbcommon-dev:i386 but it is not going to be installed
+</span></span><span style="display:flex;"><span>                     Depends: libmirclient-dev:i386 (&gt;= 0.13.3) but it is not going to be installed
+</span></span><span style="display:flex;"><span> libgtk2.0-dev:i386 : Depends: gir1.2-gtk-2.0:i386 (= 2.24.30-1ubuntu1.16.04.2) but it is not going to be installed
+</span></span><span style="display:flex;"><span>                      Depends: libatk1.0-dev:i386 (&gt;= 1.29.2) but it is not going to be installed
+</span></span><span style="display:flex;"><span>                      Recommends: python:i386 (&gt;= 2.4) but it is not going to be installed
+</span></span><span style="display:flex;"><span> libnotify-dev:i386 : Depends: gir1.2-notify-0.7:i386 (= 0.7.6-2svn1) but it is not going to be installed
+</span></span><span style="display:flex;"><span>E: Unable to correct problems, you have held broken packages.
+</span></span></code></pre></div><p>Well, that doesn&rsquo;t look good.  It appears some of the Gecko libraries we need
 aren&rsquo;t happy about being installed for multiple architectures.</p>
 <h2 id="switch-approaches-to-chroot">Switch Approaches to <code>chroot</code></h2>
 <p>Since multiarch packages don&rsquo;t appear to be working here, I looked around for
@@ -138,39 +138,39 @@ Linux for a different architecture.  A utility like <code>schroot</code> can the
 to issue the <code>chroot(2)</code> system call which makes the current session believe
 this sub-installation is the root filesystem.</p>
 <p>Let&rsquo;s grab <code>schroot</code> so we&rsquo;ll be able to enter the chroot once it&rsquo;s set up:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ sudo apt install schroot
-</code></pre></div><p>There are several different <a href="http://manpages.ubuntu.com/manpages/xenial/man5/schroot.conf.5.html">types of chroots</a> you can use with <code>schroot</code>.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>(host) $ sudo apt install schroot
+</span></span></code></pre></div><p>There are several different <a href="http://manpages.ubuntu.com/manpages/xenial/man5/schroot.conf.5.html">types of chroots</a> you can use with <code>schroot</code>.
 We&rsquo;ll use the <code>directory</code> type, as it&rsquo;s the simplest to understand (just another
 directory on the existing filesystem), and it will make it simpler to expose a
 few things to the host later on.</p>
 <p>You can place the directory wherever, but some existing filesystems are mapped
 into the chroot for convenience, so avoiding <code>/home</code> is probably a good idea.  I
 went with <code>/var/chroot/linux32</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ sudo mkdir -p /var/chroot/linux32
-</code></pre></div><p>We need to update <code>schroot.conf</code> to configure the new chroot:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ sudo cat &lt;&lt; EOF &gt;&gt; /etc/schroot/schroot.conf
-[linux32]
-description=Linux32 build environment
-aliases=default
-type=directory
-directory=/var/chroot/linux32
-personality=linux32
-profile=desktop
-users=jryans
-root-users=jryans
-EOF
-</code></pre></div><p>In particular, <code>personality</code> is important to set for this multi-arch use case.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>(host) $ sudo mkdir -p /var/chroot/linux32
+</span></span></code></pre></div><p>We need to update <code>schroot.conf</code> to configure the new chroot:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>(host) $ sudo cat &lt;&lt; EOF &gt;&gt; /etc/schroot/schroot.conf
+</span></span><span style="display:flex;"><span>[linux32]
+</span></span><span style="display:flex;"><span>description=Linux32 build environment
+</span></span><span style="display:flex;"><span>aliases=default
+</span></span><span style="display:flex;"><span>type=directory
+</span></span><span style="display:flex;"><span>directory=/var/chroot/linux32
+</span></span><span style="display:flex;"><span>personality=linux32
+</span></span><span style="display:flex;"><span>profile=desktop
+</span></span><span style="display:flex;"><span>users=jryans
+</span></span><span style="display:flex;"><span>root-users=jryans
+</span></span><span style="display:flex;"><span>EOF
+</span></span></code></pre></div><p>In particular, <code>personality</code> is important to set for this multi-arch use case.
 (Make sure to replace the user names with your own!)</p>
 <p>Firefox will want access to shared memory as well, so we&rsquo;ll need to add that to
 the set of mapped filesystems in the chroot:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ sudo cat &lt;&lt; EOF &gt;&gt; /etc/schroot/desktop/fstab
-/dev/shm       /dev/shm        none    rw,bind         0       0
-EOF
-</code></pre></div><p>Now we need to <a href="https://help.ubuntu.com/community/DebootstrapChroot">install the 32-bit system</a> inside the chroot.  We can do
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>(host) $ sudo cat &lt;&lt; EOF &gt;&gt; /etc/schroot/desktop/fstab
+</span></span><span style="display:flex;"><span>/dev/shm       /dev/shm        none    rw,bind         0       0
+</span></span><span style="display:flex;"><span>EOF
+</span></span></code></pre></div><p>Now we need to <a href="https://help.ubuntu.com/community/DebootstrapChroot">install the 32-bit system</a> inside the chroot.  We can do
 that with a utility called <code>debootstrap</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ sudo apt install debootstrap
-(host) $ sudo debootstrap --variant=buildd --arch=i386 --foreign xenial /var/chroot/linux32 http://archive.ubuntu.com/ubuntu
-</code></pre></div><p>This will fetch all the packages for a 32-bit installation and place them in the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>(host) $ sudo apt install debootstrap
+</span></span><span style="display:flex;"><span>(host) $ sudo debootstrap --variant=buildd --arch=i386 --foreign xenial /var/chroot/linux32 http://archive.ubuntu.com/ubuntu
+</span></span></code></pre></div><p>This will fetch all the packages for a 32-bit installation and place them in the
 chroot.  For a cross-arch bootstrap, we need to add <code>--foreign</code> to skip the
 unpacking step, which we will do momentarily from inside the chroot.
 <code>--variant=buildd</code> will help us out a bit by including common build tools.</p>
@@ -179,69 +179,69 @@ with <code>schroot</code> and it remains active until you <code>exit</code>.  An
 <code>(chroot)</code> instead of <code>(host)</code> are meant to be run inside the chroot.</p>
 <p>So, inside the chroot, run the second stage of <code>debootstrap</code> to actually unpack
 everything:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(chroot) $ /debootstrap/debootstrap --second-stage
-</code></pre></div><p>Let&rsquo;s double-check that things are working like we expect:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(chroot) $ arch
-i686
-</code></pre></div><p>Great, we&rsquo;re getting closer!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>(chroot) $ /debootstrap/debootstrap --second-stage
+</span></span></code></pre></div><p>Let&rsquo;s double-check that things are working like we expect:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>(chroot) $ arch
+</span></span><span style="display:flex;"><span>i686
+</span></span></code></pre></div><p>Great, we&rsquo;re getting closer!</p>
 <h2 id="install-packages">Install packages</h2>
 <p>Now that we have a basic 32-bit installation, let&rsquo;s install the packages we need
 for development.  The <code>apt</code> source list inside the chroot is pretty bare bones,
 so we&rsquo;ll want to expand it a bit to reach everything we need:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(chroot) $ sudo cat &lt;&lt; EOF &gt; /etc/apt/sources.list
-deb http://archive.ubuntu.com/ubuntu xenial main universe
-deb http://archive.ubuntu.com/ubuntu xenial-updates main universe
-EOF
-(chroot) $ sudo apt update
-</code></pre></div><p>Let&rsquo;s grab the same packages from before (without <code>:i386</code> since that&rsquo;s the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>(chroot) $ sudo cat &lt;&lt; EOF &gt; /etc/apt/sources.list
+</span></span><span style="display:flex;"><span>deb http://archive.ubuntu.com/ubuntu xenial main universe
+</span></span><span style="display:flex;"><span>deb http://archive.ubuntu.com/ubuntu xenial-updates main universe
+</span></span><span style="display:flex;"><span>EOF
+</span></span><span style="display:flex;"><span>(chroot) $ sudo apt update
+</span></span></code></pre></div><p>Let&rsquo;s grab the same packages from before (without <code>:i386</code> since that&rsquo;s the
 default inside the chroot):</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(chroot) $ sudo apt install libasound2-dev libcurl4-openssl-dev libdbus-1-dev libdbus-glib-1-dev libgconf2-dev libgtk-3-dev libgtk2.0-dev libiw-dev libnotify-dev libpulse-dev libx11-xcb-dev libxt-dev mesa-common-dev python-dbus xvfb yasm
-</code></pre></div><p>You may need to install the 32-bit version of your graphics card&rsquo;s GL library to
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>(chroot) $ sudo apt install libasound2-dev libcurl4-openssl-dev libdbus-1-dev libdbus-glib-1-dev libgconf2-dev libgtk-3-dev libgtk2.0-dev libiw-dev libnotify-dev libpulse-dev libx11-xcb-dev libxt-dev mesa-common-dev python-dbus xvfb yasm
+</span></span></code></pre></div><p>You may need to install the 32-bit version of your graphics card&rsquo;s GL library to
 get reasonable graphics output when running in the 32-bit environment.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(chroot) $ sudo apt install nvidia-384
-</code></pre></div><p>We&rsquo;ll also want to have access to the X display inside the chroot.  The simple
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>(chroot) $ sudo apt install nvidia-384
+</span></span></code></pre></div><p>We&rsquo;ll also want to have access to the X display inside the chroot.  The simple
 way to achieve this is to disable X security in the host and expose the same
 display in the chroot:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ xhost +
-(chroot) $ export DISPLAY=:0
-</code></pre></div><p>We can verify that we have accelerated graphics:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(chroot) $ sudo apt install mesa-utils
-(chroot) $ glxinfo | grep renderer
-OpenGL renderer string: GeForce GTX 1080/PCIe/SSE2
-</code></pre></div><h2 id="building-firefox">Building Firefox</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>(host) $ xhost +
+</span></span><span style="display:flex;"><span>(chroot) $ export DISPLAY=:0
+</span></span></code></pre></div><p>We can verify that we have accelerated graphics:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>(chroot) $ sudo apt install mesa-utils
+</span></span><span style="display:flex;"><span>(chroot) $ glxinfo | grep renderer
+</span></span><span style="display:flex;"><span>OpenGL renderer string: GeForce GTX 1080/PCIe/SSE2
+</span></span></code></pre></div><h2 id="building-firefox">Building Firefox</h2>
 <p>In order for the host to build Firefox for the 32-bit target, it needs to access
 various 32-bit libraries and include files.  We already have these installed in
 the chroot, so let&rsquo;s cheat and expose them to the host via symlinks into the
 chroot&rsquo;s file structure:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ sudo ln -s /var/chroot/linux32/lib/i386-linux-gnu /lib/
-(host) $ sudo ln -s /var/chroot/linux32/usr/lib/i386-linux-gnu /usr/lib/
-(host) $ sudo ln -s /var/chroot/linux32/usr/include/i386-linux-gnu /usr/include/
-</code></pre></div><p>We also need Rust to be able to target 32-bit from the host, so let&rsquo;s install
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>(host) $ sudo ln -s /var/chroot/linux32/lib/i386-linux-gnu /lib/
+</span></span><span style="display:flex;"><span>(host) $ sudo ln -s /var/chroot/linux32/usr/lib/i386-linux-gnu /usr/lib/
+</span></span><span style="display:flex;"><span>(host) $ sudo ln -s /var/chroot/linux32/usr/include/i386-linux-gnu /usr/include/
+</span></span></code></pre></div><p>We also need Rust to be able to target 32-bit from the host, so let&rsquo;s install
 support for that:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ rustup target add i686-unknown-linux-gnu
-</code></pre></div><p>We&rsquo;ll need a specialized <code>.mozconfig</code> for Firefox to target 32-bit.  Something
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>(host) $ rustup target add i686-unknown-linux-gnu
+</span></span></code></pre></div><p>We&rsquo;ll need a specialized <code>.mozconfig</code> for Firefox to target 32-bit.  Something
 like the following:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ cat &lt;&lt; EOF &gt; ~/projects/gecko/.mozconfig
-export PKG_CONFIG_PATH=&#34;/var/chroot/linux32/usr/lib/i386-linux-gnu/pkgconfig:/var/chroot/linux32/usr/share/pkgconfig&#34;
-export MOZ_LINUX_32_SSE2_STARTUP_ERROR=1
-CFLAGS=&#34;$CFLAGS -msse -msse2 -mfpmath=sse&#34;
-CXXFLAGS=&#34;$CXXFLAGS -msse -msse2 -mfpmath=sse&#34;
-if test `uname -m` = &#34;x86_64&#34;; then
-  CFLAGS=&#34;$CFLAGS -m32 -march=pentium-m&#34;
-  CXXFLAGS=&#34;$CXXFLAGS -m32 -march=pentium-m&#34;
-  ac_add_options --target=i686-pc-linux
-  ac_add_options --host=i686-pc-linux
-  ac_add_options --x-libraries=/usr/lib
-fi
-EOF
-</code></pre></div><p>This was <a href="http://searchfox.org/mozilla-central/rev/89e125b817c5d493babbc58ea526be970bd3748e/build/unix/mozconfig.linux32">adapted</a> from the <code>mozconfig.linux32</code> used for official 32-bit
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>(host) $ cat &lt;&lt; EOF &gt; ~/projects/gecko/.mozconfig
+</span></span><span style="display:flex;"><span>export PKG_CONFIG_PATH=&#34;/var/chroot/linux32/usr/lib/i386-linux-gnu/pkgconfig:/var/chroot/linux32/usr/share/pkgconfig&#34;
+</span></span><span style="display:flex;"><span>export MOZ_LINUX_32_SSE2_STARTUP_ERROR=1
+</span></span><span style="display:flex;"><span>CFLAGS=&#34;$CFLAGS -msse -msse2 -mfpmath=sse&#34;
+</span></span><span style="display:flex;"><span>CXXFLAGS=&#34;$CXXFLAGS -msse -msse2 -mfpmath=sse&#34;
+</span></span><span style="display:flex;"><span>if test `uname -m` = &#34;x86_64&#34;; then
+</span></span><span style="display:flex;"><span>  CFLAGS=&#34;$CFLAGS -m32 -march=pentium-m&#34;
+</span></span><span style="display:flex;"><span>  CXXFLAGS=&#34;$CXXFLAGS -m32 -march=pentium-m&#34;
+</span></span><span style="display:flex;"><span>  ac_add_options --target=i686-pc-linux
+</span></span><span style="display:flex;"><span>  ac_add_options --host=i686-pc-linux
+</span></span><span style="display:flex;"><span>  ac_add_options --x-libraries=/usr/lib
+</span></span><span style="display:flex;"><span>fi
+</span></span><span style="display:flex;"><span>EOF
+</span></span></code></pre></div><p>This was <a href="http://searchfox.org/mozilla-central/rev/89e125b817c5d493babbc58ea526be970bd3748e/build/unix/mozconfig.linux32">adapted</a> from the <code>mozconfig.linux32</code> used for official 32-bit
 builds.  I modified the <code>PKG_CONFIG_PATH</code> to point at more 32-bit files
 installed inside the chroot, similar to the library and include changes above.</p>
 <p>Now, we should be able to build successfully:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(host) $ ./mach build
-</code></pre></div><p>Then, from the chroot, you can run Firefox and other tests:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">(chroot) $ ./mach run
-</code></pre></div><p><img loading="lazy" src="firefox-linux32.png" alt="Firefox running on Linux 32-bit"  />
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>(host) $ ./mach build
+</span></span></code></pre></div><p>Then, from the chroot, you can run Firefox and other tests:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>(chroot) $ ./mach run
+</span></span></code></pre></div><p><img loading="lazy" src="firefox-linux32.png" alt="Firefox running on Linux 32-bit"  />
 </p>
 <h2 id="footnotes">Footnotes</h2>
 <p><b id="f1">1.</b> It&rsquo;s commonly suggested that people should use <code>./mach bootstrap</code> to install the Firefox build dependencies, so feel free to try that
@@ -460,7 +460,7 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
       <description>For quite a while, it has been possible to debug tabs on Firefox for Android devices, but there were many steps involved, including manual port forwarding from the terminal.
 As I hinted a few weeks ago, WebIDE would soon support connecting to Firefox for Android via ADB Helper support, and that time is now!
 How to Use You&amp;rsquo;ll need to assemble the following bits and bobs:
- Firefox 36 (2014-10-25 or later) ADB Helper 0.</description>
+Firefox 36 (2014-10-25 or later) ADB Helper 0.</description>
       <content:encoded><![CDATA[<p>For quite a while, it has been possible to debug tabs on Firefox for Android
 devices, but there were many steps involved, including manual port forwarding
 from the terminal.</p>
@@ -538,7 +538,6 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
       
       <guid>https://convolv.es/blog/2014/08/18/webide-enabled/</guid>
       <description>I am excited to announce that WebIDE is now enabled by default in Nightly (Firefox 34)! Everyone on the App Tools team has been working hard to polish this new tool that we originally announced back in June.
-
 Features While the previous App Manager tool was great, that tool&amp;rsquo;s UX held us back when trying support more complex workflows. With the redesign into WebIDE, we&amp;rsquo;ve already been able to add:</description>
       <content:encoded><![CDATA[<p>I am excited to announce that <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> is now enabled by default in Nightly
 (Firefox 34)!  Everyone on the App Tools team has been working hard to polish

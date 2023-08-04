@@ -151,7 +151,6 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
       
       <guid>https://convolv.es/blog/2014/08/18/webide-enabled/</guid>
       <description>I am excited to announce that WebIDE is now enabled by default in Nightly (Firefox 34)! Everyone on the App Tools team has been working hard to polish this new tool that we originally announced back in June.
-
 Features While the previous App Manager tool was great, that tool&amp;rsquo;s UX held us back when trying support more complex workflows. With the redesign into WebIDE, we&amp;rsquo;ve already been able to add:</description>
       <content:encoded><![CDATA[<p>I am excited to announce that <a href="https://developer.mozilla.org/docs/Tools/WebIDE">WebIDE</a> is now enabled by default in Nightly
 (Firefox 34)!  Everyone on the App Tools team has been working hard to polish

@@ -114,7 +114,7 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
       <description>For quite a while, it has been possible to debug tabs on Firefox for Android devices, but there were many steps involved, including manual port forwarding from the terminal.
 As I hinted a few weeks ago, WebIDE would soon support connecting to Firefox for Android via ADB Helper support, and that time is now!
 How to Use You&amp;rsquo;ll need to assemble the following bits and bobs:
- Firefox 36 (2014-10-25 or later) ADB Helper 0.</description>
+Firefox 36 (2014-10-25 or later) ADB Helper 0.</description>
       <content:encoded><![CDATA[<p>For quite a while, it has been possible to debug tabs on Firefox for Android
 devices, but there were many steps involved, including manual port forwarding
 from the terminal.</p>
