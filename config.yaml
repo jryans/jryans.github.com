@@ -49,6 +49,10 @@ params:
     - talks
     - blog
 
+frontmatter:
+  lastmod:
+    - lastmod
+
 permalinks:
   blog: /blog/:year/:month/:day/:filename/
   tags: /blog/tags/:title/
