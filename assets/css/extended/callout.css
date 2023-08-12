@@ -1,0 +1,16 @@
+.callout {
+  background: #f1f1f1;
+  padding: 20px;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+.callout-inner {
+  margin-left: 10px;
+}
+@media (max-width: 767px) {
+  .callout {
+    padding: 10px;
+  }
+}

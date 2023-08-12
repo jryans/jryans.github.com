@@ -1,0 +1,7 @@
+<!-- Adapted from https://github.com/mr-islam/hugo-callout -->
+<div class="callout">
+  <div>{{ .Get "icon" }}</div>
+	<div class="callout-inner">
+    {{ .Inner | markdownify }}
+  </div>
+</div>
