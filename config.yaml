@@ -46,8 +46,9 @@ params:
       url: "https://github.com/jryans"
   showFullTextInRSS: true
   mainSections:
-    - talks
     - blog
+    - guides
+    - talks
 
 frontmatter:
   lastmod:
