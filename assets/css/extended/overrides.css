@@ -23,3 +23,9 @@
 .post-content .highlight pre {
   border-radius: var(--radius);
 }
+
+.post-content img {
+  border-radius: unset;
+  margin-left: auto;
+  margin-right: auto;
+}
