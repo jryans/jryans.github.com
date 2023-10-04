@@ -132,8 +132,9 @@ benefiting from most of the same whole-program optimisations as [basic
 LTO](#basic-lto).
 
 Continuing with the same [example data][tl] based on building Clang 3.9,
-parallel LTO achieves nearly all of the run-time performance improvement as seen
-with basic LTO:
+LLVM's implementation of parallel LTO
+achieves nearly all of the run-time performance improvement
+as seen with basic LTO:
 basic LTO reached a 2.86% improvement over non-LTO,
 while parallel LTO achieved a 2.63% improvement over non-LTO.
 
@@ -148,10 +149,16 @@ and inlines across module boundaries,
 but most other cross-modules optimisations are skipped.
 GCC, on the other hand,
 partitions (nearly) the same optimisation work
-it would have done with one thread into a batch per thread,
-so it should achieve the same run-time performance as with basic LTO.
-(If you would like to see data comparing the two modes in GCC,
-please let me know.)
+it would have done with one thread into a batch per thread.
+
+This suggests that GCC's parallel LTO should be able to get closer than LLVM
+in achieving the same run-time performance as with basic LTO
+(our recurring dataset shows a 0.23% run-time delta between
+LLVM's basic and parallel modes).
+At the same time, LLVM's approach may be better able to handle
+incremental changes in a single module of large program.
+If you would like to see data comparing the two modes in GCC,
+please let me know.
 
 This mode is also referred to as "thin LTO",
 particularly in the LLVM ecosystem.
