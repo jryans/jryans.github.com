@@ -3,7 +3,7 @@ title: Curriculum Vitae
 aliases: ["/blog/cv/"]
 menu:
   main:
-    weight: 2
+    weight: 1
     name: CV
 ---
 
