@@ -3,95 +3,66 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://convolv.es/</loc>
-    <lastmod>2022-09-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://convolv.es/talks/</loc>
-    <lastmod>2022-09-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://convolv.es/talks/testing-debug-info/</loc>
-    <lastmod>2022-09-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://convolv.es/talks/room-to-grow/</loc>
-    <lastmod>2022-04-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://convolv.es/now/</loc>
-    <lastmod>2020-02-29T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/</loc>
-    <lastmod>2017-08-25T19:33:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit/</loc>
-    <lastmod>2017-08-25T19:33:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/tags/firefox/</loc>
-    <lastmod>2017-08-25T19:33:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/tags/linux/</loc>
-    <lastmod>2017-08-25T19:33:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/tags/mozilla/</loc>
-    <lastmod>2017-08-25T19:33:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/tags/open-source/</loc>
-    <lastmod>2017-08-25T19:33:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/tags/</loc>
-    <lastmod>2017-08-25T19:33:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/tags/developer-tools/</loc>
-    <lastmod>2015-08-05T15:33:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/tags/firefox-for-android/</loc>
-    <lastmod>2015-08-05T15:33:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/2015/08/05/wifi-debug-fennec/</loc>
-    <lastmod>2015-08-05T15:33:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/tags/firefox-os/</loc>
-    <lastmod>2015-03-25T08:51:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/2015/03/25/wifi-debug-fxos/</loc>
-    <lastmod>2015-03-25T08:51:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/2014/10/28/debug-fennec-tabs/</loc>
-    <lastmod>2014-10-28T16:08:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/2014/10/14/debug-fxos-tabs/</loc>
-    <lastmod>2014-10-14T13:29:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/2014/08/18/webide-enabled/</loc>
-    <lastmod>2014-08-18T10:44:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/2013/08/25/mozilla/</loc>
-    <lastmod>2013-08-25T01:27:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/2013/02/17/into-the-open/</loc>
-    <lastmod>2013-02-17T22:52:00-06:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/tags/education/</loc>
-    <lastmod>2012-10-06T15:13:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/2012/10/06/materials/</loc>
-    <lastmod>2012-10-06T15:13:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/2012/09/29/splines/</loc>
-    <lastmod>2012-09-29T08:17:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/2012/09/22/basic-game-with-unity/</loc>
-    <lastmod>2012-09-22T04:42:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/2012/09/15/3d-modeling-robot-in-the-ruins/</loc>
-    <lastmod>2012-09-15T05:43:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/2012/09/07/3d-modeling-and-rendering-1/</loc>
-    <lastmod>2012-09-07T23:20:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/blog/2012/05/07/exciting-new-blog-thing/</loc>
-    <lastmod>2012-05-07T23:28:00-05:00</lastmod>
   </url><url>
     <loc>https://convolv.es/archives/</loc>
   </url><url>
     <loc>https://convolv.es/categories/</loc>
+  </url><url>
+    <loc>https://convolv.es/consulting/</loc>
   </url><url>
     <loc>https://convolv.es/contact/</loc>
   </url><url>
