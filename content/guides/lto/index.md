@@ -108,6 +108,8 @@ Interprocedural analysis and optimisation is performed on a single thread.
 With large code bases, this process is likely to consume lots of memory and take
 a considerable amount of time.
 
+![](lto-workflow.svg)
+
 In terms of compile-time performance,
 the LLVM project [has shown][tl] that compilation and linking of
 the Clang 3.9 codebase with basic LTO is ~5x the non-LTO time.
@@ -130,6 +132,8 @@ global index of functions likely to be inlined is computed. With that in hand,
 each compilation unit can be processed in parallel at link time while still
 benefiting from most of the same whole-program optimisations as [basic
 LTO](#basic-lto).
+
+![](parallel-lto-workflow.svg)
 
 Continuing with the same [example data][tl] based on building Clang 3.9,
 LLVM's implementation of parallel LTO
@@ -228,7 +232,8 @@ that others are interested in.
 
 Thanks to
 [Teresa Johnson][johnson],
-[Jan Hubička][hubicka], and
+[Jan Hubička][hubicka],
+[Iti Shree][shree], and
 [Laurence Tratt][tratt]
 for feedback on earlier drafts.
 
@@ -237,4 +242,5 @@ for feedback on earlier drafts.
 
 [johnson]: https://discourse.llvm.org/u/teresajohnson
 [hubicka]: https://www.ucw.cz/~hubicka/
+[shree]: https://github.com/nmdis1999
 [tratt]: https://tratt.net/laurie/
