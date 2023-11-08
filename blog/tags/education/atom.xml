@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
     <lastBuildDate>Sat, 06 Oct 2012 15:13:00 -0500</lastBuildDate><atom:link href="https://convolv.es/blog/tags/education/atom.xml" rel="self" type="application/rss+xml" />
-    <item>
+    <item xml:base="https://convolv.es/blog/2012/10/06/materials/">
       <title>Materials, Maps, and Surfacing</title>
       <link>https://convolv.es/blog/2012/10/06/materials/</link>
       <pubDate>Sat, 06 Oct 2012 15:13:00 -0500</pubDate>
@@ -40,7 +40,7 @@ give a metallic appearance.</p>
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2012/09/29/splines/">
       <title>Splines, Loft, and Lathe</title>
       <link>https://convolv.es/blog/2012/09/29/splines/</link>
       <pubDate>Sat, 29 Sep 2012 08:17:00 -0500</pubDate>
@@ -70,7 +70,7 @@ many ways you can customize and tune its behavior.</p>
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2012/09/22/basic-game-with-unity/">
       <title>Basic Game with Unity</title>
       <link>https://convolv.es/blog/2012/09/22/basic-game-with-unity/</link>
       <pubDate>Sat, 22 Sep 2012 04:42:00 -0500</pubDate>
@@ -100,7 +100,7 @@ exciting to see something playable come together so quickly.</p>
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2012/09/15/3d-modeling-robot-in-the-ruins/">
       <title>3D Modeling: Robot in the Ruins</title>
       <link>https://convolv.es/blog/2012/09/15/3d-modeling-robot-in-the-ruins/</link>
       <pubDate>Sat, 15 Sep 2012 05:43:00 -0500</pubDate>
@@ -127,7 +127,7 @@ various items between the islands as needed.</p>
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2012/09/07/3d-modeling-and-rendering-1/">
       <title>3D Modeling and Rendering 1</title>
       <link>https://convolv.es/blog/2012/09/07/3d-modeling-and-rendering-1/</link>
       <pubDate>Fri, 07 Sep 2012 23:20:00 -0500</pubDate>

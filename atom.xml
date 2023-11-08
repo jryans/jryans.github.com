@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
     <lastBuildDate>Wed, 08 Nov 2023 15:49:51 +0000</lastBuildDate><atom:link href="https://convolv.es/atom.xml" rel="self" type="application/rss+xml" />
-    <item>
+    <item xml:base="https://convolv.es/guides/lto/">
       <title>Link-time optimisation (LTO)</title>
       <link>https://convolv.es/guides/lto/</link>
       <pubDate>Wed, 08 Nov 2023 15:49:51 +0000</pubDate>
@@ -295,7 +295,7 @@ for feedback on earlier drafts.</p>
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/talks/testing-debug-info/">
       <title>Testing debug info of optimised programs</title>
       <link>https://convolv.es/talks/testing-debug-info/</link>
       <pubDate>Thu, 15 Sep 2022 00:00:00 +0000</pubDate>
@@ -320,7 +320,7 @@ of the compiler.</p>
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/talks/room-to-grow/">
       <title>Room to grow: Building collaborative, open software</title>
       <link>https://convolv.es/talks/room-to-grow/</link>
       <pubDate>Fri, 29 Apr 2022 00:00:00 +0000</pubDate>
@@ -362,7 +362,7 @@ depending on upstream vendors to add a new options to achieve your goals.</p>
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit/">
       <title>Building Firefox for Linux 32-bit</title>
       <link>https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit/</link>
       <pubDate>Fri, 25 Aug 2017 19:33:00 -0500</pubDate>
@@ -539,7 +539,7 @@ support this use case. <a href="#a1">↩</a></p>
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2015/08/05/wifi-debug-fennec/">
       <title>WiFi Debugging for Firefox for Android</title>
       <link>https://convolv.es/blog/2015/08/05/wifi-debug-fennec/</link>
       <pubDate>Wed, 05 Aug 2015 15:33:00 -0500</pubDate>
@@ -637,7 +637,7 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2015/03/25/wifi-debug-fxos/">
       <title>WiFi Debugging for Firefox OS</title>
       <link>https://convolv.es/blog/2015/03/25/wifi-debug-fxos/</link>
       <pubDate>Wed, 25 Mar 2015 08:51:00 -0500</pubDate>
@@ -739,7 +739,7 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2014/10/28/debug-fennec-tabs/">
       <title>Debugging Tabs with Firefox for Android</title>
       <link>https://convolv.es/blog/2014/10/28/debug-fennec-tabs/</link>
       <pubDate>Tue, 28 Oct 2014 16:08:00 -0500</pubDate>
@@ -784,7 +784,7 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2014/10/14/debug-fxos-tabs/">
       <title>DevTools for Firefox OS browser tabs</title>
       <link>https://convolv.es/blog/2014/10/14/debug-fxos-tabs/</link>
       <pubDate>Tue, 14 Oct 2014 13:29:00 -0500</pubDate>
@@ -819,7 +819,7 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2014/08/18/webide-enabled/">
       <title>WebIDE enabled in Nightly</title>
       <link>https://convolv.es/blog/2014/08/18/webide-enabled/</link>
       <pubDate>Mon, 18 Aug 2014 10:44:00 -0500</pubDate>
@@ -879,7 +879,7 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2013/08/25/mozilla/">
       <title>Mozilla</title>
       <link>https://convolv.es/blog/2013/08/25/mozilla/</link>
       <pubDate>Sun, 25 Aug 2013 01:27:00 -0500</pubDate>
@@ -911,7 +911,7 @@ tools that people don&rsquo;t even know they need.</p>
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2013/02/17/into-the-open/">
       <title>Into the Open</title>
       <link>https://convolv.es/blog/2013/02/17/into-the-open/</link>
       <pubDate>Sun, 17 Feb 2013 22:52:00 -0600</pubDate>
@@ -941,7 +941,7 @@ an exciting time ahead!</p>
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2012/10/06/materials/">
       <title>Materials, Maps, and Surfacing</title>
       <link>https://convolv.es/blog/2012/10/06/materials/</link>
       <pubDate>Sat, 06 Oct 2012 15:13:00 -0500</pubDate>
@@ -974,7 +974,7 @@ give a metallic appearance.</p>
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2012/09/29/splines/">
       <title>Splines, Loft, and Lathe</title>
       <link>https://convolv.es/blog/2012/09/29/splines/</link>
       <pubDate>Sat, 29 Sep 2012 08:17:00 -0500</pubDate>
@@ -1004,7 +1004,7 @@ many ways you can customize and tune its behavior.</p>
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2012/09/22/basic-game-with-unity/">
       <title>Basic Game with Unity</title>
       <link>https://convolv.es/blog/2012/09/22/basic-game-with-unity/</link>
       <pubDate>Sat, 22 Sep 2012 04:42:00 -0500</pubDate>
@@ -1034,7 +1034,7 @@ exciting to see something playable come together so quickly.</p>
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2012/09/15/3d-modeling-robot-in-the-ruins/">
       <title>3D Modeling: Robot in the Ruins</title>
       <link>https://convolv.es/blog/2012/09/15/3d-modeling-robot-in-the-ruins/</link>
       <pubDate>Sat, 15 Sep 2012 05:43:00 -0500</pubDate>
@@ -1061,7 +1061,7 @@ various items between the islands as needed.</p>
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2012/09/07/3d-modeling-and-rendering-1/">
       <title>3D Modeling and Rendering 1</title>
       <link>https://convolv.es/blog/2012/09/07/3d-modeling-and-rendering-1/</link>
       <pubDate>Fri, 07 Sep 2012 23:20:00 -0500</pubDate>
@@ -1082,7 +1082,7 @@ the past.</p>
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2012/05/07/exciting-new-blog-thing/">
       <title>Exciting new blog thing</title>
       <link>https://convolv.es/blog/2012/05/07/exciting-new-blog-thing/</link>
       <pubDate>Mon, 07 May 2012 23:28:00 -0500</pubDate>

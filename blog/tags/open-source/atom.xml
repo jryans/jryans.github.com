@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
     <lastBuildDate>Fri, 25 Aug 2017 19:33:00 -0500</lastBuildDate><atom:link href="https://convolv.es/blog/tags/open-source/atom.xml" rel="self" type="application/rss+xml" />
-    <item>
+    <item xml:base="https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit/">
       <title>Building Firefox for Linux 32-bit</title>
       <link>https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit/</link>
       <pubDate>Fri, 25 Aug 2017 19:33:00 -0500</pubDate>
@@ -184,7 +184,7 @@ support this use case. <a href="#a1">↩</a></p>
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2015/08/05/wifi-debug-fennec/">
       <title>WiFi Debugging for Firefox for Android</title>
       <link>https://convolv.es/blog/2015/08/05/wifi-debug-fennec/</link>
       <pubDate>Wed, 05 Aug 2015 15:33:00 -0500</pubDate>
@@ -282,7 +282,7 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2015/03/25/wifi-debug-fxos/">
       <title>WiFi Debugging for Firefox OS</title>
       <link>https://convolv.es/blog/2015/03/25/wifi-debug-fxos/</link>
       <pubDate>Wed, 25 Mar 2015 08:51:00 -0500</pubDate>
@@ -384,7 +384,7 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2014/10/28/debug-fennec-tabs/">
       <title>Debugging Tabs with Firefox for Android</title>
       <link>https://convolv.es/blog/2014/10/28/debug-fennec-tabs/</link>
       <pubDate>Tue, 28 Oct 2014 16:08:00 -0500</pubDate>
@@ -429,7 +429,7 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2014/10/14/debug-fxos-tabs/">
       <title>DevTools for Firefox OS browser tabs</title>
       <link>https://convolv.es/blog/2014/10/14/debug-fxos-tabs/</link>
       <pubDate>Tue, 14 Oct 2014 13:29:00 -0500</pubDate>
@@ -464,7 +464,7 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2014/08/18/webide-enabled/">
       <title>WebIDE enabled in Nightly</title>
       <link>https://convolv.es/blog/2014/08/18/webide-enabled/</link>
       <pubDate>Mon, 18 Aug 2014 10:44:00 -0500</pubDate>
@@ -524,7 +524,7 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2013/08/25/mozilla/">
       <title>Mozilla</title>
       <link>https://convolv.es/blog/2013/08/25/mozilla/</link>
       <pubDate>Sun, 25 Aug 2013 01:27:00 -0500</pubDate>
@@ -556,7 +556,7 @@ tools that people don&rsquo;t even know they need.</p>
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2013/02/17/into-the-open/">
       <title>Into the Open</title>
       <link>https://convolv.es/blog/2013/02/17/into-the-open/</link>
       <pubDate>Sun, 17 Feb 2013 22:52:00 -0600</pubDate>

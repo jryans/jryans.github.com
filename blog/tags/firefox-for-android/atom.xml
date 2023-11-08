@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
     <lastBuildDate>Wed, 05 Aug 2015 15:33:00 -0500</lastBuildDate><atom:link href="https://convolv.es/blog/tags/firefox-for-android/atom.xml" rel="self" type="application/rss+xml" />
-    <item>
+    <item xml:base="https://convolv.es/blog/2015/08/05/wifi-debug-fennec/">
       <title>WiFi Debugging for Firefox for Android</title>
       <link>https://convolv.es/blog/2015/08/05/wifi-debug-fennec/</link>
       <pubDate>Wed, 05 Aug 2015 15:33:00 -0500</pubDate>
@@ -105,7 +105,7 @@ team via <a href="https://wiki.mozilla.org/DevTools/GetInvolved#Communication">v
 ]]></content:encoded>
     </item>
     
-    <item>
+    <item xml:base="https://convolv.es/blog/2014/10/28/debug-fennec-tabs/">
       <title>Debugging Tabs with Firefox for Android</title>
       <link>https://convolv.es/blog/2014/10/28/debug-fennec-tabs/</link>
       <pubDate>Tue, 28 Oct 2014 16:08:00 -0500</pubDate>
