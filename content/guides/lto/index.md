@@ -1,8 +1,7 @@
 ---
 title: "Link-time optimisation (LTO)"
-date: 2023-09-14T12:35:00+01:00
-lastmod: 2023-09-14
-draft: true
+date: 2023-11-08T15:49:51+00:00
+lastmod: 2023-11-08
 tags: [Compilers, LTO]
 ---
 
