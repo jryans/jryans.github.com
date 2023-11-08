@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Link-time optimisation (LTO) | J. Ryan Stinnett</title>
+<meta name="keywords" content="Compilers, LTO">
+<meta name="description" content="I recently started exploring link-time optimisation (LTO), which I used to think was just a single boolean choice in the compilation and linking workflow, and perhaps it was like that a while ago&hellip; I&rsquo;ve learned that these days, there are many different dimensions of LTO across compilers and linkers today and more variations are being proposed all the time.
+In this &ldquo;living guide&rdquo;, I aim to cover the LTO-related features I have encountered thus far.">
+<meta name="author" content="">
+<link rel="canonical" href="https://convolv.es/guides/lto/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.998af9822ed969bb71a5651b692ce7ce2c3256dd4c44319af2fafea7176fd500.css" integrity="sha256-mYr5gi7ZabtxpWUbaSznziwyVt1MRDGa8vr&#43;pxdv1QA=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://convolv.es/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://convolv.es/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://convolv.es/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://convolv.es/apple-touch-icon.png">
+<link rel="mask-icon" href="https://convolv.es/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Link-time optimisation (LTO)" />
+<meta property="og:description" content="I recently started exploring link-time optimisation (LTO), which I used to think was just a single boolean choice in the compilation and linking workflow, and perhaps it was like that a while ago&hellip; I&rsquo;ve learned that these days, there are many different dimensions of LTO across compilers and linkers today and more variations are being proposed all the time.
+In this &ldquo;living guide&rdquo;, I aim to cover the LTO-related features I have encountered thus far." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://convolv.es/guides/lto/" /><meta property="article:section" content="guides" />
+<meta property="article:published_time" content="2023-11-08T15:49:51+00:00" />
+<meta property="article:modified_time" content="2023-11-08T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Link-time optimisation (LTO)"/>
+<meta name="twitter:description" content="I recently started exploring link-time optimisation (LTO), which I used to think was just a single boolean choice in the compilation and linking workflow, and perhaps it was like that a while ago&hellip; I&rsquo;ve learned that these days, there are many different dimensions of LTO across compilers and linkers today and more variations are being proposed all the time.
+In this &ldquo;living guide&rdquo;, I aim to cover the LTO-related features I have encountered thus far."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Guides",
+      "item": "https://convolv.es/guides/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Link-time optimisation (LTO)",
+      "item": "https://convolv.es/guides/lto/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Link-time optimisation (LTO)",
+  "name": "Link-time optimisation (LTO)",
+  "description": "I recently started exploring link-time optimisation (LTO), which I used to think was just a single boolean choice in the compilation and linking workflow, and perhaps it was like that a while ago\u0026hellip; I\u0026rsquo;ve learned that these days, there are many different dimensions of LTO across compilers and linkers today and more variations are being proposed all the time.\nIn this \u0026ldquo;living guide\u0026rdquo;, I aim to cover the LTO-related features I have encountered thus far.",
+  "keywords": [
+    "Compilers", "LTO"
+  ],
+  "articleBody": "I recently started exploring link-time optimisation (LTO), which I used to think was just a single boolean choice in the compilation and linking workflow, and perhaps it was like that a while ago… I’ve learned that these days, there are many different dimensions of LTO across compilers and linkers today and more variations are being proposed all the time.\nIn this “living guide”, I aim to cover the LTO-related features I have encountered thus far. I intend to keep updating this going forward as I learn about new details in this space. I am sure there are even more corners to cover, so if you see something that should be added, corrected, etc. please contact me.\nI am not aiming to provide specific recommendations here, as there are many tradeoffs to consider and different applications of LTO will weigh each of those differently. Instead, I hope this is a broadly useful portrayal of the facts.\nThis guide focuses on common toolchains for languages like C, Rust, etc. which typically use ahead-of-time (AOT) compilation and linking. Alternative toolchains for these languages and common toolchains for other languages may use other strategies like interpreting, JIT compilation, etc. Those other language implementation strategies do not offer LTO-like features (that I know of), so I have ignored them here.\nI hope this guide is useful to experienced compiler users and compiler hackers who may not have heard about the latest work yet. I also hope it’s broadly accessible to those who may be unfamiliar with LTO.\nBasics Normal (non-LTO) compilation compiles and optimises one file at a time. LTO can optimise across all files at once. The overall aim of LTO is better runtime performance through whole-program analysis and cross-module optimisation.\nLet’s take a high-level look at the workflow of most AOT compile and link toolchains. We’ll start off with the “default” workflow without LTO.\nIn the default workflow without LTO, each unit of source code is compiled and optimised separately to produce an object file with machine code for the target architecture. Optimisations can only consider a single source unit at a time, so all externally accessible symbols (functions and variables) must be preserved, even if they will end up being unused in the final linked output. The linker then combines these object files to produce the final output (executable or library).\nNow let’s look at a workflow with LTO.\nIn the LTO setup, we still initially compile each source unit separately and perform some amount of optimisation, but the output is different: instead of machine code, the output of LTO compilation is an object file containing the compiler’s specific internal representation (IR) for that source unit.\nThe linking stage now performs a much more complex dance than it did before. The IR produced from compiling each source unit is read and the compiler’s optimisation pipeline is invoked to analyse and transform the whole program (the precise details of this varies with different LTO features, as we’ll see later in this guide). This whole program stage unlocks further optimisation opportunities, as we can remove symbols that are unused outside the whole program, inline functions from other source units, etc.\nWith those fundamentals out of the way, let’s look at various features and variants that toolchains offer to further tweak and customise this process.\nFeatures and variants ⚠️ Some of the features found in the LTO space have “marketing” names which do not communicate what they actually do on a technical level. For some descriptions below, I have used my own terminology to avoid these issues. Each section also lists other names things are known by, in case you want to search for more information. Basic LTO This is the simplest of the LTO modes and matches the workflow described above in Basics. Each compilation task produces object files containing the compiler’s internal IR format. The linking stage combines all compilation units into a single, large module. Interprocedural analysis and optimisation is performed on a single thread. With large code bases, this process is likely to consume lots of memory and take a considerable amount of time.\nIn terms of compile-time performance, the LLVM project has shown that compilation and linking of the Clang 3.9 codebase with basic LTO is ~5x the non-LTO time. This extra work achieves an average run-time performance improvement of 2.86%.\nThis mode is also referred to as “full LTO”.\nToolchain First available Option Clang 2.6 (2009) -flto or -flto=full GCC 4.5 (2010) -flto -flto-partition=one Rust 1.0 (2015) -C lto Parallel LTO Toolchains have come up with a variety of related techniques to speed up the the link-time work of LTO while preserving (most of) the run-time performance gains. Instead of creating a single, massive module at link time, a much smaller global index of functions likely to be inlined is computed. With that in hand, each compilation unit can be processed in parallel at link time while still benefiting from most of the same whole-program optimisations as basic LTO.\nContinuing with the same example data based on building Clang 3.9, LLVM’s implementation of parallel LTO achieves nearly all of the run-time performance improvement as seen with basic LTO: basic LTO reached a 2.86% improvement over non-LTO, while parallel LTO achieved a 2.63% improvement over non-LTO.\nThe compilation time improves dramatically: instead of 5x non-LTO, it’s now only 1.2x non-LTO, which is quite impressive.\nThe technical details of how each toolchain implements parallel LTO vary somewhat. LLVM-based toolchains (which includes Clang and Rust from our discussions here) optimise different compilation units in parallel and inlines across module boundaries, but most other cross-modules optimisations are skipped. GCC, on the other hand, partitions (nearly) the same optimisation work it would have done with one thread into a batch per thread.\nThis suggests that GCC’s parallel LTO should be able to get closer than LLVM in achieving the same run-time performance as with basic LTO (our recurring dataset shows a 0.23% run-time delta between LLVM’s basic and parallel modes). At the same time, LLVM’s approach may be better able to handle incremental changes in a single module of large program. If you would like to see data comparing the two modes in GCC, please let me know.\nThis mode is also referred to as “thin LTO”, particularly in the LLVM ecosystem. The “thin” concept on the LLVM side refers to the fact that no IR is involved in the whole program analysis step.\nToolchain First available Option Clang 3.9 (2016) -flto=thin GCC 4.6 (2011) -flto=auto or -flto= Rust 1.25 (2018) -C lto=thin LTO with mode selection deferred to link time In some applications, it may be useful to support both the basic and parallel LTO modes. In this arrangement, the compiler IR attached to each object file stores all the info it needs to run either LTO mode at link time.\nWhen it’s time to link, you can then choose either of the basic or parallel LTO modes via link-time compiler options (for the toolchains mentioned here, the program commonly referred to as just the “compiler” is really the “compiler driver” which in turn calls the other programs in the workflow, such as the linker).\nThis variant is also referred to as “unified LTO”.\nToolchain First available Option Clang 17 (2023) -funified-lto GCC 4.5 (2010) supported by default Rust — — LTO enablement decision deferred to link time It may also be useful to push the choice of whether to use LTO at all down to the linking step of the workflow. To support this use case, the compiler combines both machine code and internal IR in the object files produced by each compilation unit.\nThis variant is also referred to as “fat LTO objects”.\nToolchain First available Option Clang 17 (2023) -ffat-lto-objects GCC 4.9 (2014) -ffat-lto-objects Rust — — Other details There are a few other more advanced corners of LTO, including:\nDistributed build support Symbol visibility Linker caching If you’re curious about any of these or other aspects, please let me know! I plan to extend this guide to document additional bits of LTO that others are interested in.\nAcknowledgements Thanks to Teresa Johnson, Jan Hubička, Iti Shree, and Laurence Tratt for feedback on earlier drafts.\n",
+  "wordCount" : "1365",
+  "inLanguage": "en",
+  "datePublished": "2023-11-08T15:49:51Z",
+  "dateModified": "2023-11-08T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://convolv.es/guides/lto/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "J. Ryan Stinnett",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://convolv.es/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://convolv.es/" accesskey="h" title="J. Ryan Stinnett (Alt + H)">J. Ryan Stinnett</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://convolv.es/cv/" title="Curriculum Vitae">
+                    <span>CV</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/consulting/" title="Consulting">
+                    <span>Consulting</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/contact/" title="Contact">
+                    <span>Contact</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/archives/" title="Archives">
+                    <span>Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      Link-time optimisation (LTO)
+    </h1>
+    <div class="post-meta">started&nbsp;<span title='2023-11-08 15:49:51 +0000 UTC'>2023-11-08</span>&nbsp;·&nbsp;updated&nbsp;<span title='2023-11-08 00:00:00 +0000 UTC'>2023-11-08</span>
+
+</div>
+  </header> 
+  <div class="post-content"><p>I recently started exploring link-time optimisation (LTO),
+which I used to think was just a single boolean choice
+in the compilation and linking workflow,
+and perhaps it was like that a while ago&hellip;
+I&rsquo;ve learned that these days,
+there are many different dimensions of LTO across
+compilers and linkers today and more variations
+<a href="https://discourse.llvm.org/t/rfc-a-unified-lto-bitcode-frontend/61774">are</a>
+<a href="https://discourse.llvm.org/t/rfc-ffat-lto-objects-support/63977">being</a>
+<a href="https://discourse.llvm.org/t/rfc-integrated-distributed-thinlto/69641">proposed</a>
+all the time.</p>
+<p>In this &ldquo;living guide&rdquo;,
+I aim to cover the LTO-related features I have encountered thus far.
+I intend to keep updating this going forward
+as I learn about new details in this space.
+I am sure there are even more corners to cover,
+so if you see something that should be added, corrected, etc.
+please <a href="/contact">contact me</a>.</p>
+<p>I am <em>not</em> aiming to provide specific recommendations here,
+as there are many tradeoffs to consider
+and different applications of LTO will weigh each of those differently.
+Instead, I hope this is a broadly useful portrayal of the facts.</p>
+<p>This guide focuses on common toolchains for languages like C, Rust, etc. which
+typically use ahead-of-time (AOT) compilation and linking. Alternative
+toolchains for these languages and common toolchains for other languages may use
+other strategies like interpreting, JIT compilation, etc. Those other language
+implementation strategies do not offer LTO-like features (that I know of), so
+I have ignored them here.</p>
+<p>I hope this guide is useful to experienced compiler users and compiler hackers
+who may not have heard about the latest work yet. I also hope it&rsquo;s broadly
+accessible to those who may be unfamiliar with LTO.</p>
+<hr>
+<h2 id="basics">Basics<a hidden class="anchor" aria-hidden="true" href="#basics">#</a></h2>
+<p>Normal (non-LTO) compilation compiles and optimises one file at a time.
+LTO can optimise across all files at once.
+The overall aim of LTO is better runtime performance through whole-program
+analysis and cross-module optimisation.</p>
+<p>Let&rsquo;s take a high-level look at the workflow of most AOT compile and link
+toolchains. We&rsquo;ll start off with the &ldquo;default&rdquo; workflow without LTO.</p>
+<p><img loading="lazy" src="default-workflow.svg" alt="Default compile and link workflow with several source files optimised
+separately into object files containing machine code, then linked to create the
+final output"  />
+</p>
+<p>In the default workflow without LTO, each unit of source code is compiled and
+optimised separately to produce an object file with machine code for the target
+architecture. Optimisations can only consider a single source unit at a time, so
+all externally accessible symbols (functions and variables) must be preserved,
+even if they will end up being unused in the final linked output. The linker
+then combines these object files to produce the final output (executable or
+library).</p>
+<p>Now let&rsquo;s look at a workflow with LTO.</p>
+<p><img loading="lazy" src="lto-workflow.svg" alt=""  />
+</p>
+<p>In the LTO setup, we still initially compile each source unit separately and
+perform some amount of optimisation, but the output is different: instead of
+machine code, the output of LTO compilation is an object file containing
+the compiler&rsquo;s specific internal representation (IR) for that source unit.</p>
+<p>The linking stage now performs a much more complex dance than it did before.
+The IR produced from compiling each source unit is read and the compiler&rsquo;s
+optimisation pipeline is invoked to analyse and transform the whole program (the
+precise details of this varies with different LTO features, as we&rsquo;ll see later
+in this guide). This whole program stage unlocks further optimisation
+opportunities, as we can remove symbols that are unused outside the whole
+program, inline functions from other source units, etc.</p>
+<p>With those fundamentals out of the way, let&rsquo;s look at various features and
+variants that toolchains offer to further tweak and customise this process.</p>
+<h2 id="features-and-variants">Features and variants<a hidden class="anchor" aria-hidden="true" href="#features-and-variants">#</a></h2>
+
+<div class="callout">
+  <div>⚠️</div>
+	<div class="callout-inner">
+    Some of the features found in the LTO space have &ldquo;marketing&rdquo; names which do not
+communicate what they actually do on a technical level.
+For some descriptions below, I have used my own terminology to avoid these
+issues.
+Each section also lists other names things are known by, in case you want to
+search for more information.
+  </div>
+</div>
+
+<h3 id="basic-lto">Basic LTO<a hidden class="anchor" aria-hidden="true" href="#basic-lto">#</a></h3>
+<p>This is the simplest of the LTO modes and matches the workflow described above
+in <a href="#basics">Basics</a>.
+Each compilation task produces object files containing the compiler&rsquo;s internal
+IR format.
+The linking stage combines all compilation units into a single, large module.
+Interprocedural analysis and optimisation is performed on a single thread.
+With large code bases, this process is likely to consume lots of memory and take
+a considerable amount of time.</p>
+<p><img loading="lazy" src="lto-workflow.svg" alt=""  />
+</p>
+<p>In terms of compile-time performance,
+the LLVM project <a href="https://blog.llvm.org/2016/06/thinlto-scalable-and-incremental-lto.html">has shown</a> that compilation and linking of
+the Clang 3.9 codebase with basic LTO is ~5x the non-LTO time.
+This extra work achieves an average run-time performance improvement of 2.86%.</p>
+<p>This mode is also referred to as &ldquo;full LTO&rdquo;.</p>
+<table>
+<thead>
+<tr>
+<th>Toolchain</th>
+<th>First available</th>
+<th>Option</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clang</td>
+<td>2.6 (2009)</td>
+<td><code>-flto</code> or <code>-flto=full</code></td>
+</tr>
+<tr>
+<td>GCC</td>
+<td>4.5 (2010)</td>
+<td><code>-flto -flto-partition=one</code></td>
+</tr>
+<tr>
+<td>Rust</td>
+<td>1.0 (2015)</td>
+<td><code>-C lto</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="parallel-lto">Parallel LTO<a hidden class="anchor" aria-hidden="true" href="#parallel-lto">#</a></h3>
+<p>Toolchains have come up with a variety of related techniques to speed up the
+the link-time work of LTO while preserving (most of) the run-time performance
+gains. Instead of creating a single, massive module at link time, a much smaller
+global index of functions likely to be inlined is computed. With that in hand,
+each compilation unit can be processed in parallel at link time while still
+benefiting from most of the same whole-program optimisations as <a href="#basic-lto">basic
+LTO</a>.</p>
+<p><img loading="lazy" src="parallel-lto-workflow.svg" alt=""  />
+</p>
+<p>Continuing with the same <a href="https://blog.llvm.org/2016/06/thinlto-scalable-and-incremental-lto.html">example data</a> based on building Clang 3.9,
+LLVM&rsquo;s implementation of parallel LTO
+achieves nearly all of the run-time performance improvement
+as seen with basic LTO:
+basic LTO reached a 2.86% improvement over non-LTO,
+while parallel LTO achieved a 2.63% improvement over non-LTO.</p>
+<p>The compilation time improves dramatically: instead of 5x non-LTO, it&rsquo;s now only
+1.2x non-LTO, which is quite impressive.</p>
+<p>The technical details of how each toolchain
+implements parallel LTO vary somewhat.
+LLVM-based toolchains (which includes Clang and Rust from our discussions here)
+optimise different compilation units in parallel
+and inlines across module boundaries,
+but most other cross-modules optimisations are skipped.
+GCC, on the other hand,
+partitions (nearly) the same optimisation work
+it would have done with one thread into a batch per thread.</p>
+<p>This suggests that GCC&rsquo;s parallel LTO should be able to get closer than LLVM
+in achieving the same run-time performance as with basic LTO
+(our recurring dataset shows a 0.23% run-time delta between
+LLVM&rsquo;s basic and parallel modes).
+At the same time, LLVM&rsquo;s approach may be better able to handle
+incremental changes in a single module of large program.
+If you would like to see data comparing the two modes in GCC,
+please let me know.</p>
+<p>This mode is also referred to as &ldquo;thin LTO&rdquo;,
+particularly in the LLVM ecosystem.
+The &ldquo;thin&rdquo; concept on the LLVM side
+refers to the fact that no IR is involved in the whole program analysis step.</p>
+<table>
+<thead>
+<tr>
+<th>Toolchain</th>
+<th>First available</th>
+<th>Option</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clang</td>
+<td>3.9 (2016)</td>
+<td><code>-flto=thin</code></td>
+</tr>
+<tr>
+<td>GCC</td>
+<td>4.6 (2011)</td>
+<td><code>-flto=auto</code> or <code>-flto=&lt;threads&gt;</code></td>
+</tr>
+<tr>
+<td>Rust</td>
+<td>1.25 (2018)</td>
+<td><code>-C lto=thin</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="lto-with-mode-selection-deferred-to-link-time">LTO with mode selection deferred to link time<a hidden class="anchor" aria-hidden="true" href="#lto-with-mode-selection-deferred-to-link-time">#</a></h3>
+<p>In some applications, it may be useful to support both the <a href="#basic-lto">basic</a>
+and <a href="#parallel-lto">parallel</a> LTO modes. In this arrangement, the compiler IR
+attached to each object file stores all the info it needs to run either LTO mode
+at link time.</p>
+<p>When it&rsquo;s time to link, you can then choose either of
+the basic or parallel LTO modes via link-time compiler options
+(for the toolchains mentioned here,
+the program commonly referred to as just the &ldquo;compiler&rdquo;
+is really the &ldquo;compiler driver&rdquo;
+which in turn calls the other programs in the workflow,
+such as the linker).</p>
+<p>This variant is also referred to as &ldquo;unified LTO&rdquo;.</p>
+<table>
+<thead>
+<tr>
+<th>Toolchain</th>
+<th>First available</th>
+<th>Option</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clang</td>
+<td>17 (2023)</td>
+<td><code>-funified-lto</code></td>
+</tr>
+<tr>
+<td>GCC</td>
+<td>4.5 (2010)</td>
+<td>supported by default</td>
+</tr>
+<tr>
+<td>Rust</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="lto-enablement-decision-deferred-to-link-time">LTO enablement decision deferred to link time<a hidden class="anchor" aria-hidden="true" href="#lto-enablement-decision-deferred-to-link-time">#</a></h3>
+<p>It may also be useful to push the choice of whether to use LTO at all down to
+the linking step of the workflow. To support this use case, the compiler
+combines <em>both</em> machine code <em>and</em> internal IR in the object files produced by
+each compilation unit.</p>
+<p>This variant is also referred to as &ldquo;fat LTO objects&rdquo;.</p>
+<table>
+<thead>
+<tr>
+<th>Toolchain</th>
+<th>First available</th>
+<th>Option</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clang</td>
+<td>17 (2023)</td>
+<td><code>-ffat-lto-objects</code></td>
+</tr>
+<tr>
+<td>GCC</td>
+<td>4.9 (2014)</td>
+<td><code>-ffat-lto-objects</code></td>
+</tr>
+<tr>
+<td>Rust</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="other-details">Other details<a hidden class="anchor" aria-hidden="true" href="#other-details">#</a></h3>
+<p>There are a few other more advanced corners of LTO, including:</p>
+<ul>
+<li>Distributed build support</li>
+<li>Symbol visibility</li>
+<li>Linker caching</li>
+</ul>
+<p>If you&rsquo;re curious about any of these or other aspects, please
+<a href="/contact">let me know</a>!
+I plan to extend this guide to document additional bits of LTO
+that others are interested in.</p>
+<hr>
+<h4 id="acknowledgements">Acknowledgements<a hidden class="anchor" aria-hidden="true" href="#acknowledgements">#</a></h4>
+<p>Thanks to
+<a href="https://discourse.llvm.org/u/teresajohnson">Teresa Johnson</a>,
+<a href="https://www.ucw.cz/~hubicka/">Jan Hubička</a>,
+<a href="https://github.com/nmdis1999">Iti Shree</a>, and
+<a href="https://tratt.net/laurie/">Laurence Tratt</a>
+for feedback on earlier drafts.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://convolv.es/blog/tags/compilers/">Compilers</a></li>
+      <li><a href="https://convolv.es/blog/tags/lto/">LTO</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2023 <a href="https://convolv.es/">J. Ryan Stinnett</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
