@@ -315,6 +315,7 @@ balance of power.
   <div class="lr sec">
     <span>
       <a href="/papers/2019/ESEC-FSE/JFS.pdf">paper</a>
+      <a href="https://doi.org/10.1145/3338906.3338921">doi</a>
       <a href="https://github.com/mc-imperial/jfs">code</a>
     </span>
   </div>
