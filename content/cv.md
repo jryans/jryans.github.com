@@ -474,6 +474,11 @@ balance of power.
 <div class="section">Achievements and Honors</div>
 
 <div class="lr">
+  <span>New Year's Honours List, OpenUK</span>
+  <span class="pri">2024</span>
+</div>
+
+<div class="lr">
   <span>Quarterly Achievement-based Bonus, Mozilla</span>
   <span class="pri">August 2013 – July 2018</span>
 </div>
