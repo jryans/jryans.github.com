@@ -303,6 +303,26 @@ balance of power.
 
 <div class="row">
   <div class="lr pri">
+    <span>Accurate Coverage Metrics for Compiler-Generated Debugging
+    Information</span>
+    <a href="https://conf.researchr.org/home/CC-2024">CC 2024</a>
+  </div>
+  <div class="lr sec">
+    <span>J. Ryan Stinnett, Stephen Kell</span>
+    <span>Edinburgh, UK</span>
+  </div>
+  <div class="lr sec">
+    <span>
+      <a href="/papers/2024/CC/debug-info-metrics.pdf">pdf</a>
+      <a href="https://arxiv.org/abs/2402.04811">arxiv</a>
+      <a href="https://doi.org/10.1145/3640537.3641578">publisher</a>
+      <a href="https://github.com/jryans/debug-info-metrics-artifact">artifact</a>
+    </span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="lr pri">
     <span>Just Fuzz It: Solving Floating-Point Constraints using
     Coverage-Guided Fuzzing</span>
     <a href="https://esec-fse19.ut.ee/">ESEC/FSE 2019</a>
