@@ -27,4 +27,4 @@ If you'd like to work together or you know someone else who might,
 you can contact me at [jryans@gmail.com][e].
 
 [e]:  mailto:jryans@gmail.com
-[cv]: /cv
+[cv]: /cv/
