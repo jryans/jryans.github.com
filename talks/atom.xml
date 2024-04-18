@@ -6,7 +6,31 @@
     <description>Recent content in Talks on J. Ryan Stinnett</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Thu, 15 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://convolv.es/talks/atom.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 11 Apr 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://convolv.es/talks/atom.xml" rel="self" type="application/rss+xml" />
+    <item xml:base="https://convolv.es/talks/debug-info-metrics/">
+      <title>Accurate coverage metrics for compiler-generated debugging information</title>
+      <link>https://convolv.es/talks/debug-info-metrics/</link>
+      <pubDate>Thu, 11 Apr 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://convolv.es/talks/debug-info-metrics/</guid>
+      <description>In this talk, we propose some new metrics, computable by our tools, which could serve as motivation for language implementations to improve debugging quality.</description>
+      <content:encoded><![CDATA[<p>Conference talk (<a href="/talks/2024/EuroLLVM/Debug%20info%20metrics.pdf">slides</a>)
+presented at <a href="https://llvm.swoogo.com/2024eurollvm/agenda">EuroLLVM 2024</a></p>
+<p>Video should <a href="https://www.youtube.com/@LLVMPROJ">appear</a> around June 2024</p>
+<p>See also our CC 2024 <a href="/cv/#debug-info-metrics">paper</a> on this topic</p>
+<h2 id="abstract">Abstract</h2>
+<p>Many debugging tools rely on compiler-produced metadata to present a
+source-language view of program states, such as variable values and source line
+numbers. While this tends to work for unoptimised programs, current compilers
+often generate only partial debugging information in optimised programs. Current
+approaches for measuring the extent of coverage of local variables are based on
+crude assumptions (for example, assuming variables could cover their whole
+parent scope) and are not comparable from one compilation to another. In this
+talk, we propose some new metrics, computable by our tools, which could serve as
+motivation for language implementations to improve debugging quality.</p>
+]]></content:encoded>
+    </item>
+    
     <item xml:base="https://convolv.es/talks/testing-debug-info/">
       <title>Testing debug info of optimised programs</title>
       <link>https://convolv.es/talks/testing-debug-info/</link>
