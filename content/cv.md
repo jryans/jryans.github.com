@@ -301,7 +301,7 @@ balance of power.
 
 <div class="section">Refereed Papers</div>
 
-<div class="row">
+<div class="row" id="debug-info-metrics">
   <div class="lr pri">
     <span>Accurate Coverage Metrics for Compiler-Generated Debugging
     Information</span>
@@ -342,6 +342,21 @@ balance of power.
 </div>
 
 <div class="section">Talks</div>
+
+<div class="row">
+  <div class="lr pri">
+    <span>Accurate coverage metrics for compiler-generated debugging
+    information</span>
+    <a href="https://llvm.swoogo.com/2024eurollvm/agenda">EuroLLVM 2024</a>
+  </div>
+  <div class="lr sec">
+    <span>
+      <a href="/talks/debug-info-metrics/">abstract</a>
+      <a href="/talks/2024/EuroLLVM/Debug info metrics.pdf">slides</a>
+    </span>
+    <span>Vienna, Austria</span>
+  </div>
+</div>
 
 <div class="row">
   <div class="lr pri">
