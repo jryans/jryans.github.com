@@ -13,7 +13,8 @@ presented at [EuroLLVM 2024](https://llvm.swoogo.com/2024eurollvm/agenda)
 
 [![](video.png)](https://www.youtube.com/watch?v=LePAdLTRa4Q)
 
-See also our CC 2024 [paper](/cv/#debug-info-metrics) on this topic
+This talk covers research I worked on together with Stephen Kell. See also our
+CC 2024 [paper](/cv/#debug-info-metrics) on this topic.
 
 ## Abstract
 
