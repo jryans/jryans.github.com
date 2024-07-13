@@ -1,16 +1,17 @@
 ---
 title: "Accurate coverage metrics for compiler-generated debugging information"
 date: 2024-04-11
+lastmod: 2024-07-13
 summary:
   "In this talk, we propose some new metrics, computable by our tools, which
   could serve as motivation for language implementations to improve debugging
   quality."
 ---
 
-Conference talk ([slides](</talks/2024/EuroLLVM/Debug info metrics.pdf>))
+Conference talk ([video](https://www.youtube.com/watch?v=LePAdLTRa4Q), [slides](</talks/2024/EuroLLVM/Debug info metrics.pdf>))
 presented at [EuroLLVM 2024](https://llvm.swoogo.com/2024eurollvm/agenda)
 
-Video should [appear](https://www.youtube.com/@LLVMPROJ) around June 2024
+[![](video.png)](https://www.youtube.com/watch?v=LePAdLTRa4Q)
 
 See also our CC 2024 [paper](/cv/#debug-info-metrics) on this topic
 

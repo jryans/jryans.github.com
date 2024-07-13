@@ -352,6 +352,7 @@ balance of power.
   <div class="lr sec">
     <span>
       <a href="/talks/debug-info-metrics/">abstract</a>
+      <a href="https://www.youtube.com/watch?v=LePAdLTRa4Q">video</a>
       <a href="/talks/2024/EuroLLVM/Debug info metrics.pdf">slides</a>
     </span>
     <span>Vienna, Austria</span>
