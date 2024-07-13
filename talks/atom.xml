@@ -14,9 +14,10 @@
       
       <guid>https://convolv.es/talks/debug-info-metrics/</guid>
       <description>In this talk, we propose some new metrics, computable by our tools, which could serve as motivation for language implementations to improve debugging quality.</description>
-      <content:encoded><![CDATA[<p>Conference talk (<a href="/talks/2024/EuroLLVM/Debug%20info%20metrics.pdf">slides</a>)
+      <content:encoded><![CDATA[<p>Conference talk (<a href="https://www.youtube.com/watch?v=LePAdLTRa4Q">video</a>, <a href="/talks/2024/EuroLLVM/Debug%20info%20metrics.pdf">slides</a>)
 presented at <a href="https://llvm.swoogo.com/2024eurollvm/agenda">EuroLLVM 2024</a></p>
-<p>Video should <a href="https://www.youtube.com/@LLVMPROJ">appear</a> around June 2024</p>
+<p><a href="https://www.youtube.com/watch?v=LePAdLTRa4Q"><img loading="lazy" src="video.png" alt=""  />
+</a></p>
 <p>See also our CC 2024 <a href="/cv/#debug-info-metrics">paper</a> on this topic</p>
 <h2 id="abstract">Abstract</h2>
 <p>Many debugging tools rely on compiler-produced metadata to present a
