@@ -18,7 +18,8 @@
 presented at <a href="https://llvm.swoogo.com/2024eurollvm/agenda">EuroLLVM 2024</a></p>
 <p><a href="https://www.youtube.com/watch?v=LePAdLTRa4Q"><img loading="lazy" src="video.png" alt=""  />
 </a></p>
-<p>See also our CC 2024 <a href="/cv/#debug-info-metrics">paper</a> on this topic</p>
+<p>This talk covers research I worked on together with Stephen Kell. See also our
+CC 2024 <a href="/cv/#debug-info-metrics">paper</a> on this topic.</p>
 <h2 id="abstract">Abstract</h2>
 <p>Many debugging tools rely on compiler-produced metadata to present a
 source-language view of program states, such as variable values and source line
