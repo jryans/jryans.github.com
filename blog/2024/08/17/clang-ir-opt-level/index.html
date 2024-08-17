@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Optimisation-dependent IR decisions in Clang | J. Ryan Stinnett</title>
+<meta name="keywords" content="Compilers, Optimisation, Clang, LLVM, IR">
+<meta name="description" content="I used to naively assume that Clang always handed off the same IR to the LLVM optimisation pipeline regardless of optimisation level. In an attempt to gain a bit more understanding into exactly what kinds of decisions depend on optimisation level in Clang, I surveyed the IR emission code paths.">
+<meta name="author" content="">
+<link rel="canonical" href="https://convolv.es/blog/2024/08/17/clang-ir-opt-level/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.0cea2a3dcce6601618b5d7f37f980629ede4a005dd2be0e3048360ee1e85d448.css" integrity="sha256-DOoqPczmYBYYtdfzf5gGKe3koAXdK&#43;DjBINg7h6F1Eg=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://convolv.es/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://convolv.es/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://convolv.es/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://convolv.es/apple-touch-icon.png">
+<link rel="mask-icon" href="https://convolv.es/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Optimisation-dependent IR decisions in Clang" />
+<meta property="og:description" content="I used to naively assume that Clang always handed off the same IR to the LLVM optimisation pipeline regardless of optimisation level. In an attempt to gain a bit more understanding into exactly what kinds of decisions depend on optimisation level in Clang, I surveyed the IR emission code paths." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://convolv.es/blog/2024/08/17/clang-ir-opt-level/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2024-08-17T22:27:06+01:00" />
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Optimisation-dependent IR decisions in Clang"/>
+<meta name="twitter:description" content="I used to naively assume that Clang always handed off the same IR to the LLVM optimisation pipeline regardless of optimisation level. In an attempt to gain a bit more understanding into exactly what kinds of decisions depend on optimisation level in Clang, I surveyed the IR emission code paths."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Blogs",
+      "item": "https://convolv.es/blog/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Optimisation-dependent IR decisions in Clang",
+      "item": "https://convolv.es/blog/2024/08/17/clang-ir-opt-level/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Optimisation-dependent IR decisions in Clang",
+  "name": "Optimisation-dependent IR decisions in Clang",
+  "description": "I used to naively assume that Clang always handed off the same IR to the LLVM optimisation pipeline regardless of optimisation level. In an attempt to gain a bit more understanding into exactly what kinds of decisions depend on optimisation level in Clang, I surveyed the IR emission code paths.",
+  "keywords": [
+    "Compilers", "Optimisation", "Clang", "LLVM", "IR"
+  ],
+  "articleBody": "I used to naively assume that Clang always handed off “basically” the same IR to the LLVM optimisation pipeline regardless of optimisation level. I was at least aware of the optnone attribute set on functions when compiling at -O0, but I’ve slowly started to notice there are more divergences than just that.\nSurvey In an attempt to gain a bit more understanding into exactly what kinds of decisions depend on optimisation level in Clang, I surveyed the IR emission code paths. I examined Clang source at commit 7c4c72b52038810a8997938a2b3485363cd6be3a (2024-08).\nI ignored decisions related to specialised language specifics (Objective-C, ARC, HLSL, OpenMP) and ABI details.\nWhen optimisation is disabled Add block.addr stack slot to help debugger Keep destructor distinct from base class destructor to help debugger Keep switch case with just break as separate block to help debugger Add trap call for unreachable blocks Add optnone function attribute When optimisation is enabled Check if errno is disabled Pass __builtin_expect along via llvm.expect (2) Add various virtual table invariants and assumptions (more in same file) Split constant struct / array stores into sequence for each field Add various variable invariants Add load range metadata Add matrix index assumptions (2, 3) Collapse trap calls Add exact dynamic casts Add loop unrolling metadata Add condition likelihood (2, 3, 4, 5) Track condition likelihood Pass __builtin_unpredictable along via metadata (2) Add lifetime markers Add type-based alias analysis (TBAA) metadata (2, 3) Add strict virtual table metadata Preserve function declarations Add opportunistic virtual tables Example If you’d like to explore the differences yourself, take a look at this Compiler Explorer example. The input source is not too interesting (I’ve grabbed a random slice of Git source files that I happened to have on hand). The left IR view shows -O0 and the right IR view shows -O1 with LLVM passes disabled. We can ask Clang to produce LLVM IR without sending it through the LLVM optimisation pipeline by adding -Xclang -disable-llvm-passes (a useful tip for LLVM archaeology).\nAfter diffing the two outputs, there are two features that are only activated when optimisation is enabled that appear to be responsible for most of the differences in this example:\nLifetime markers Type-based alias analysis (TBAA) metadata Lifetime markers are especially interesting in this example, as Clang actually reshapes control flow (adding several additional cleanup blocks) so that it can insert these markers (which are calls to LLVM intrinsic functions llvm.lifetime.start/end).\n",
+  "wordCount" : "402",
+  "inLanguage": "en",
+  "datePublished": "2024-08-17T22:27:06+01:00",
+  "dateModified": "0001-01-01T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://convolv.es/blog/2024/08/17/clang-ir-opt-level/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "J. Ryan Stinnett",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://convolv.es/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://convolv.es/" accesskey="h" title="J. Ryan Stinnett (Alt + H)">J. Ryan Stinnett</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://convolv.es/cv/" title="Curriculum Vitae">
+                    <span>CV</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/consulting/" title="Consulting">
+                    <span>Consulting</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/contact/" title="Contact">
+                    <span>Contact</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/archives/" title="Archives">
+                    <span>Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://convolv.es/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      Optimisation-dependent IR decisions in Clang
+    </h1>
+    <div class="post-meta"><span title='2024-08-17 22:27:06 +0100 +0100'>2024-08-17</span>
+
+</div>
+  </header> 
+  <div class="post-content"><p>I used to naively assume that Clang always handed off &ldquo;basically&rdquo; the same IR to
+the LLVM optimisation pipeline regardless of optimisation level. I was at least
+aware of the <code>optnone</code> attribute set on functions when compiling at <code>-O0</code>, but
+I&rsquo;ve slowly started to notice there are more divergences than just that.</p>
+<h2 id="survey">Survey<a hidden class="anchor" aria-hidden="true" href="#survey">#</a></h2>
+<p>In an attempt to gain a bit more understanding into exactly what kinds of
+decisions depend on optimisation level in Clang, I surveyed the <a href="https://github.com/search?q=repo%3Allvm%2Fllvm-project+path%3A%2F%5Eclang%5C%2Flib%5C%2FCodeGen%5C%2F%2F+OptimizationLevel&amp;type=code">IR emission
+code
+paths</a>.
+I examined Clang source at commit <code>7c4c72b52038810a8997938a2b3485363cd6be3a</code>
+(2024-08).</p>
+<p>I ignored decisions related to specialised language specifics (Objective-C, ARC,
+HLSL, OpenMP) and ABI details.</p>
+<ul>
+<li>When optimisation is disabled
+<ul>
+<li><a href="https://github.com/llvm/llvm-project/blob/997e5e870337e4a25b82be5b01e8f7675c350070/clang/lib/CodeGen/CGBlocks.cpp#L1503-L1513">Add <code>block.addr</code> stack slot to help debugger</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/1b8ab2f08998d3220e5d95003d47bb3d7cac966b/clang/lib/CodeGen/CGCXX.cpp#L38-L41">Keep destructor distinct from base class destructor to help debugger</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGStmt.cpp#L1746-L1751">Keep switch case with just <code>break</code> as separate block to help debugger</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/d179acd0484bac30c5ebbbed4d29a4734d92ac93/clang/lib/CodeGen/CodeGenFunction.cpp#L1581-L1582">Add trap call for unreachable blocks</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CodeGenModule.cpp#L2485-L2488">Add <code>optnone</code> function attribute</a></li>
+</ul>
+</li>
+<li>When optimisation is enabled
+<ul>
+<li><a href="https://github.com/llvm/llvm-project/blob/e91e0f52895e2b23bd690a86dbaafd979e027d29/clang/lib/CodeGen/CGBuiltin.cpp#L2585-L2587">Check if <code>errno</code> is disabled</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/e91e0f52895e2b23bd690a86dbaafd979e027d29/clang/lib/CodeGen/CGBuiltin.cpp#L3366-L3370">Pass <code>__builtin_expect</code> along via <code>llvm.expect</code></a> (<a href="https://github.com/llvm/llvm-project/blob/e91e0f52895e2b23bd690a86dbaafd979e027d29/clang/lib/CodeGen/CGBuiltin.cpp#L3392-L3396">2</a>)</li>
+<li><a href="https://github.com/llvm/llvm-project/blob/4497ec293a6e745be817dc88027169bd5e4f7246/clang/lib/CodeGen/CGClass.cpp#L1309-L1312">Add various virtual table invariants and assumptions</a> (more in same file)</li>
+<li><a href="https://github.com/llvm/llvm-project/blob/2f8f58dd17a11934e8c8ec212b6474f76fb18e61/clang/lib/CodeGen/CGDecl.cpp#L1008-L1009">Split constant struct / array stores into sequence for each field</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/07f8a65d09608d67bfd6adbd62bb0999c7363456/clang/lib/CodeGen/CGDeclCXX.cpp#L158-L160">Add various variable invariants</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGExpr.cpp#L2010-L2015">Add load range metadata</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGExpr.cpp#L2240-L2244">Add matrix index assumptions</a> (<a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGExpr.cpp#L2403-L2407">2</a>, <a href="https://github.com/llvm/llvm-project/blob/e108853ac8fad27ff22be9303c87d90bcdf0ef53/clang/lib/CodeGen/CGExprScalar.cpp#L2005-L2006">3</a>)</li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGExpr.cpp#L3842-L3850">Collapse trap calls</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/3ad31e12ccfc7db25f3cbedc4ee966e7099ac78f/clang/lib/CodeGen/CGExprCXX.cpp#L2277-L2280">Add exact dynamic casts</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92fc1eb0c1ae3813f2ac9208e2c74207aae9d23f/clang/lib/CodeGen/CGLoopInfo.cpp#L822-L828">Add loop unrolling metadata</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGStmt.cpp#L870-L872">Add condition likelihood</a> (<a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGStmt.cpp#L1049-L1051">2</a>, <a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGStmt.cpp#L1264-L1266">3</a>, <a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGStmt.cpp#L1367-L1369">4</a>, <a href="https://github.com/llvm/llvm-project/blob/d179acd0484bac30c5ebbbed4d29a4734d92ac93/clang/lib/CodeGen/CodeGenFunction.cpp#L3037-L3040">5</a>)</li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGStmt.cpp#L2212-L2215">Track condition likelihood</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGStmt.cpp#L2264-L2271">Pass <code>__builtin_unpredictable</code> along via metadata</a> (<a href="https://github.com/llvm/llvm-project/blob/d179acd0484bac30c5ebbbed4d29a4734d92ac93/clang/lib/CodeGen/CodeGenFunction.cpp#L2039-L2045">2</a>)</li>
+<li><a href="https://github.com/llvm/llvm-project/blob/d179acd0484bac30c5ebbbed4d29a4734d92ac93/clang/lib/CodeGen/CodeGenFunction.cpp#L73-L74">Add lifetime markers</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CodeGenModule.cpp#L402-L406">Add type-based alias analysis (TBAA) metadata</a> (<a href="https://github.com/llvm/llvm-project/blob/123c036bd361de9ed6baa0090e5942105764e8db/clang/lib/CodeGen/CodeGenTBAA.cpp#L277-L279">2</a>, <a href="https://github.com/llvm/llvm-project/blob/123c036bd361de9ed6baa0090e5942105764e8db/clang/lib/CodeGen/CodeGenTBAA.cpp#L407-L408">3</a>)</li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CodeGenModule.cpp#L1031-L1046">Add strict virtual table metadata</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CodeGenModule.cpp#L4048-L4049">Preserve function declarations</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CodeGenModule.cpp#L4101-L4103">Add opportunistic virtual tables</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="example">Example<a hidden class="anchor" aria-hidden="true" href="#example">#</a></h2>
+<p>If you&rsquo;d like to explore the differences yourself, take a look at this <a href="https://godbolt.org/z/GrbohjcWa">Compiler
+Explorer example</a>. The input source is not too
+interesting (I&rsquo;ve grabbed a random slice of Git source files that I happened to
+have on hand). The left IR view shows <code>-O0</code> and the right IR view shows <code>-O1</code>
+with LLVM passes disabled. We can ask Clang to produce LLVM IR without sending
+it through the LLVM optimisation pipeline by adding <code>-Xclang -disable-llvm-passes</code> (a useful tip for LLVM archaeology).</p>
+<p><a href="https://godbolt.org/z/GrbohjcWa"><img loading="lazy" src="ce.png" alt="Compiler Explorer playground comparing O0 and O1 LLVM IR"  />
+</a></p>
+<p>After diffing the two outputs, there are two features that are only activated
+when optimisation is enabled that appear to be responsible for most of the
+differences in this example:</p>
+<ul>
+<li>Lifetime markers</li>
+<li>Type-based alias analysis (TBAA) metadata</li>
+</ul>
+<p>Lifetime markers are especially interesting in this example, as Clang actually
+reshapes control flow (adding several additional <code>cleanup</code> blocks) so that it
+can insert these markers (which are calls to LLVM intrinsic functions
+<code>llvm.lifetime.start/end</code>).</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://convolv.es/blog/tags/compilers/">Compilers</a></li>
+      <li><a href="https://convolv.es/blog/tags/optimisation/">Optimisation</a></li>
+      <li><a href="https://convolv.es/blog/tags/clang/">Clang</a></li>
+      <li><a href="https://convolv.es/blog/tags/llvm/">LLVM</a></li>
+      <li><a href="https://convolv.es/blog/tags/ir/">IR</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2024 <a href="https://convolv.es/">J. Ryan Stinnett</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

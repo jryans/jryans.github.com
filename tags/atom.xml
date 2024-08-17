@@ -6,13 +6,53 @@
     <description>Recent content in Tags on J. Ryan Stinnett</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Wed, 08 Nov 2023 15:49:51 +0000</lastBuildDate><atom:link href="https://convolv.es/tags/atom.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 17 Aug 2024 22:27:06 +0100</lastBuildDate><atom:link href="https://convolv.es/tags/atom.xml" rel="self" type="application/rss+xml" />
+    <item xml:base="https://convolv.es/blog/tags/clang/">
+      <title>Clang</title>
+      <link>https://convolv.es/blog/tags/clang/</link>
+      <pubDate>Sat, 17 Aug 2024 22:27:06 +0100</pubDate>
+      
+      <guid>https://convolv.es/blog/tags/clang/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    
     <item xml:base="https://convolv.es/blog/tags/compilers/">
       <title>Compilers</title>
       <link>https://convolv.es/blog/tags/compilers/</link>
-      <pubDate>Wed, 08 Nov 2023 15:49:51 +0000</pubDate>
+      <pubDate>Sat, 17 Aug 2024 22:27:06 +0100</pubDate>
       
       <guid>https://convolv.es/blog/tags/compilers/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    
+    <item xml:base="https://convolv.es/blog/tags/ir/">
+      <title>IR</title>
+      <link>https://convolv.es/blog/tags/ir/</link>
+      <pubDate>Sat, 17 Aug 2024 22:27:06 +0100</pubDate>
+      
+      <guid>https://convolv.es/blog/tags/ir/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    
+    <item xml:base="https://convolv.es/blog/tags/llvm/">
+      <title>LLVM</title>
+      <link>https://convolv.es/blog/tags/llvm/</link>
+      <pubDate>Sat, 17 Aug 2024 22:27:06 +0100</pubDate>
+      
+      <guid>https://convolv.es/blog/tags/llvm/</guid>
+      <description></description>
+      <content:encoded><![CDATA[]]></content:encoded>
+    </item>
+    
+    <item xml:base="https://convolv.es/blog/tags/optimisation/">
+      <title>Optimisation</title>
+      <link>https://convolv.es/blog/tags/optimisation/</link>
+      <pubDate>Sat, 17 Aug 2024 22:27:06 +0100</pubDate>
+      
+      <guid>https://convolv.es/blog/tags/optimisation/</guid>
       <description></description>
       <content:encoded><![CDATA[]]></content:encoded>
     </item>

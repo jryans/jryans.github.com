@@ -6,7 +6,83 @@
     <description>Recent content in Blogs on J. Ryan Stinnett</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Fri, 25 Aug 2017 19:33:00 -0500</lastBuildDate><atom:link href="https://convolv.es/blog/atom.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 17 Aug 2024 22:27:06 +0100</lastBuildDate><atom:link href="https://convolv.es/blog/atom.xml" rel="self" type="application/rss+xml" />
+    <item xml:base="https://convolv.es/blog/2024/08/17/clang-ir-opt-level/">
+      <title>Optimisation-dependent IR decisions in Clang</title>
+      <link>https://convolv.es/blog/2024/08/17/clang-ir-opt-level/</link>
+      <pubDate>Sat, 17 Aug 2024 22:27:06 +0100</pubDate>
+      
+      <guid>https://convolv.es/blog/2024/08/17/clang-ir-opt-level/</guid>
+      <description>I used to naively assume that Clang always handed off the same IR to the LLVM optimisation pipeline regardless of optimisation level. In an attempt to gain a bit more understanding into exactly what kinds of decisions depend on optimisation level in Clang, I surveyed the IR emission code paths.</description>
+      <content:encoded><![CDATA[<p>I used to naively assume that Clang always handed off &ldquo;basically&rdquo; the same IR to
+the LLVM optimisation pipeline regardless of optimisation level. I was at least
+aware of the <code>optnone</code> attribute set on functions when compiling at <code>-O0</code>, but
+I&rsquo;ve slowly started to notice there are more divergences than just that.</p>
+<h2 id="survey">Survey</h2>
+<p>In an attempt to gain a bit more understanding into exactly what kinds of
+decisions depend on optimisation level in Clang, I surveyed the <a href="https://github.com/search?q=repo%3Allvm%2Fllvm-project+path%3A%2F%5Eclang%5C%2Flib%5C%2FCodeGen%5C%2F%2F+OptimizationLevel&amp;type=code">IR emission
+code
+paths</a>.
+I examined Clang source at commit <code>7c4c72b52038810a8997938a2b3485363cd6be3a</code>
+(2024-08).</p>
+<p>I ignored decisions related to specialised language specifics (Objective-C, ARC,
+HLSL, OpenMP) and ABI details.</p>
+<ul>
+<li>When optimisation is disabled
+<ul>
+<li><a href="https://github.com/llvm/llvm-project/blob/997e5e870337e4a25b82be5b01e8f7675c350070/clang/lib/CodeGen/CGBlocks.cpp#L1503-L1513">Add <code>block.addr</code> stack slot to help debugger</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/1b8ab2f08998d3220e5d95003d47bb3d7cac966b/clang/lib/CodeGen/CGCXX.cpp#L38-L41">Keep destructor distinct from base class destructor to help debugger</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGStmt.cpp#L1746-L1751">Keep switch case with just <code>break</code> as separate block to help debugger</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/d179acd0484bac30c5ebbbed4d29a4734d92ac93/clang/lib/CodeGen/CodeGenFunction.cpp#L1581-L1582">Add trap call for unreachable blocks</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CodeGenModule.cpp#L2485-L2488">Add <code>optnone</code> function attribute</a></li>
+</ul>
+</li>
+<li>When optimisation is enabled
+<ul>
+<li><a href="https://github.com/llvm/llvm-project/blob/e91e0f52895e2b23bd690a86dbaafd979e027d29/clang/lib/CodeGen/CGBuiltin.cpp#L2585-L2587">Check if <code>errno</code> is disabled</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/e91e0f52895e2b23bd690a86dbaafd979e027d29/clang/lib/CodeGen/CGBuiltin.cpp#L3366-L3370">Pass <code>__builtin_expect</code> along via <code>llvm.expect</code></a> (<a href="https://github.com/llvm/llvm-project/blob/e91e0f52895e2b23bd690a86dbaafd979e027d29/clang/lib/CodeGen/CGBuiltin.cpp#L3392-L3396">2</a>)</li>
+<li><a href="https://github.com/llvm/llvm-project/blob/4497ec293a6e745be817dc88027169bd5e4f7246/clang/lib/CodeGen/CGClass.cpp#L1309-L1312">Add various virtual table invariants and assumptions</a> (more in same file)</li>
+<li><a href="https://github.com/llvm/llvm-project/blob/2f8f58dd17a11934e8c8ec212b6474f76fb18e61/clang/lib/CodeGen/CGDecl.cpp#L1008-L1009">Split constant struct / array stores into sequence for each field</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/07f8a65d09608d67bfd6adbd62bb0999c7363456/clang/lib/CodeGen/CGDeclCXX.cpp#L158-L160">Add various variable invariants</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGExpr.cpp#L2010-L2015">Add load range metadata</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGExpr.cpp#L2240-L2244">Add matrix index assumptions</a> (<a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGExpr.cpp#L2403-L2407">2</a>, <a href="https://github.com/llvm/llvm-project/blob/e108853ac8fad27ff22be9303c87d90bcdf0ef53/clang/lib/CodeGen/CGExprScalar.cpp#L2005-L2006">3</a>)</li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGExpr.cpp#L3842-L3850">Collapse trap calls</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/3ad31e12ccfc7db25f3cbedc4ee966e7099ac78f/clang/lib/CodeGen/CGExprCXX.cpp#L2277-L2280">Add exact dynamic casts</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92fc1eb0c1ae3813f2ac9208e2c74207aae9d23f/clang/lib/CodeGen/CGLoopInfo.cpp#L822-L828">Add loop unrolling metadata</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGStmt.cpp#L870-L872">Add condition likelihood</a> (<a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGStmt.cpp#L1049-L1051">2</a>, <a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGStmt.cpp#L1264-L1266">3</a>, <a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGStmt.cpp#L1367-L1369">4</a>, <a href="https://github.com/llvm/llvm-project/blob/d179acd0484bac30c5ebbbed4d29a4734d92ac93/clang/lib/CodeGen/CodeGenFunction.cpp#L3037-L3040">5</a>)</li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGStmt.cpp#L2212-L2215">Track condition likelihood</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CGStmt.cpp#L2264-L2271">Pass <code>__builtin_unpredictable</code> along via metadata</a> (<a href="https://github.com/llvm/llvm-project/blob/d179acd0484bac30c5ebbbed4d29a4734d92ac93/clang/lib/CodeGen/CodeGenFunction.cpp#L2039-L2045">2</a>)</li>
+<li><a href="https://github.com/llvm/llvm-project/blob/d179acd0484bac30c5ebbbed4d29a4734d92ac93/clang/lib/CodeGen/CodeGenFunction.cpp#L73-L74">Add lifetime markers</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CodeGenModule.cpp#L402-L406">Add type-based alias analysis (TBAA) metadata</a> (<a href="https://github.com/llvm/llvm-project/blob/123c036bd361de9ed6baa0090e5942105764e8db/clang/lib/CodeGen/CodeGenTBAA.cpp#L277-L279">2</a>, <a href="https://github.com/llvm/llvm-project/blob/123c036bd361de9ed6baa0090e5942105764e8db/clang/lib/CodeGen/CodeGenTBAA.cpp#L407-L408">3</a>)</li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CodeGenModule.cpp#L1031-L1046">Add strict virtual table metadata</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CodeGenModule.cpp#L4048-L4049">Preserve function declarations</a></li>
+<li><a href="https://github.com/llvm/llvm-project/blob/92aec5192ce752c984837a93227200b54faa8679/clang/lib/CodeGen/CodeGenModule.cpp#L4101-L4103">Add opportunistic virtual tables</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="example">Example</h2>
+<p>If you&rsquo;d like to explore the differences yourself, take a look at this <a href="https://godbolt.org/z/GrbohjcWa">Compiler
+Explorer example</a>. The input source is not too
+interesting (I&rsquo;ve grabbed a random slice of Git source files that I happened to
+have on hand). The left IR view shows <code>-O0</code> and the right IR view shows <code>-O1</code>
+with LLVM passes disabled. We can ask Clang to produce LLVM IR without sending
+it through the LLVM optimisation pipeline by adding <code>-Xclang -disable-llvm-passes</code> (a useful tip for LLVM archaeology).</p>
+<p><a href="https://godbolt.org/z/GrbohjcWa"><img loading="lazy" src="ce.png" alt="Compiler Explorer playground comparing O0 and O1 LLVM IR"  />
+</a></p>
+<p>After diffing the two outputs, there are two features that are only activated
+when optimisation is enabled that appear to be responsible for most of the
+differences in this example:</p>
+<ul>
+<li>Lifetime markers</li>
+<li>Type-based alias analysis (TBAA) metadata</li>
+</ul>
+<p>Lifetime markers are especially interesting in this example, as Clang actually
+reshapes control flow (adding several additional <code>cleanup</code> blocks) so that it
+can insert these markers (which are calls to LLVM intrinsic functions
+<code>llvm.lifetime.start/end</code>).</p>
+]]></content:encoded>
+    </item>
+    
     <item xml:base="https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit/">
       <title>Building Firefox for Linux 32-bit</title>
       <link>https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit/</link>

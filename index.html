@@ -11,7 +11,7 @@
 <meta name="description" content="Exploring how to make programs more malleable and computing more humane">
 <meta name="author" content="">
 <link rel="canonical" href="https://convolv.es/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.998af9822ed969bb71a5651b692ce7ce2c3256dd4c44319af2fafea7176fd500.css" integrity="sha256-mYr5gi7ZabtxpWUbaSznziwyVt1MRDGa8vr&#43;pxdv1QA=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.0cea2a3dcce6601618b5d7f37f980629ede4a005dd2be0e3048360ee1e85d448.css" integrity="sha256-DOoqPczmYBYYtdfzf5gGKe3koAXdK&#43;DjBINg7h6F1Eg=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://convolv.es/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://convolv.es/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://convolv.es/favicon-32x32.png">
@@ -271,6 +271,18 @@ and I overhauled the Firefox
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>Optimisation-dependent IR decisions in Clang
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>I used to naively assume that Clang always handed off the same IR to the LLVM optimisation pipeline regardless of optimisation level. In an attempt to gain a bit more understanding into exactly what kinds of decisions depend on optimisation level in Clang, I surveyed the IR emission code paths.</p>
+  </div>
+  <footer class="entry-footer"><span title='2024-08-17 22:27:06 +0100 +0100'>2024-08-17</span></footer>
+  <a class="entry-link" aria-label="post link to Optimisation-dependent IR decisions in Clang" href="https://convolv.es/blog/2024/08/17/clang-ir-opt-level/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>Accurate coverage metrics for compiler-generated debugging information
     </h2>
   </header>
@@ -316,18 +328,6 @@ In this “living guide”, I aim to cover the LTO-related features I have encou
   </div>
   <footer class="entry-footer"><span title='2022-04-29 00:00:00 +0000 UTC'>2022-04-29</span></footer>
   <a class="entry-link" aria-label="post link to Room to grow: Building collaborative, open software" href="https://convolv.es/talks/room-to-grow/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2>Building Firefox for Linux 32-bit
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Background As part of my work on the Stylo / Quantum CSS team at Mozilla, I needed to be able to test changes to Firefox that only affect Linux 32-bit builds. These days, I believe you essentially have to use a 64-bit host to build Firefox to avoid OOM issues during linking and potentially other steps, so this means some form of cross-compiling from a Linux 64-bit host to a Linux 32-bit target....</p>
-  </div>
-  <footer class="entry-footer"><span title='2017-08-25 19:33:00 -0500 -0500'>2017-08-25</span></footer>
-  <a class="entry-link" aria-label="post link to Building Firefox for Linux 32-bit" href="https://convolv.es/blog/2017/08/25/building-firefox-for-linux-32-bit/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
