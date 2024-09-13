@@ -301,6 +301,23 @@ balance of power.
 
 <div class="section">Refereed Papers</div>
 
+<div class="row" id="debug-info-vision">
+  <div class="lr pri">
+    <span>Source-Level Debugging of Compiler-Optimised Code:
+          Ill-Posed, but Not Impossible</span>
+    <a href="https://2024.splashcon.org/track/splash-2024-Onward-papers">Onward! 2024</a>
+  </div>
+  <div class="lr sec">
+    <span>Stephen Kell, J. Ryan Stinnett</span>
+    <span>Pasadena, USA</span>
+  </div>
+  <div class="lr sec">
+    <span>
+      <a href="/papers/2024/Onward!/debug-info-vision.pdf">pdf</a>
+    </span>
+  </div>
+</div>
+
 <div class="row" id="debug-info-metrics">
   <div class="lr pri">
     <span>Accurate Coverage Metrics for Compiler-Generated Debugging
