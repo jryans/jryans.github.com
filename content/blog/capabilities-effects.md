@@ -2,6 +2,11 @@
 title: "Extensibility via capabilities and effects"
 date: 2024-11-01T16:10:32+00:00
 tags: [Malleable, Challenge, Extensibility, Capabilities, Effects]
+summary:
+  "Much of today's software limits user extensibility.
+  This article explores one potential route forward using
+  capabilities, effects, and extension-time type checking
+  to provide a more predictable extension path."
 ---
 
 _This is a submission for the [fearless extensibility challenge
