@@ -6,7 +6,301 @@
     <description>Recent content on J. Ryan Stinnett</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sat, 17 Aug 2024 22:27:06 +0100</lastBuildDate><atom:link href="https://convolv.es/atom.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 01 Nov 2024 16:10:32 +0000</lastBuildDate><atom:link href="https://convolv.es/atom.xml" rel="self" type="application/rss+xml" />
+    <item xml:base="https://convolv.es/blog/2024/11/01/capabilities-effects/">
+      <title>Fearless extensibility: Capabilities and effects</title>
+      <link>https://convolv.es/blog/2024/11/01/capabilities-effects/</link>
+      <pubDate>Fri, 01 Nov 2024 16:10:32 +0000</pubDate>
+      
+      <guid>https://convolv.es/blog/2024/11/01/capabilities-effects/</guid>
+      <description>This is a submission for the fearless extensibility challenge problem organised by the Malleable Systems Collective.
+Much of today&amp;rsquo;s software limits user extensibility. If you&amp;rsquo;re lucky, there may be a plugin system of some kind, but that will only support whatever actions the upstream vendor imagines and deigns to support. If it&amp;rsquo;s open source, you could fork and customise, but that&amp;rsquo;s not accessible to most. Even if you have the expertise, it entails a pile of maintenance work to stay up to date.</description>
+      <content:encoded><![CDATA[<p><em>This is a submission for the <a href="https://forum.malleable.systems/t/challenge-problem-fearless-extensibility/205">fearless extensibility challenge
+problem</a> organised by the <a href="https://malleable.systems">Malleable Systems Collective</a>.</em></p>
+<hr>
+<p>Much of today&rsquo;s software limits user extensibility.
+If you&rsquo;re lucky, there may be a plugin system of some kind,
+but that will only support whatever actions
+the upstream vendor imagines and deigns to support.
+If it&rsquo;s open source, you could fork and customise,
+but that&rsquo;s not accessible to most.
+Even if you have the expertise,
+it entails a pile of maintenance work to stay up to date.
+If it&rsquo;s closed source,
+you&rsquo;re essentially out of luck.</p>
+<p>There have been some historical extension systems that allowed
+a high degree of freedom (e.g. legacy Firefox extensions).
+As mentioned by the <a href="https://forum.malleable.systems/t/challenge-problem-fearless-extensibility/205">challenge problem</a>,
+while those approaches may offer a high degree of user freedom,
+they also open the door to malware and
+create maintenance issues for the extension host.</p>
+<p>This article explores one potential route forward using
+capabilities, effects, and extension-time type checking
+to provide a more predictable extension path for
+users, extension authors, and platform maintainers alike.</p>
+<h2 id="disclaimers-and-assumptions">Disclaimers and assumptions</h2>
+<p>I&rsquo;ve perhaps already spooked the dynamic language fans with words like
+&ldquo;type checking&rdquo; and &ldquo;effect&rdquo; above&hellip; 😅
+I&rsquo;m not attempting to claim that static types are the only way here.
+I just returned from SPLASH (an academic PL conference)
+where several statically typed effects systems were in the air,
+so my thoughts just happen to biased in that direction at the moment.
+I&rsquo;ve scribbled a few more thoughts about a dynamic version
+towards the end in the Implementation section.</p>
+<p>This article focuses on cases where
+the source (or a typed IR derived from source)
+for both the extension and the extension host are available,
+as tooling would need to analyse the combination of both.</p>
+<h2 id="goal">Goal</h2>
+<p>The key ability we wish to achieve is arbitrary extension / modification of the
+extension host while preserving safe and correct operation overall and also
+permitting host maintainers to refactor without fear.</p>
+<p>As an example,
+let&rsquo;s imagine the host program we want to extend is a
+graphics canvas (e.g. akin to Figma).
+This host program has a built-in color picking feature
+that displays a UI to choose a color
+which is then added to the recent colors palette.
+Our extension author would like to extend color picking
+so that all colors are adjusted to meet accessibility standards.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-scala" data-lang="scala"><span style="display:flex;"><span><span style="color:#75715e">// host
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">def</span> pickColor<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">val</span> color <span style="color:#66d9ef">=</span> colorPicker<span style="color:#f92672">.</span>choose<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>    palette<span style="color:#f92672">.</span>add<span style="color:#f92672">(</span>color<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// extension
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">def</span> onClickPick<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// We want to call `host.pickColor`,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// but we need adjust `color` before it goes into the palette
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>The only accessible and relevant API the host offers for extensions to use
+for this case is the <code>pickColor</code> function, but our extension wants to add
+behaviour in the middle of <code>pickColor</code>, so we can&rsquo;t use it as-is.</p>
+<p>Dynamic languages might allow host functions like <code>pickColor</code>
+to be copied by the extension and redefined,
+but this is too broad for the change we wish to make.
+The extension now needs to keep its modified <code>pickColor</code> up to date
+with changes upstream in the host copy,
+even though they aren&rsquo;t related to the behaviour it&rsquo;s adding.
+From the host maintainer perspective,
+you don&rsquo;t feel that you can safely refactor your code,
+since every extension might contain old copies of host functions
+that could break after your refactoring.</p>
+<p>We&rsquo;d like to express the intent of the extension&rsquo;s behaviour change
+in a targeted and precise manner
+that avoids these issues.</p>
+<h2 id="effects-and-capabilities">Effects and capabilities</h2>
+<p>Before we get there, let&rsquo;s talk about effects.</p>
+<p><a href="https://en.wikipedia.org/wiki/Effect_system">Effects</a> are a (relatively) newer programming language concept that
+allows tracking user-defined side effects as types (e.g. IO, memory access,
+exceptions) and also supports effect handlers to take some action when these
+effects occur. They&rsquo;ve been percolating in experimental languages (<a href="https://koka-lang.github.io">Koka</a>,
+<a href="https://effekt-lang.org">Effekt</a>, <a href="https://www.unison-lang.org/docs/fundamentals/abilities/">Unison</a>) for a while now, and are starting to appear
+in more established ones (<a href="https://docs.scala-lang.org/scala3/reference/experimental/canthrow.html">Scala</a>, <a href="https://ocaml.org/manual/5.0/effects.html">OCaml</a>).</p>
+<p>If you haven&rsquo;t encountered effects before, I suggest skimming the
+<a href="https://effekt-lang.org">Effekt</a> language site, as they have an approachable intro to the key
+<a href="https://effekt-lang.org/docs/concepts/effect-safety">concepts</a>. I don&rsquo;t think I can do it justice myself, and
+introducing effects is beyond the scope of this article anyway.</p>
+<p>Effect handlers can resume the computation that was suspended when the effect
+occurred, and may even resume multiple times. Effects and their handlers
+generalise many forms of control flow, including exceptions, generators, and
+multithreading, allowing libraries to <a href="https://doi.org/10.1007/978-3-030-83128-8_3">flexibly provide</a> these
+features, rather than requiring language designers to add special functionality
+for each one.</p>
+<p>Various works have <a href="https://koka-lang.github.io/koka/doc/book.html#sec-handling">made</a> <a href="https://effekt-lang.org/docs/concepts/effect-safety">connections</a>
+between effects and capabilities.
+A function that has e.g. a &ldquo;file read&rdquo; effect can be thought of as
+requiring a &ldquo;file read&rdquo; capability.
+Effect handlers can even be added to some existing languages
+if we pass the handler / capability as an extra function argument
+(referred to as &ldquo;capability-passing style&rdquo;).</p>
+<h2 id="implicit-effects">Implicit effects</h2>
+<p>Effects systems today focus on what I&rsquo;ll call &ldquo;explicit&rdquo; effects: both the code
+performing the effect and its corresponding handler are written explicitly in
+the program source. If you want to model additional user-defined effects, you
+would add both handlers and effect performing steps to do so.</p>
+<p>We can also imagine &ldquo;implicit&rdquo; effects that represent existing language
+operations. For example, function calls could be treated as an implicit effect.
+If we then allow handlers to be defined for these implicit effects, we gain
+quite powerful control over deeply nested code.</p>
+<p>Extensions can leverage this ability to make arbitrary changes to the extension
+host. While that is quite a powerful technique, the static types present in both
+the host and extension help to ensure reasonable behaviour is maintained by
+ensuring required values are still provided as expected.</p>
+<p>This code modification ability bears some resemblance to the power of
+<a href="https://en.wikipedia.org/wiki/Aspect-oriented_programming">aspect-oriented programming</a>. Effect systems (especially those with
+lexical effect handlers) avoid the &ldquo;spooky action at a distance&rdquo; issue that can
+make AOP approaches hard to understand. Additional tooling can help further by
+highlighting modified operations in the combined system (host with extensions).
+Some amount of surprising host control flow seems tolerable when we gain the
+ability to make arbitrary changes via extensions. Extension-time type checking
+should ameliorate some concerns by ensure all modules fit together as expected.</p>
+
+<div class="callout">
+  <div>🚧</div>
+	<div class="callout-inner">
+    This would be a good place to show a running example&hellip;
+I&rsquo;ll try to add one in a future version.
+  </div>
+</div>
+
+<h2 id="safety-via-capabilities-and-isolation">Safety via capabilities and isolation</h2>
+<p>Host maintainers often fear nefarious extensions
+may perform various undesirable actions.
+Dangerous abilities (e.g. &ldquo;delete home directory&rdquo;) can be avoided
+by restricting or not providing those capabilities
+to extension execution contexts.</p>
+<p>In a system where extensions can modify deeply nested code,
+there will likely be a need to isolate extensions
+both from the host and from each other.
+For example,
+extension A uses handles a call effect to alter host function <code>foo</code>,
+while extension B depends on its default behaviour.
+Fortunately, the desired isolation falls out naturally
+from a lexical effect handler model:
+extension A&rsquo;s code modification is only active inside the scope of its handler.
+It has no effect on other code paths in extension A,
+and certainly not on other extensions.</p>
+<p>It&rsquo;s likely ideal to go further and ensure execution contexts
+actually are isolated from each other.
+Existing concepts like
+<a href="https://en.wikipedia.org/wiki/Mirror_(programming)">mirrors</a>,
+<a href="https://github.com/tc39/proposal-compartments">compartments</a>, and
+<a href="https://github.com/tc39/proposal-shadowrealm">realms</a>
+suggest a way forward.</p>
+<h2 id="extension-host-code-changes">Extension host code changes</h2>
+<p>In today&rsquo;s dynamic systems where extension might mean
+wholly replacing host functions with modified copies,
+it can be hard to predict what madness may ensue
+when the host platform refactors some code.
+Issues usually only present themselves at run time
+when the modified host code is somehow invoked,
+or alternatively the modified code may be silently unused
+if the extension includes
+an outdated copy of a modified host function.</p>
+<p>These concerns are easily avoided
+when leveraging static types and
+code modification via effects.
+Effects allow for precision code modification,
+so there&rsquo;s no need to copy an entire host function
+just to modify one line.
+Static types give extension-time assurance
+that the extension and host continue to fit together
+in a reasonable way.
+If the host refactoring creates an incompatibility,
+it will be clearly surfaced when trying to <em>load</em> the extension
+(which is far better than waiting until feature <em>use</em>).</p>
+<h2 id="open-questions">Open questions</h2>
+<p>We&rsquo;ve examined a mechanism to modify code
+nested beneath some function an extension calls,
+but what if you need to modify some behaviour
+that cannot be reached by any function exposed to extensions?
+At first glance, it would seem like some form of reflection
+is needed to gain access to these internals.
+Perhaps a controlled form of reflection using
+<a href="https://gbracha.blogspot.com/2010/03/through-looking-glass-darkly.html">mirrors as capabilities</a>&hellip;?
+I am confident there&rsquo;s an elegant approach to be found
+that integrates well with the thoughts on effects and capabilities above,
+while avoiding the messy approaches of AOP.</p>
+<h2 id="implementation">Implementation</h2>
+<p>This approach would seem to require an execution environment that
+allows dynamically hooking / modifying code
+in response to changes made by extensions.
+While various <a href="https://tratt.net/laurie/research/pubs/html/tratt__dynamically_typed_languages/">dynamic programming systems</a>
+like those associated with JavaScript, Smalltalk, Lisp, etc.
+may have some support for this,
+it&rsquo;s less likely to be found in the statically typed languages,
+as those often assume type checking
+should be paired with ahead-of-time compilation.</p>
+<p>I imagine <a href="https://en.wikipedia.org/wiki/Metaobject">metaobject protocols</a>
+(e.g. from Common Lisp, Smalltalk, etc.)
+could accomplish similar modifications at run time.
+The approach described here also makes uses of capabilities,
+so <a href="https://newspeaklanguage.org">Newspeak</a> might be the closest match among dynamic languages.</p>
+<p>It&rsquo;s less clear to me how dynamically typed languages
+might provide extension-time sanity checks,
+so that&rsquo;s a big part of why I focused on a statically typed approach.
+If you see a way to do something similar in a more dynamic environment,
+please do let me know!</p>
+<p>A few stacks that could allow for
+type-checked extension-time code modification
+include:</p>
+<ul>
+<li>Wasm with GC and stack switching extensions (plus additional metadata)</li>
+<li>Scala 3 (which preserves a <a href="https://docs.scala-lang.org/scala3/guides/tasty-overview.html">typed AST</a> for metaprogramming)</li>
+</ul>
+<p>Are there other technologies that might be well suited to such an approach?
+Please do let me know,
+as it may save me quite a lot of time and energy
+as I explore this idea further!</p>
+<h2 id="summary">Summary</h2>
+<p>In the article, we&rsquo;ve taken a look at
+(an in-progress sketch of)
+one potential extensibility approach.
+Is it complicated? Yes.
+Is it over-engineered&hellip;? Perhaps.
+I&rsquo;m okay with jumping through a few hoops if it will restore deep extensibility
+while also balancing safety and maintenance concerns.</p>
+<p>I&rsquo;d love to hear feedback on this!
+Assuming I manage to stay focused on this topic,
+I&rsquo;d like to implementing an extension system using some of the ideas here.
+There are clearly some rough edges and likely better alternate approaches, so do
+let me know what comes to mind.</p>
+<h2 id="related-work">Related work</h2>
+<p>As already mentioned, there are various languages that support some form of
+effects, capabilities, or both, so do take a look at those.</p>
+<p>There are many resources on
+effects, capabilities, metaprogramming, etc.
+that could be mentioned&hellip;
+The list below mentions those that connect more directly
+to the ideas in this article.
+This is certainly not a comprehensive list&hellip;!</p>
+<ul>
+<li>
+<p>Aleksander Boruch-Gruszecki, Adrien Ghosn, Mathias Payer, and Clément
+Pit-Claudel. 2024. Gradient: Gradual compartmentalization via object
+capabilities tracked in types. Proc. ACM Program. Lang. 8, OOPSLA2.
+<a href="https://doi.org/10.1145/3689751">https://doi.org/10.1145/3689751</a></p>
+</li>
+<li>
+<p>Gilad Bracha and David Ungar. 2004. Mirrors:
+Design principles for meta-level facilities of object-oriented programming
+languages. In Proc. of OOPSLA ’04.
+<a href="https://doi.org/10.1145/1028976.1029004">https://doi.org/10.1145/1028976.1029004</a></p>
+</li>
+<li>
+<p>Gilad Bracha. 2010. Through the looking glass darkly.
+<a href="https://gbracha.blogspot.com/2010/03/through-looking-glass-darkly.html">https://gbracha.blogspot.com/2010/03/through-looking-glass-darkly.html</a></p>
+</li>
+<li>
+<p>Jonathan Immanuel Brachthäuser, Philipp Schuster, and Klaus Ostermann. 2020.
+Effects as capabilities: Effect handlers and lightweight effect polymorphism.
+Proc. ACM Program. Lang. 4, OOPSLA.
+<a href="https://doi.org/10.1145/3428194">https://doi.org/10.1145/3428194</a></p>
+</li>
+<li>
+<p>Jonathan Immanuel Brachthäuser. 2022. What you see is what you get:
+Practical effect handlers in capability-passing style.
+<a href="https://doi.org/10.1007/978-3-030-83128-8_3">https://doi.org/10.1007/978-3-030-83128-8_3</a></p>
+</li>
+<li>
+<p>Chip Morningstar. 2017. What are capabilities?
+<a href="http://habitatchronicles.com/2017/05/what-are-capabilities/">http://habitatchronicles.com/2017/05/what-are-capabilities/</a></p>
+</li>
+<li>
+<p>Éric Tanter. 2006. Reflection and open implementations.
+University of Chile.
+<a href="https://www.dcc.uchile.cl/TR/2009/TR_DCC-20091123-013.pdf">https://www.dcc.uchile.cl/TR/2009/TR_DCC-20091123-013.pdf</a></p>
+</li>
+<li>
+<p>Jeremy Yallop. 2023. Effects bibliography.
+<a href="https://github.com/yallop/effects-bibliography">https://github.com/yallop/effects-bibliography</a></p>
+</li>
+</ul>
+]]></content:encoded>
+    </item>
+    
     <item xml:base="https://convolv.es/blog/2024/08/17/clang-ir-opt-level/">
       <title>Optimisation-dependent IR decisions in Clang</title>
       <link>https://convolv.es/blog/2024/08/17/clang-ir-opt-level/</link>

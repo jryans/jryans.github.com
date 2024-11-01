@@ -4,6 +4,24 @@
   <url>
     <loc>https://convolv.es/blog/</loc>
   </url><url>
+    <loc>https://convolv.es/blog/tags/capabilities/</loc>
+  </url><url>
+    <loc>https://convolv.es/blog/tags/challenge/</loc>
+  </url><url>
+    <loc>https://convolv.es/blog/tags/effects/</loc>
+  </url><url>
+    <loc>https://convolv.es/blog/tags/extensibility/</loc>
+  </url><url>
+    <loc>https://convolv.es/blog/2024/11/01/capabilities-effects/</loc>
+  </url><url>
+    <loc>https://convolv.es/</loc>
+    <lastmod>2024-07-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://convolv.es/blog/tags/malleable/</loc>
+  </url><url>
+    <loc>https://convolv.es/tags/</loc>
+    <lastmod>2023-11-08T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://convolv.es/blog/tags/clang/</loc>
   </url><url>
     <loc>https://convolv.es/blog/tags/compilers/</loc>
@@ -11,17 +29,11 @@
   </url><url>
     <loc>https://convolv.es/blog/tags/ir/</loc>
   </url><url>
-    <loc>https://convolv.es/</loc>
-    <lastmod>2024-07-13T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://convolv.es/blog/tags/llvm/</loc>
   </url><url>
     <loc>https://convolv.es/blog/tags/optimisation/</loc>
   </url><url>
     <loc>https://convolv.es/blog/2024/08/17/clang-ir-opt-level/</loc>
-  </url><url>
-    <loc>https://convolv.es/tags/</loc>
-    <lastmod>2023-11-08T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://convolv.es/talks/debug-info-metrics/</loc>
     <lastmod>2024-07-13T00:00:00+00:00</lastmod>
