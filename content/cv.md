@@ -314,6 +314,7 @@ balance of power.
   <div class="lr sec">
     <span>
       <a href="/papers/2024/Onward!/debug-info-vision.pdf">pdf</a>
+      <a href="https://dl.acm.org/doi/10.1145/3689492.3690047">publisher</a>
     </span>
   </div>
 </div>
