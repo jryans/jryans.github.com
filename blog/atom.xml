@@ -13,8 +13,7 @@
       <pubDate>Fri, 01 Nov 2024 16:10:32 +0000</pubDate>
       
       <guid>https://convolv.es/blog/2024/11/01/capabilities-effects/</guid>
-      <description>This is a submission for the fearless extensibility challenge problem organised by the Malleable Systems Collective.
-Much of today&amp;rsquo;s software limits user extensibility. If you&amp;rsquo;re lucky, there may be a plugin system of some kind, but that will only support whatever actions the upstream vendor imagines and deigns to support. If it&amp;rsquo;s open source, you could fork and customise, but that&amp;rsquo;s not accessible to most. Even if you have the expertise, it entails a pile of maintenance work to stay up to date.</description>
+      <description>Much of today&amp;rsquo;s software limits user extensibility. This article explores one potential route forward using capabilities, effects, and extension-time type checking to provide a more predictable extension path.</description>
       <content:encoded><![CDATA[<p><em>This is a submission for the <a href="https://forum.malleable.systems/t/challenge-problem-fearless-extensibility/205">fearless extensibility challenge
 problem</a> organised by the <a href="https://malleable.systems">Malleable Systems Collective</a>.</em></p>
 <hr>
