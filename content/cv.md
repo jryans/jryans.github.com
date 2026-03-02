@@ -301,6 +301,24 @@ balance of power.
 
 <div class="section">Refereed Papers</div>
 
+<div class="row" id="debug-info-consistency-concrete">
+  <div class="lr pri">
+    <span>Debugging Debugging Information using Dynamic Call Trees</span>
+    <a href="https://2026.splashcon.org/track/oopsla-2026">OOPSLA 2026</a>
+  </div>
+  <div class="lr sec">
+    <span>J. Ryan Stinnett, Stephen Kell</span>
+    <span>Oakland, USA</span>
+  </div>
+  <div class="lr sec">
+    <span>
+      <a href="/papers/2026/OOPSLA/debug-info-consistency-concrete.pdf">pdf</a>
+      <a href="https://doi.org/10.1145/3798213">publisher</a>
+      <a href="https://github.com/jryans/debug-info-consistency-concrete-artifact">artifact</a>
+    </span>
+  </div>
+</div>
+
 <div class="row" id="debug-info-vision">
   <div class="lr pri">
     <span>Source-Level Debugging of Compiler-Optimised Code:
@@ -314,7 +332,7 @@ balance of power.
   <div class="lr sec">
     <span>
       <a href="/papers/2024/Onward!/debug-info-vision.pdf">pdf</a>
-      <a href="https://dl.acm.org/doi/10.1145/3689492.3690047">publisher</a>
+      <a href="https://doi.org/10.1145/3689492.3690047">publisher</a>
     </span>
   </div>
 </div>
