@@ -24,7 +24,7 @@ My areas of experience include:
 Feel free to review my [CV][cv] for more details on my past work.
 
 If you'd like to work together or you know someone else who might,
-you can contact me at [jryans@gmail.com][e].
+you can contact me at [ryan@convolv.es][e].
 
-[e]:  mailto:jryans@gmail.com
+[e]:  mailto:ryan@convolv.es
 [cv]: /cv/

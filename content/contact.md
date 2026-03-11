@@ -8,7 +8,7 @@ menu:
 
 ### Email
 
-[jryans@gmail.com](mailto:jryans@gmail.com)
+[ryan@convolv.es](mailto:ryan@convolv.es)
 
 ### Mastodon
 

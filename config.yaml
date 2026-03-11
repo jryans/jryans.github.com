@@ -37,7 +37,7 @@ params:
     - name: rss
       url: "/atom.xml"
     - name: email
-      url: "mailto:jryans@gmail.com"
+      url: "mailto:ryan@convolv.es"
     - name: mastodon
       url: "https://merveilles.town/@jryans"
     - name: matrix
