@@ -60,12 +60,23 @@ balance of power.
 
 <div class="row">
   <div class="lr pri">
+    <span>Research Software Consultant</span>
+    <span>July 2024 – present</span>
+  </div>
+  <div class="lr sec">
+    <span>Self-employed</span>
+    <span>London, UK & Glasgow, UK</span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="lr pri">
     <span>Research Associate</span>
-    <span>May 2022 – present</span>
+    <span>May 2022 – August 2025</span>
   </div>
   <div class="lr sec">
     <span>King's College London</span>
-    <span>London, UK</span>
+    <span>London, UK & Glasgow, UK</span>
   </div>
 </div>
 
