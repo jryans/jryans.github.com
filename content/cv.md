@@ -280,7 +280,7 @@ balance of power.
 <div class="row">
   <div class="lr pri">
     <span>PhD in Computer Science</span>
-    <span>June 2022 – May 2025</span>
+    <span>June 2022 – April 2026</span>
   </div>
   <div class="lr sec">
     <span>King's College London</span>
