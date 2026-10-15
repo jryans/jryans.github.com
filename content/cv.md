@@ -310,7 +310,24 @@ balance of power.
   </div>
 </div>
 
-<div class="section">Refereed Papers</div>
+<div class="section">Publications</div>
+
+<div class="row" id="phd-thesis">
+  <div class="lr pri">
+    <span>Testing debuggability of compiler-optimised programs</span>
+    April 2026
+  </div>
+  <div class="lr sec">
+    <span>J. Ryan Stinnett</span>
+    <span>PhD thesis</span>
+  </div>
+  <div class="lr sec">
+    <span>
+      <a href="/papers/2026/KCL/phd-thesis.pdf">pdf</a>
+    </span>
+    <span>King's College London</span>
+  </div>
+</div>
 
 <div class="row" id="debug-info-consistency-concrete">
   <div class="lr pri">
